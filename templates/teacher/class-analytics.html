@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class Analytics • E-Sakha Platform</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Page CSS -->
+  <style>
+    :root {
+      --bg-main: #0e0f13;
+      --bg-secondary: #151823;
+      --bg-card: #1c2033;
+
+      --accent: #4f8cff;
+      --accent-soft: rgba(79, 140, 255, 0.15);
+      --success: #22c55e;
+      --moderate: #facc15;
+      --danger: #ef4444;
+
+      --text-main: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1a1d2e 0%, #0e0f13 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ================= HEADER ================= */
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: linear-gradient(180deg, #14182a, #0f1220);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-area h1 {
+      font-size: 24px;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .logo-area span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-actions button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-actions button:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    /* ================= MAIN WRAPPER ================= */
+
+    .analytics-wrapper {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 50px 24px 40px;
+    }
+
+    /* ================= OVERVIEW ================= */
+
+    .analytics-overview h2 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .analytics-overview p {
+      max-width: 700px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= METRICS ================= */
+
+    .metrics {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+
+    .metric-card {
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79, 140, 255, 0.4);
+    }
+
+    .metric {
+      font-size: 30px;
+      font-weight: 700;
+      margin: 10px 0 4px;
+      color: var(--accent);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ================= CARD ================= */
+
+    .card {
+      margin-top: 40px;
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ================= HEATMAP ================= */
+
+    .heatmap-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .heatmap-row strong {
+      font-weight: 600;
+    }
+
+    .heatmap-row.strong {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--success);
+    }
+
+    .heatmap-row.moderate {
+      background: rgba(250, 204, 21, 0.15);
+      color: var(--moderate);
+    }
+
+    .heatmap-row.weak {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+    }
+
+    /* ================= RISK STUDENTS ================= */
+
+    .student-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 14px;
+    }
+
+    /* ================= AI INSIGHTS ================= */
+
+    .ai-insights ul {
+      margin-top: 12px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-insights li {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .analytics-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .analytics-actions button {
+      padding: 12px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .analytics-actions .primary {
+      background: linear-gradient(135deg, #4f8cff, #6b9bff);
+      color: #fff;
+      border: none;
+    }
+
+    .analytics-actions .primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(79, 140, 255, 0.35);
+    }
+
+    .analytics-actions .secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .analytics-actions .secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: #0b0e19;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:700px) {
+      .analytics-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="main-header">
+    <div class="logo-area">
+      <h1>E-Sakha</h1>
+      <span>Class Analytics</span>
+    </div>
+
+    <nav class="nav-actions">
+      <button onclick="location.href='{% url 'teacher-dashboard' %}'">Dashboard</button>
+      <button onclick="location.href='{% url 'logout' %}'">Logout</button>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="analytics-wrapper">
+
+    <!-- Overview -->
+    <section class="analytics-overview">
+      <h2>Class 6 • Mathematics</h2>
+      <p>
+        Concept-level performance insights to support
+        targeted teaching interventions.
+      </p>
+    </section>
+
+    <!-- Summary Metrics -->
+    <section class="metrics">
+
+      <div class="metric-card">
+        <h3>Class Mastery</h3>
+        <p class="metric">61%</p>
+        <span class="note">Average concept mastery</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>Students at Risk</h3>
+        <p class="metric">7</p>
+        <span class="note">Below mastery threshold</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>Strong Concepts</h3>
+        <p class="metric">3</p>
+        <span class="note">High-performing topics</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>Weak Concepts</h3>
+        <p class="metric">2</p>
+        <span class="note">Need reinforcement</span>
+      </div>
+
+    </section>
+
+    <!-- Concept Heatmap -->
+    <section class="concept-heatmap card">
+      <h3>Concept Mastery Heatmap</h3>
+
+      <div class="heatmap-row strong">
+        <span>Understanding Fractions</span>
+        <strong>78%</strong>
+      </div>
+
+      <div class="heatmap-row strong">
+        <span>Numerator & Denominator</span>
+        <strong>74%</strong>
+      </div>
+
+      <div class="heatmap-row moderate">
+        <span>Equivalent Fractions</span>
+        <strong>59%</strong>
+      </div>
+
+      <div class="heatmap-row weak">
+        <span>Comparing Fractions</span>
+        <strong>42%</strong>
+      </div>
+    </section>
+
+    <!-- At-Risk Students -->
+    <section class="risk-students card">
+      <h3>At-Risk Students</h3>
+
+      <div class="student-row">
+        <span>Rahul Kumar</span>
+        <strong>Low retention</strong>
+      </div>
+
+      <div class="student-row">
+        <span>Neha Singh</span>
+        <strong>Repeated mistakes</strong>
+      </div>
+
+      <div class="student-row">
+        <span>Aman Verma</span>
+        <strong>Slow pace</strong>
+      </div>
+    </section>
+
+    <!-- AI Teaching Insights -->
+    <section class="ai-insights card">
+      <h3>AI Teaching Insights</h3>
+      <ul>
+        <li>📌 Revise <strong>Comparing Fractions</strong> before moving ahead</li>
+        <li>📌 Use visual examples for 6 students</li>
+        <li>📌 Short quizzes improve accuracy in this class</li>
+      </ul>
+    </section>
+
+    <!-- Actions -->
+    <section class="analytics-actions">
+      <button class="secondary">
+        Plan Revision Session
+      </button>
+
+      <button class="primary">
+        View Student Details
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <p>© 2026 E-Sakha • Teacher Analytics & Insights</p>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard • E-Sakha Platform</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Page CSS -->
+  <style>
+    :root {
+      --bg-main: #0e0f13;
+      --bg-secondary: #151823;
+      --bg-card: #1c2033;
+
+      --accent: #4f8cff;
+      --accent-soft: rgba(79, 140, 255, 0.15);
+      --success: #22c55e;
+      --warning: #facc15;
+      --locked: #6b7280;
+
+      --text-main: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1a1d2e 0%, #0e0f13 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ================= HEADER ================= */
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: linear-gradient(180deg, #14182a, #0f1220);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-area h1 {
+      font-size: 24px;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .logo-area span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-actions button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-actions button:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    /* ================= MAIN WRAPPER ================= */
+
+    .dashboard-wrapper {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 50px 24px 40px;
+    }
+
+    /* ================= WELCOME ================= */
+
+    .welcome-section h2 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .welcome-section p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 700px;
+    }
+
+    /* ================= QUICK STATS ================= */
+
+    .quick-stats {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+
+    .stat-card {
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79, 140, 255, 0.4);
+    }
+
+    .stat-card h3 {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .stat {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 8px 0 4px;
+      color: var(--accent);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= CARD ================= */
+
+    .card {
+      margin-top: 40px;
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ================= RECOMMENDATION ================= */
+
+    .recommendation p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+
+    .hint {
+      font-size: 13px;
+      margin-top: 8px;
+      color: var(--text-muted);
+    }
+
+    /* ================= SNAPSHOT ================= */
+
+    .progress-snapshot {
+      margin-top: 40px;
+    }
+
+    .snapshot-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .snapshot-item.completed {
+      border-left: 4px solid var(--success);
+    }
+
+    .snapshot-item.in-progress {
+      border-left: 4px solid var(--accent);
+    }
+
+    .snapshot-item.locked {
+      border-left: 4px solid var(--locked);
+      opacity: 0.6;
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .dashboard-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .dashboard-actions button {
+      padding: 12px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dashboard-actions .primary {
+      background: linear-gradient(135deg, #4f8cff, #6b9bff);
+      color: #fff;
+      border: none;
+    }
+
+    .dashboard-actions .primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(79, 140, 255, 0.35);
+    }
+
+    .dashboard-actions .secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .dashboard-actions .secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: #0b0e19;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:700px) {
+      .dashboard-actions {
+        flex-direction: column;
+      }
+    }
+  </style>>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="main-header">
+    <div class="logo-area">
+      <h1>E-Sakha</h1>
+      <span>Student Dashboard</span>
+    </div>
+
+    <nav class="nav-actions">
+      <button onclick="location.href='/pages/student/learning-path.html'">Learning Path</button>
+      <button onclick="location.href='/pages/student/progress.html'">Progress</button>
+      <button onclick="location.href='/pages/auth/login.html'">Logout</button>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="dashboard-wrapper">
+
+    <!-- Welcome -->
+    <section class="welcome-section">
+      <h2>Welcome back 👋</h2>
+      <p>
+        Your personalized learning journey is ready.
+        Let’s continue strengthening your concepts.
+      </p>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="quick-stats">
+
+      <div class="stat-card">
+        <h3>Current Subject</h3>
+        <p class="stat">Mathematics</p>
+        <span class="note">Fractions Chapter</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>Concept Mastery</h3>
+        <p class="stat">68%</p>
+        <span class="note">Overall performance</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>Pending Concepts</h3>
+        <p class="stat">5</p>
+        <span class="note">Needs attention</span>
+      </div>
+
+      <div class="stat-card">
+        <h3>Study Streak</h3>
+        <p class="stat">6 Days</p>
+        <span class="note">Keep going</span>
+      </div>
+
+    </section>
+
+    <!-- Today's Recommendation -->
+    <section class="recommendation card">
+      <h3>Today’s AI Recommendation</h3>
+      <p>
+        Revise <strong>Equivalent Fractions</strong> before moving
+        to <strong>Comparing Fractions</strong>.
+      </p>
+      <p class="hint">
+        Students with strong fundamentals perform better in upcoming quizzes.
+      </p>
+    </section>
+
+    <!-- Learning Progress Snapshot -->
+    <section class="progress-snapshot card">
+      <h3>Learning Snapshot</h3>
+
+      <div class="snapshot-item completed">
+        <span>Understanding Fractions</span>
+        <strong>Completed</strong>
+      </div>
+
+      <div class="snapshot-item completed">
+        <span>Numerator & Denominator</span>
+        <strong>Completed</strong>
+      </div>
+
+      <div class="snapshot-item in-progress">
+        <span>Equivalent Fractions</span>
+        <strong>In Progress</strong>
+      </div>
+
+      <div class="snapshot-item locked">
+        <span>Comparing Fractions</span>
+        <strong>Locked</strong>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="dashboard-actions">
+      <button class="secondary" onclick="location.href='/pages/student/learning-path.html'">
+        Continue Learning
+      </button>
+
+      <button class="primary" onclick="location.href='/pages/student/quiz.html'">
+        Take Quiz
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <p>© 2026 E-Sakha • Personalized Learning System</p>
+  </footer>
+
+</body>
+
+</html>

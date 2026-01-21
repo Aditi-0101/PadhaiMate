@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher Dashboard • E-Sakha Platform</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Page CSS -->
+  <style>
+    :root {
+      --bg-main: #0e0f13;
+      --bg-secondary: #151823;
+      --bg-card: #1c2033;
+
+      --accent: #4f8cff;
+      --accent-soft: rgba(79, 140, 255, 0.15);
+      --success: #22c55e;
+      --warning: #facc15;
+
+      --text-main: #e5e7eb;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+
+      --transition: 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1a1d2e 0%, #0e0f13 45%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ================= HEADER ================= */
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: linear-gradient(180deg, #14182a, #0f1220);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-area h1 {
+      font-size: 24px;
+      letter-spacing: 2px;
+      color: var(--accent);
+    }
+
+    .logo-area span {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .nav-actions button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-actions button:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    /* ================= MAIN WRAPPER ================= */
+
+    .teacher-wrapper {
+      flex: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 50px 24px 40px;
+    }
+
+    /* ================= WELCOME ================= */
+
+    .welcome-section h2 {
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+
+    .welcome-section p {
+      max-width: 700px;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= METRICS ================= */
+
+    .metrics {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 22px;
+    }
+
+    .metric-card {
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(79, 140, 255, 0.4);
+    }
+
+    .metric-card h3 {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .metric {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 8px 0 4px;
+      color: var(--accent);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= CARD ================= */
+
+    .card {
+      margin-top: 40px;
+      background: linear-gradient(180deg, #1c2033, #161a2b);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+
+    /* ================= CLASS SNAPSHOT ================= */
+
+    .snapshot-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      margin-top: 10px;
+      font-size: 14px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* ================= AI INSIGHTS ================= */
+
+    .ai-insights ul {
+      margin-top: 12px;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ai-insights li {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ================= ACTIONS ================= */
+
+    .teacher-actions {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .teacher-actions button {
+      padding: 12px 26px;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .teacher-actions .primary {
+      background: linear-gradient(135deg, #4f8cff, #6b9bff);
+      color: #fff;
+      border: none;
+    }
+
+    .teacher-actions .primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(79, 140, 255, 0.35);
+    }
+
+    .teacher-actions .secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+    }
+
+    .teacher-actions .secondary:hover {
+      background: var(--accent-soft);
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: #0b0e19;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:700px) {
+      .teacher-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="main-header">
+    <div class="logo-area">
+      <h1>E-Sakha</h1>
+      <span>Teacher Dashboard</span>
+    </div>
+
+    <nav class="nav-actions">
+      <button onclick="location.href='{% url 'class-analytics' %}'">Class Analytics</button>
+      <button onclick="location.href='/pages/auth/login.html'">Logout</button>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main class="teacher-wrapper">
+
+    <!-- Welcome -->
+    <section class="welcome-section">
+      <h2>Good Morning 👋</h2>
+      <p>
+        Here’s an overview of your classes and
+        AI-assisted teaching insights.
+      </p>
+    </section>
+
+    <!-- Quick Overview Metrics -->
+    <section class="metrics">
+
+      <div class="metric-card">
+        <h3>Assigned Classes</h3>
+        <p class="metric">3</p>
+        <span class="note">Class 6 & 7</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>Total Students</h3>
+        <p class="metric">92</p>
+        <span class="note">Across subjects</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>At-Risk Students</h3>
+        <p class="metric">11</p>
+        <span class="note">Need intervention</span>
+      </div>
+
+      <div class="metric-card">
+        <h3>Strong Concepts</h3>
+        <p class="metric">5</p>
+        <span class="note">High mastery areas</span>
+      </div>
+
+    </section>
+
+    <!-- Class Snapshot -->
+    <section class="class-snapshot card">
+      <h3>Class Snapshot</h3>
+
+      <div class="snapshot-row">
+        <span>Class 6 • Mathematics</span>
+        <strong>61% Mastery</strong>
+      </div>
+
+      <div class="snapshot-row">
+        <span>Class 7 • Mathematics</span>
+        <strong>65% Mastery</strong>
+      </div>
+    </section>
+
+    <!-- AI Teaching Suggestions -->
+    <section class="ai-insights card">
+      <h3>AI Teaching Suggestions</h3>
+      <ul>
+        <li>📌 Focus on <strong>Comparing Fractions</strong> in Class 6</li>
+        <li>📌 Use bilingual explanations for 8 students</li>
+        <li>📌 Short concept quizzes improve retention</li>
+      </ul>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="teacher-actions">
+      <button class="secondary" onclick="location.href='/pages/teacher/class-analytics.html'">
+        View Class Analytics
+      </button>
+
+      <button class="primary">
+        Plan Intervention
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <p>© 2026 E-Sakha • Teacher-Assistive AI System</p>
+  </footer>
+
+</body>
+
+</html>
