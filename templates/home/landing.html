@@ -862,12 +862,12 @@ nav a.active {
             </div>
         </div>
         <nav id="navbar">
-            <a href="#home" class="active"><span class="nav-icon">🏠</span> Home</a>
+            <a href="{% url 'landing' %}" class="active"><span class="nav-icon">🏠</span> Home</a>
             <a href="#features"><span class="nav-icon">✨</span> Features</a>
             <a href="#levels"><span class="nav-icon">📚</span> Levels</a>
             <a href="#teachers"><span class="nav-icon">👨‍🏫</span> Teachers</a>
             <a href="#footer"><span class="nav-icon">📞</span> Contact</a>
-            <button class="cta-btn" href="{% url 'login' %}">LOGIN</button>
+            <a class="cta-btn" href="{% url 'login' %}">LOGIN</a>
         </nav>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </header>
@@ -880,7 +880,7 @@ nav a.active {
             <p>Experience personalized learning with expert guidance, adaptive curriculum, and real-time progress
                 tracking. Join thousands of students achieving their academic dreams.</p>
             <div class="hero-buttons">
-                <button class="btn-primary" href="{% url 'login' %}">Start Learning</button>
+                <a class="btn-primary" href="{% url 'login' %}">Start Learning</a>
                 <button class="btn-secondary">Learn More →</button>
             </div>
         </div>
