@@ -1240,6 +1240,36 @@
         .class-card:nth-child(1) { animation-delay: 0.1s; }
         .class-card:nth-child(2) { animation-delay: 0.2s; }
         .class-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .logout-btn {
+    padding: 8px 18px;
+    border-radius: 50px;
+
+    background: linear-gradient(135deg, #FF6A6A 0%, #E63946 100%);
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 0 4px 12px rgba(230, 57, 70, 0.35);
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(135deg, #E63946 0%, #C1121F 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(230, 57, 70, 0.45);
+}
+
+.logout-btn:active {
+    transform: scale(0.96);
+}
+
     </style>
 </head>
 <body>
@@ -1247,8 +1277,8 @@
     <nav class="top-navbar">
         <div class="navbar-left">
             <div class="navbar-logo">
-                <div class="navbar-logo-icon">E</div>
-                <span class="navbar-logo-text">EduLearn</span>
+                <div class="navbar-logo-icon">P</div>
+                <span class="navbar-logo-text">PadhaiMate</span>
             </div>
             <div class="navbar-menu" id="navbarMenu">
                 <a href="#" class="active">Dashboard</a>
@@ -1259,15 +1289,23 @@
         </div>
         <div class="navbar-right">
             <button class="mobile-nav-toggle" id="mobileNavToggle" onclick="toggleNavbar()">☰</button>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
             <button class="notification-btn">
                 🔔
-                <span class="notification-badge">3</span>
+                {% if unread_count > 0 %}
+                <span class="notification-badge">{{ unread_count }}</span>
+                {% endif %}
             </button>
             <div class="user-profile">
-                <div class="user-avatar">SW</div>
+                <div class="user-avatar">{{ user.first_name|first|upper }}{{ user.last_name|first|upper }}</div>
                 <div class="user-info">
-                    <div class="user-name">Stella Walton</div>
-                    <div class="user-role">Student</div>
+                    <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+                    <div class="user-role">{% if user.is_staff %}
+                                              Teacher
+                                            {% else %}
+                                              Student
+                                            {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -1325,16 +1363,23 @@
                     <span class="search-icon">🔍</span>
                     <input type="text" placeholder="Search">
                 </div>
-                <div class="date-display">23 May 2023, Friday</div>
+                <div class="date-display">{{ current_date|date:"d M Y, l" }}</div>
             </div>
 
             <!-- Welcome Section -->
             <div class="welcome-section">
                 <div class="welcome-text">
-                    <h1>Welcome back, Stella Walton!</h1>
+                    <h1>Welcome back,
+                      {% if user.first_name %}
+                      {{ user.first_name }} {{ user.last_name }}
+                      {% else %}
+                      {{ user.username }}
+                      {% endif %}
+                      !
+                    </h1>
                     <p>You have 8 new courses since last login. Three of your students</p>
                     <p>scored over 80 on all the forms. <a href="#">Learn more</a></p>
-                    <button class="learn-more-btn">Continue Teaching</button>
+                    <button class="learn-more-btn">Continue Learning</button>
                 </div>
                 <div class="welcome-illustration">
                     <div class="books-stack">
