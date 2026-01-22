@@ -1,372 +1,1137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Sakha – AI Based Learning Platform</title>
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-
-    <!-- Common CSS -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> PadhaiMate- Personalized Learning Platform</title>
     <style>
-      :root {
-        --bg-main: #0e0f13;
-        --bg-secondary: #151823;
-        --bg-card: #1c2033;
-      
-        --accent: #4f8cff;
-        --accent-soft: rgba(79, 140, 255, 0.15);
-      
-        --text-main: #e5e7eb;
-        --text-secondary: #9ca3af;
-        --text-muted: #6b7280;
-      
-        --border: rgba(255, 255, 255, 0.08);
-        --shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
-      
-        --radius-sm: 6px;
-        --radius-md: 12px;
-        --radius-lg: 18px;
-      
-        --transition: 0.3s ease;
-      }
-      
-      /* ================= RESET ================= */
-      
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Inter', system-ui, sans-serif;
-      }
-      
-      body {
-        background: radial-gradient(circle at top, #1a1d2e 0%, #0e0f13 45%);
-        color: var(--text-main);
-        min-height: 100vh;
-      }
-      
-      /* ================= HEADER ================= */
-      
-      .main-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 18px 32px;
-        background: linear-gradient(180deg, #14182a, #0f1220);
-        border-bottom: 1px solid var(--border);
-      }
-      
-      .logo-area h1 {
-        font-size: 26px;
-        letter-spacing: 2px;
-        color: var(--accent);
-      }
-      
-      .logo-area span {
-        font-size: 13px;
-        color: var(--text-muted);
-      }
-      
-      .nav-actions {
-        display: flex;
-        gap: 12px;
-      }
-      
-      .nav-actions button {
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--text-main);
-        padding: 8px 16px;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: var(--transition);
-      }
-      
-      .nav-actions button:hover {
-        background: var(--accent-soft);
-        border-color: var(--accent);
-      }
-      
-      /* ================= BUTTONS ================= */
-      
-      button {
-        font-family: inherit;
-      }
-      
-      .primary {
-        background: linear-gradient(135deg, #4f8cff, #6b9bff);
-        color: #fff;
-        border: none;
-        padding: 12px 26px;
-        border-radius: var(--radius-sm);
-        font-size: 15px;
-        cursor: pointer;
-        transition: var(--transition);
-      }
-      
-      .primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 35px rgba(79, 140, 255, 0.35);
-      }
-      
-      .primary.large {
-        padding: 14px 36px;
-        font-size: 16px;
-      }
-      
-      .secondary {
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--text-main);
-        padding: 12px 26px;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        transition: var(--transition);
-      }
-      
-      .secondary:hover {
-        background: var(--accent-soft);
-      }
-      
-      /* ================= HERO ================= */
-      
-      .hero {
-        padding: 90px 24px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --nav-bg: #0f172a;        /* Dark Slate */
+    --nav-bg-soft: #1e293b;  /* Slightly lighter */
+    --nav-text: #e5e7eb;     /* Light text */
+    --nav-text-muted: #9ca3af;
+            --primary: #2563eb;
+            --primary-soft: #dbeafe;
+
+            --secondary: #14b8a6;
+            --secondary-soft: #ccfbf1;
+
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+
+            --text-main: #0f172a;
+            --text-muted: #475569;
+
+            --border-soft: #e2e8f0;
+        }
+
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-main);
+            background: var(--bg-main);
+            overflow-x: hidden;
+        }
+
+
+        /* Header */
+        header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, var(--nav-bg), var(--nav-bg-soft));
+    box-shadow: 0 2px 20px rgba(15, 23, 42, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(255, 140, 66, 0.3));
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1;
+        }
+
+        .logo-main {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo-tagline {
+    font-size: 10px;
+    color: var(--nav-text-muted);
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+        nav {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 8px;
+    border-radius: 50px;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+
+        nav a {
+    text-decoration: none;
+    color: var(--nav-text);
+    font-weight: 600;
+    font-size: 15px;
+    position: relative;
+    padding: 12px 24px;
+    border-radius: 50px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+
+        nav a:hover::before {
+            opacity: 1;
+        }
+
+       nav a:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.6);
+}
+
+nav a.active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.7);
+}
+
+
+
+        .nav-icon {
+            font-size: 16px;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white !important;
+            padding: 14px 32px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+        }
+
+
+        .cta-btn::after {
+            content: '→';
+            transition: transform 0.3s;
+        }
+
+        .cta-btn:hover::after {
+            transform: translateX(5px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        @media (max-width: 968px) {
+            header {
+                padding: 15px 30px;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            nav {
+                position: fixed;
+                top: 85px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 85px);
+                background: white;
+                flex-direction: column;
+                padding: 40px 20px;
+                transition: left 0.3s;
+                box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+                border-radius: 0;
+                gap: 5px;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav a {
+                width: 100%;
+                justify-content: center;
+                padding: 18px 24px;
+                font-size: 18px;
+            }
+
+            .cta-btn {
+                width: 100%;
+                justify-content: center;
+                margin: 20px 0 0 0;
+                padding: 18px 32px;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 80px 80px;
+            background: linear-gradient(135deg, var(--primary-soft) 0%, #FFF 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: linear-gradient(135deg, var(--secondary-soft) 0%, var(--primary-soft) 100%);
+            border-radius: 45% 55% 60% 40% / 50% 60% 40% 50%;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--secondary-soft);
+            color: var(--secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .hero h1 .highlight {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+
+        .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    padding: 15px 35px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--primary);
+    padding: 15px 35px;
+    border-radius: 30px;
+    border: 2px solid var(--primary);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+    color: white;
+}
+
+
+        .hero-image {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-image-container {
+    width: 500px;
+    height: 500px;
+    border-radius: 50% 40% 60% 50% / 60% 50% 50% 40%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.hero-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Features Section */
+.features {
+    padding: 100px 80px;
+    background: var(--bg-card);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 42px;
+    margin-bottom: 60px;
+    color: var(--text-main);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+}
+
+.feature-card:nth-child(2) .feature-icon {
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+}
+
+.feature-card:nth-child(3) .feature-icon {
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+}
+
+.feature-card:nth-child(4) .feature-icon {
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+}
+
+.feature-card h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+
+        /* Level Learning Section */
+        .level-learning {
+    padding: 100px 80px;
+    background: linear-gradient(135deg, var(--bg-main) 0%, var(--primary-soft) 100%);
+}
+
+.level-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.level-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.level-card {
+    background: var(--bg-card);
+    padding: 50px 35px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.level-card:nth-child(2)::before {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.level-card:nth-child(3)::before {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.level-card:nth-child(4)::before {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.level-card:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.level-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.level-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+.level-card .age-range {
+    color: var(--secondary);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.level-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+
+        /* Teacher Monitoring Section */
+        .teacher-section {
+    padding: 100px 80px;
+    background: var(--bg-card);
+}
+
+.teacher-content {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.teacher-image {
+    flex: 1;
+    margin-bottom: 141px;
+    height: 115%;
+}
+
+.teacher-image-container {
+    width: 450px;
+    height: 450px;
+    border-radius: 40% 60% 50% 50% / 50% 50% 60% 40%;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-soft) 0%, var(--secondary-soft) 100%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.teacher-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teacher-info {
+    flex: 1;
+}
+
+.teacher-info h2 {
+    font-size: 42px;
+    margin-bottom: 25px;
+    color: var(--text-main);
+}
+
+.teacher-info p {
+    font-size: 18px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.teacher-features {
+    display: grid;
+    gap: 20px;
+}
+
+.teacher-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 15px;
+    transition: all 0.3s;
+}
+
+.teacher-feature:hover {
+    background: var(--secondary-soft);
+    transform: translateX(10px);
+}
+
+.teacher-feature-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.teacher-feature-text h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.teacher-feature-text p {
+    font-size: 14px;
+    margin: 0;
+}
+
+
+        /* Footer */
+        footer {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    color: white;
+    padding: 60px 80px 30px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto 40px;
+}
+
+.footer-about h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--secondary);
+}
+
+.footer-about p {
+    line-height: 1.8;
+    color: #BDC3C7;
+}
+
+.footer-links h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links ul li a {
+    color: #BDC3C7;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: var(--secondary);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #BDC3C7;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.social-links a:hover {
+    background: var(--primary);
+    transform: translateY(-3px);
+}
+
+
+        @media (max-width: 768px) {
+
+    header,
+    .hero,
+    .features,
+    .level-learning,
+    .teacher-section,
+    footer {
+        padding: 40px 20px;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    nav {
+        position: fixed;
+        top: 85px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 85px);
+        background: var(--bg-card);
+        flex-direction: column;
+        padding: 40px;
+        transition: left 0.3s;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    nav.active {
+        left: 0;
+    }
+
+    .hero {
+        flex-direction: column;
         text-align: center;
-        max-width: 900px;
-        margin: auto;
-      }
-      
-      .hero h2 {
+    }
+
+    .hero h1 {
         font-size: 36px;
-        margin-bottom: 16px;
-      }
-      
-      .hero p {
-        font-size: 16px;
-        color: var(--text-secondary);
-        line-height: 1.7;
-      }
-      
-      .hero-buttons {
-        margin-top: 30px;
-        display: flex;
-        justify-content: center;
-        gap: 18px;
-        flex-wrap: wrap;
-      }
-      
-      /* ================= FEATURES ================= */
-      
-      .features {
-        padding: 80px 24px;
-        max-width: 1100px;
-        margin: auto;
-        text-align: center;
-      }
-      
-      .features h3 {
-        font-size: 26px;
-        margin-bottom: 40px;
-      }
-      
-      .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 24px;
-      }
-      
-      .feature-card {
-        background: linear-gradient(180deg, #1c2033, #161a2b);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: 26px;
-        box-shadow: var(--shadow);
-      }
-      
-      .feature-card h4 {
-        margin-bottom: 10px;
-      }
-      
-      .feature-card p {
-        font-size: 14px;
-        color: var(--text-secondary);
-      }
-      
-      /* ================= ROLES ================= */
-      
-      .roles {
-        padding: 80px 24px;
-        max-width: 1000px;
-        margin: auto;
-        text-align: center;
-      }
-      
-      .roles h3 {
-        font-size: 26px;
-        margin-bottom: 36px;
-      }
-      
-      .role-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 24px;
-      }
-      
-      .role-card {
-        background: linear-gradient(180deg, #1c2033, #161a2b);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-md);
-        padding: 26px;
-        box-shadow: var(--shadow);
-      }
-      
-      .role-card p {
-        font-size: 14px;
-        color: var(--text-secondary);
-      }
-      
-      /* ================= CTA ================= */
-      
-      .cta {
-        padding: 90px 24px;
-        text-align: center;
-        background: linear-gradient(180deg, #10142a, #0b0e19);
-      }
-      
-      .cta h3 {
-        font-size: 28px;
-        margin-bottom: 12px;
-      }
-      
-      .cta p {
-        font-size: 15px;
-        color: var(--text-secondary);
-        margin-bottom: 26px;
-      }
-      
-      /* ================= FOOTER ================= */
-      
-      .footer {
-        text-align: center;
-        padding: 24px 16px;
-        font-size: 13px;
-        color: var(--text-muted);
-        border-top: 1px solid var(--border);
-        background: #0b0e19;
-      }
-      
-      .footer p {
-        margin: 4px 0;
-      }
-      
-      /* ================= RESPONSIVE ================= */
-      
-      @media (max-width: 700px) {
-        .hero h2 {
-          font-size: 28px;
-        }
-      
-        .features h3,
-        .roles h3,
-        .cta h3 {
-          font-size: 22px;
-        }
-      }
+    }
+
+    .hero-image-container {
+        width: 300px;
+        height: 300px;
+        margin: 40px auto 0;
+    }
+
+    .teacher-content {
+        flex-direction: column;
+    }
+
+    .teacher-image-container {
+        width: 100%;
+        height: 350px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+/* ===== Blob Card System ===== */
+
+.blob-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 32% 38% 34% 36% / 38% 34% 36% 32%;
+    transition: transform 0.3s ease;
+}
+
+.blob-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.blob-card > * {
+    position: relative;
+    z-index: 3;
+}
+
+
+.blob-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Color variants */
+.blob-blue {
+    background: var(--primary);
+    color: white;
+}
+
+
+.blob-mint {
+    background: var(--secondary);
+    color: white;
+}
+
+.blob-indigo {
+    background: #ffffff;
+    color: white;
+}
+
+.blob-slate {
+    background: #334155;
+    color: white;
+}
+.blob-white {
+    background: white;
+    color: blue;
+}
+
+
+/* Icon chip (used in level & subject cards) */
+.blob-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 18px auto 0;
+    border: 2px solid #0f172a;
+}
+
+
+
     </style>
-  </head>
+</head>
 
-  <body>
-    <!-- ================= HEADER ================= -->
-    <header class="main-header">
-      <div class="logo-area">
-        <h1>E-sakha</h1>
-        <span>AI Learning Platform</span>
-      </div>
-
-      <nav class="nav-actions">
-        <button onclick="location.href='/pages/auth/language-select.html'">Language</button>
-        <button onclick="location.href='{% url 'login' %}'">Login</button>
-      </nav>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="  Logo">
+            <div class="logo-text">
+                <span class="logo-main"> PadhaiMate</span>
+                <span class="logo-tagline">SMART LEARNING</span>
+            </div>
+        </div>
+        <nav id="navbar">
+            <a href="#home" class="active"><span class="nav-icon">🏠</span> Home</a>
+            <a href="#features"><span class="nav-icon">✨</span> Features</a>
+            <a href="#levels"><span class="nav-icon">📚</span> Levels</a>
+            <a href="#teachers"><span class="nav-icon">👨‍🏫</span> Teachers</a>
+            <a href="#footer"><span class="nav-icon">📞</span> Contact</a>
+            <button class="cta-btn" href="{% url 'login' %}">LOGIN</button>
+        </nav>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
     </header>
 
-    <!-- ================= HERO SECTION ================= -->
-    <section class="hero">
-      <h2>Personalized Learning for Every Student</h2>
-      <p>An AI-powered education platform designed for government schools to identify learning gaps, personalize content, and support teachers with real-time insights.</p>
-
-      <div class="hero-buttons">
-        <button class="primary" onclick="location.href='/pages/auth/login.html'">Get Started</button>
-
-        <button class="secondary" onclick="location.href='/pages/auth/language-select.html'">Choose Language</button>
-      </div>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge">📚 Preschool to Grade 12</div>
+            <h1>We Prepare Your <span class="highlight">Child For Life</span></h1>
+            <p>Experience personalized learning with expert guidance, adaptive curriculum, and real-time progress
+                tracking. Join thousands of students achieving their academic dreams.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" href="{% url 'login' %}">Start Learning</button>
+                <button class="btn-secondary">Learn More →</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-image-container">
+                <!-- Replace with your image -->
+                <img src="/static/home/1st.png" alt="Happy students learning">
+            </div>
+        </div>
     </section>
 
-    <!-- ================= FEATURES ================= -->
-    <section class="features">
-      <h3>What Makes E-Sakha Different?</h3>
-
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h4>AI Personalization</h4>
-          <p>Learning paths adapt dynamically based on student performance, pace, and concept mastery.</p>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Why Choose  ?</h2>
+        <div class="features-grid">
+            <div class="level-card blob-card blob-white">
+                <div class="feature-icon">🎯</div>
+                <h3>Personalized Learning</h3>
+                <p>Adaptive curriculum tailored to each student's pace and learning style for maximum effectiveness.</p>
+            </div>
+            <div class="level-card blob-card blob-white">
+                <div class="feature-icon">👨‍🏫</div>
+                <h3>Expert Teachers</h3>
+                <p>Learn from qualified educators with years of experience in their respective fields.</p>
+            </div>
+            <div class="level-card blob-card blob-white">
+                <div class="feature-icon">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>Real-time analytics and detailed reports to monitor your child's academic journey.</p>
+            </div>
+            <div class="level-card blob-card blob-white">
+                <div class="feature-icon">🏆</div>
+                <h3>Interactive Content</h3>
+                <p>Engaging lessons with gamification, quizzes, and hands-on projects to boost retention.</p>
+            </div>
         </div>
-
-        <div class="feature-card">
-          <h4>Early Gap Detection</h4>
-          <p>Concept-level analysis ensures students never move forward with weak fundamentals.</p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Teacher Support</h4>
-          <p>Teachers get dashboards with insights, alerts, and intervention suggestions.</p>
-        </div>
-
-        <div class="feature-card">
-          <h4>Multilingual Learning</h4>
-          <p>Supports regional languages and mixed-language explanations for better understanding.</p>
-        </div>
-      </div>
     </section>
 
-    <!-- ================= USER ROLES ================= -->
-    <section class="roles">
-      <h3>Who Is This Platform For?</h3>
+    <!-- Level Learning Section -->
+    <section class="level-learning" id="levels">
+        <div class="level-content">
+            <h2 class="section-title">Mastery-Based Learning Journey</h2>
+            <p>Our platform doesn't just track grades; it maps every student's understanding across a granular Knowledge
+                Graph[cite: 106].</p>
 
-      <div class="role-cards">
-        <div class="role-card">
-          <h4>Students</h4>
-          <p>Personalized lessons, adaptive practice, and AI guidance tailored to individual needs.</p>
-        </div>
+            <div class="level-cards">
+                <div class="level-card blob-card blob-white">
 
-        <div class="role-card">
-          <h4>Teachers</h4>
-          <p>Class analytics, concept heatmaps, and reduced evaluation load.</p>
-        </div>
+                    <div class="level-icon">📊</div>
+                    <h3>Diagnostic Entry</h3>
+                    <p>Every journey begins with a concept-mapped diagnostic assessment to identify existing
+                        foundational gaps[cite: 169, 170].</p>
+                </div>
+                <div class="level-card blob-card blob-white">
 
-        <div class="role-card">
-          <h4>Administrators</h4>
-          <p>District-wise reports, trends, and policy-level insights.</p>
+                    <div class="level-icon">🔗</div>
+                    <h3>Knowledge Mapping</h3>
+                    <p>Curriculum is broken into Chapters and Concepts, ensuring prerequisites are met before moving
+                        forward[cite: 107, 202].</p>
+                </div>
+                <div class="level-card blob-card blob-white">
+
+                    <div class="level-icon">⚡</div>
+                    <h3>Adaptive Pathways</h3>
+                    <p>The AI adjusts content difficulty in real-time based on the student's unique learning pace[cite:
+                        101, 190].</p>
+                </div>
+                <div class="level-card blob-card blob-white">
+
+                    <div class="level-icon">🏆</div>
+                    <h3>Verified Mastery</h3>
+                    <p>Progression is only achieved through concept-level scoring, focusing on understanding over
+                        marks[cite: 94, 201].</p>
+                </div>
+                <div class="level-card blob-card blob-white">
+
+                    <div class="level-icon">🏆</div>
+                    <h3>Verified Mastery</h3>
+                    <p>Progression is only achieved through concept-level scoring, focusing on understanding over
+                        marks[cite: 94, 201].</p>
+                </div>
+                <div class="level-card blob-card blob-white">
+
+                    <div class="level-icon">🏆</div>
+                    <h3>Verified Mastery</h3>
+                    <p>Progression is only achieved through concept-level scoring, focusing on understanding over
+                        marks[cite: 94, 201].</p>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <!-- ================= CALL TO ACTION ================= -->
-    <section class="cta">
-      <h3>Start Your Learning Journey Today</h3>
-      <p>Built to empower students and teachers without replacing the human touch in education.</p>
-
-      <button class="primary large" onclick="location.href='/pages/auth/login.html'">Continue to Platform</button>
+    <!-- Teacher Monitoring Section -->
+    <section class="teacher-section" id="teachers">
+        <div class="teacher-content">
+            <div class="teacher-image">
+                <div class="teacher-image-container">
+                    <!-- Replace with your teacher/student image -->
+                    <img src="/static/home/2 (2).png" alt="Teacher helping student">
+                </div>
+            </div>
+            <div class="teacher-info">
+                <h2>Expert Teachers Monitoring Your Progress</h2>
+                <p>Our dedicated educators provide personalized guidance and support throughout your learning journey.
+                    Get real-time feedback and customized learning paths designed just for you.</p>
+                <div class="teacher-features">
+                    <div class="teacher-feature">
+                        <div class="teacher-feature-icon">📈</div>
+                        <div class="teacher-feature-text">
+                            <h4>Real-Time Monitoring</h4>
+                            <p>Teachers track your progress live and identify areas for improvement instantly.</p>
+                        </div>
+                    </div>
+                    <div class="teacher-feature">
+                        <div class="teacher-feature-icon">💬</div>
+                        <div class="teacher-feature-text">
+                            <h4>One-on-One Guidance</h4>
+                            <p>Schedule personal sessions with teachers for doubt clearing and mentorship.</p>
+                        </div>
+                    </div>
+                    <div class="teacher-feature">
+                        <div class="teacher-feature-icon">🎯</div>
+                        <div class="teacher-feature-text">
+                            <h4>Customized Learning Paths</h4>
+                            <p>Get a personalized curriculum adapted to your strengths and learning goals.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="footer">
-      <p>© 2026 E-Sakha • AI-Based Personalized Learning Platform</p>
-      <p>Designed for inclusive and scalable education</p>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>🎓 PadhaiMate </h3>
+                <p>Empowering students worldwide with personalized learning experiences. Join our community of learners
+                    and unlock your full potential.</p>
+                <div class="social-links">
+                    <a href="#" title="Facebook">f</a>
+                    <a href="#" title="Twitter">𝕏</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Community</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                    <li><a href="#">Disclaimer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PadhaiMate. All rights reserved.</p>
+        </div>
     </footer>
-  </body>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navbar').classList.remove('active');
+            });
+        });
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section, footer');
+            const navLinks = document.querySelectorAll('nav a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation to cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .level-card, .teacher-feature').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+</body>
+
 </html>
