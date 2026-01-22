@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCT Mock Tests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .left-section {
+            flex: 1;
+            padding: 24px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .test-info h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .test-info p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        .progress-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 180px;
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .btn:hover {
+            background-color: #f9f9f9;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .question-container {
+            margin-bottom: 32px;
+        }
+
+        .question-header {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .option:hover {
+            background-color: #f9fafb;
+            border-color: #c0c0c0;
+            transform: translateX(4px);
+        }
+
+        .option.selected {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+        }
+
+        .option-indicator {
+            width: 4px;
+            height: 32px;
+            background-color: #22c55e;
+            margin-right: 16px;
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .option.selected .option-indicator {
+            opacity: 1;
+        }
+
+        .option-label {
+            font-size: 15px;
+            color: #374151;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .option.selected .option-label {
+            color: #166534;
+        }
+
+        .option-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-radio {
+            border-color: #22c55e;
+            background-color: white;
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 48px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background-color: #f9f9f9;
+            border-color: #999;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .nav-btn.finish {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .nav-btn.finish:hover {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .right-section {
+            width: 280px;
+            background: linear-gradient(180deg, #fafafa 0%, #f3f4f6 100%);
+            padding: 24px;
+            overflow-y: auto;
+            border-left: 1px solid #e5e7eb;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-radius: 6px;
+            border-left: 4px solid #6366f1;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .question-number {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .question-number:hover {
+            transform: scale(1.05);
+        }
+
+        .question-number.answered {
+            background-color: #22c55e;
+            color: white;
+        }
+
+        .question-number.not-answered {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .question-number.not-attempted {
+            background-color: #d1d5db;
+            color: #666;
+        }
+
+        .question-number.current {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-header svg {
+            width: 24px;
+            height: 24px;
+            color: #6366f1;
+        }
+
+        .time-input-group {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .input-field {
+            flex: 1;
+        }
+
+        .input-field label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+            margin-bottom: 8px;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .quick-time-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .quick-time-btn {
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        .quick-time-btn:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+            background: #f5f3ff;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .modal-btn.cancel {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .modal-btn.confirm:hover {
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .timer.warning {
+            color: #f59e0b;
+            animation: pulse 1s infinite;
+        }
+
+        .timer.danger {
+            color: #ef4444;
+            animation: pulse 0.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Time Limit Modal -->
+        <div class="modal" id="timeLimitModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Set Time Limit
+                </div>
+                
+                <div class="time-input-group">
+                    <div class="input-field">
+                        <label>Hours</label>
+                        <input type="number" id="hoursInput" min="0" max="23" value="0" />
+                    </div>
+                    <div class="input-field">
+                        <label>Minutes</label>
+                        <input type="number" id="minutesInput" min="0" max="59" value="30" />
+                    </div>
+                    <div class="input-field">
+                        <label>Seconds</label>
+                        <input type="number" id="secondsInput" min="0" max="59" value="0" />
+                    </div>
+                </div>
+
+                <div class="quick-time-buttons">
+                    <button class="quick-time-btn" onclick="setQuickTime(0, 15, 0)">15 min</button>
+                    <button class="quick-time-btn" onclick="setQuickTime(0, 30, 0)">30 min</button>
+                    <button class="quick-time-btn" onclick="setQuickTime(0, 45, 0)">45 min</button>
+                    <button class="quick-time-btn" onclick="setQuickTime(1, 0, 0)">1 hour</button>
+                    <button class="quick-time-btn" onclick="setQuickTime(1, 30, 0)">1.5 hours</button>
+                    <button class="quick-time-btn" onclick="setQuickTime(2, 0, 0)">2 hours</button>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="modal-btn cancel" onclick="closeTimeLimitModal()">Cancel</button>
+                    <button class="modal-btn confirm" onclick="applyTimeLimit()">Start Test</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="left-section">
+            <div class="header">
+                <div class="test-info">
+                    <h2>MCT Mock Tests</h2>
+                    <p>Session 1</p>
+                </div>
+                <div class="progress-section">
+                    <span class="progress-text">20%</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn">Refresh</button>
+                    <button class="btn">Mark for review</button>
+                    <div class="timer">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span id="timer">00:00 Min</span>
+                    </div>
+                    <button class="btn" onclick="openTimeLimitModal()">Set Time</button>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-header">Question <span id="currentQ">1</span></div>
+                <div class="question-text" id="questionText">
+                    The Indian Contract Act 1872 came into force on... The Indian Contract Act 1872 came into force on...
+                </div>
+
+                <div class="options" id="optionsContainer">
+                    <div class="option" data-option="A">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Option A</span>
+                        <div class="option-radio"></div>
+                    </div>
+                    <div class="option" data-option="B">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Option B</span>
+                        <div class="option-radio"></div>
+                    </div>
+                    <div class="option" data-option="C">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Option C</span>
+                        <div class="option-radio"></div>
+                    </div>
+                    <div class="option" data-option="D">
+                        <div class="option-indicator"></div>
+                        <span class="option-label">Option D</span>
+                        <div class="option-radio"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="nav-btn" id="prevBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Previous
+                </button>
+                <button class="nav-btn" id="nextBtn">
+                    Next
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+                <button class="nav-btn finish" id="finishBtn">Finish</button>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="section-title">Quant</div>
+            <div class="question-grid" id="quantGrid"></div>
+
+            <div class="section-title">Verbal</div>
+            <div class="question-grid" id="verbalGrid"></div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let currentQuestion = 1;
+        const totalQuestions = 20;
+        const quantQuestions = 18;
+        const verbalQuestions = 20;
+        let timeLeft = 1800; // 30 minutes default
+        let timerInterval = null;
+        let questionStatuses = Array(totalQuestions).fill('not-attempted');
+        let selectedAnswers = Array(totalQuestions).fill(null);
+
+        // Initialize grids
+        function initializeGrids() {
+            const quantGrid = document.getElementById('quantGrid');
+            const verbalGrid = document.getElementById('verbalGrid');
+
+            for (let i = 1; i <= quantQuestions; i++) {
+                const div = document.createElement('div');
+                div.className = 'question-number not-attempted';
+                div.textContent = i;
+                div.onclick = () => goToQuestion(i);
+                quantGrid.appendChild(div);
+            }
+
+            for (let i = 1; i <= verbalQuestions; i++) {
+                const div = document.createElement('div');
+                div.className = 'question-number not-attempted';
+                div.textContent = i;
+                div.onclick = () => goToQuestion(i);
+                verbalGrid.appendChild(div);
+            }
+
+            updateGridDisplay();
+        }
+
+        // Update grid display
+        function updateGridDisplay() {
+            const allNumbers = document.querySelectorAll('.question-number');
+            allNumbers.forEach((el, index) => {
+                el.className = 'question-number ' + questionStatuses[index];
+                if (index + 1 === currentQuestion) {
+                    el.classList.add('current');
+                }
+            });
+        }
+
+        // Timer
+        function updateTimer() {
+            const hours = Math.floor(timeLeft / 3600);
+            const minutes = Math.floor((timeLeft % 3600) / 60);
+            const seconds = timeLeft % 60;
+            
+            let timeString = '';
+            if (hours > 0) {
+                timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            } else {
+                timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} Min`;
+            }
+            
+            document.getElementById('timer').textContent = timeString;
+            
+            const timerElement = document.querySelector('.timer');
+            timerElement.classList.remove('warning', 'danger');
+            
+            if (timeLeft <= 60) {
+                timerElement.classList.add('danger');
+            } else if (timeLeft <= 300) {
+                timerElement.classList.add('warning');
+            }
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                clearInterval(timerInterval);
+                alert('Time is up! Test will be submitted automatically.');
+                // Auto-submit logic here
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+            timerInterval = setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        // Modal functions
+        function openTimeLimitModal() {
+            document.getElementById('timeLimitModal').classList.add('show');
+        }
+
+        function closeTimeLimitModal() {
+            document.getElementById('timeLimitModal').classList.remove('show');
+        }
+
+        function setQuickTime(hours, minutes, seconds) {
+            document.getElementById('hoursInput').value = hours;
+            document.getElementById('minutesInput').value = minutes;
+            document.getElementById('secondsInput').value = seconds;
+        }
+
+        function applyTimeLimit() {
+            const hours = parseInt(document.getElementById('hoursInput').value) || 0;
+            const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+            const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+            
+            timeLeft = (hours * 3600) + (minutes * 60) + seconds;
+            
+            if (timeLeft === 0) {
+                alert('Please set a valid time limit!');
+                return;
+            }
+            
+            closeTimeLimitModal();
+            startTimer();
+        }
+
+        // Progress bar
+        function updateProgress() {
+            const answered = questionStatuses.filter(s => s === 'answered').length;
+            const percentage = (answered / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Option selection
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                const optionValue = this.dataset.option;
+                selectedAnswers[currentQuestion - 1] = optionValue;
+                questionStatuses[currentQuestion - 1] = 'answered';
+                
+                updateGridDisplay();
+                updateProgress();
+            });
+        });
+
+        // Navigation
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestion > 1) {
+                goToQuestion(currentQuestion - 1);
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestion < totalQuestions) {
+                goToQuestion(currentQuestion + 1);
+            }
+        });
+
+        document.getElementById('finishBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to finish the test?')) {
+                alert('Test submitted!');
+            }
+        });
+
+        function goToQuestion(questionNum) {
+            currentQuestion = questionNum;
+            document.getElementById('currentQ').textContent = questionNum;
+            
+            // Clear selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Restore selection if exists
+            if (selectedAnswers[currentQuestion - 1]) {
+                const selected = document.querySelector(`[data-option="${selectedAnswers[currentQuestion - 1]}"]`);
+                if (selected) selected.classList.add('selected');
+            }
+            
+            updateGridDisplay();
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentQuestion === 1;
+            document.getElementById('nextBtn').disabled = currentQuestion === totalQuestions;
+        }
+
+        // Initialize
+        initializeGrids();
+        updateProgress();
+        goToQuestion(1);
+        
+        // Show time limit modal on page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                openTimeLimitModal();
+            }, 500);
+        });
+    </script>
+</body>
+</html>
