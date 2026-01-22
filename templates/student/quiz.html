@@ -489,46 +489,7 @@
 <body>
     <div class="main-container">
         <!-- Time Limit Modal -->
-        <div class="modal" id="timeLimitModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
-                    Set Time Limit
-                </div>
-                
-                <div class="time-input-group">
-                    <div class="input-field">
-                        <label>Hours</label>
-                        <input type="number" id="hoursInput" min="0" max="23" value="0" />
-                    </div>
-                    <div class="input-field">
-                        <label>Minutes</label>
-                        <input type="number" id="minutesInput" min="0" max="59" value="30" />
-                    </div>
-                    <div class="input-field">
-                        <label>Seconds</label>
-                        <input type="number" id="secondsInput" min="0" max="59" value="0" />
-                    </div>
-                </div>
-
-                <div class="quick-time-buttons">
-                    <button class="quick-time-btn" onclick="setQuickTime(0, 15, 0)">15 min</button>
-                    <button class="quick-time-btn" onclick="setQuickTime(0, 30, 0)">30 min</button>
-                    <button class="quick-time-btn" onclick="setQuickTime(0, 45, 0)">45 min</button>
-                    <button class="quick-time-btn" onclick="setQuickTime(1, 0, 0)">1 hour</button>
-                    <button class="quick-time-btn" onclick="setQuickTime(1, 30, 0)">1.5 hours</button>
-                    <button class="quick-time-btn" onclick="setQuickTime(2, 0, 0)">2 hours</button>
-                </div>
-
-                <div class="modal-actions">
-                    <button class="modal-btn cancel" onclick="closeTimeLimitModal()">Cancel</button>
-                    <button class="modal-btn confirm" onclick="applyTimeLimit()">Start Test</button>
-                </div>
-            </div>
-        </div>
+        
 
         <div class="left-section">
             <div class="header">
@@ -559,28 +520,28 @@
             <div class="question-container">
                 <div class="question-header">Question <span id="currentQ">1</span></div>
                 <div class="question-text" id="questionText">
-                    The Indian Contract Act 1872 came into force on... The Indian Contract Act 1872 came into force on...
+                    {{ question_text }}
                 </div>
 
                 <div class="options" id="optionsContainer">
                     <div class="option" data-option="A">
                         <div class="option-indicator"></div>
-                        <span class="option-label">Option A</span>
+                        <span class="option-label">{{ option_a }}</span>
                         <div class="option-radio"></div>
                     </div>
                     <div class="option" data-option="B">
                         <div class="option-indicator"></div>
-                        <span class="option-label">Option B</span>
+                        <span class="option-label">{{ option_b }}</span>
                         <div class="option-radio"></div>
                     </div>
                     <div class="option" data-option="C">
                         <div class="option-indicator"></div>
-                        <span class="option-label">Option C</span>
+                        <span class="option-label">{{ option_c }}</span>
                         <div class="option-radio"></div>
                     </div>
                     <div class="option" data-option="D">
                         <div class="option-indicator"></div>
-                        <span class="option-label">Option D</span>
+                        <span class="option-label">{{ option_d }}</span>
                         <div class="option-radio"></div>
                     </div>
                 </div>
@@ -604,8 +565,11 @@
         </div>
 
         <div class="right-section">
-            <div class="section-title">Quant</div>
+            <div class="section-title">Maths</div>
             <div class="question-grid" id="quantGrid"></div>
+
+            <div class="section-title">Verbal</div>
+            <div class="question-grid" id="verbalGrid"></div>
 
             <div class="section-title">Verbal</div>
             <div class="question-grid" id="verbalGrid"></div>
@@ -613,195 +577,33 @@
     </div>
 
     <script>
-        // State management
-        let currentQuestion = 1;
-        const totalQuestions = 20;
-        const quantQuestions = 18;
-        const verbalQuestions = 20;
-        let timeLeft = 1800; // 30 minutes default
-        let timerInterval = null;
-        let questionStatuses = Array(totalQuestions).fill('not-attempted');
-        let selectedAnswers = Array(totalQuestions).fill(null);
+/* ===============================
+   UI / DECORATION ONLY SCRIPT
+   NO EXAM LOGIC – DJANGO WILL HANDLE
+================================ */
 
-        // Initialize grids
-        function initializeGrids() {
-            const quantGrid = document.getElementById('quantGrid');
-            const verbalGrid = document.getElementById('verbalGrid');
+/* ---------- Decorative Progress Bar ---------- */
+/* Backend will inject real percentage */
+function renderProgress(percentage = 0) {
+    const bar = document.getElementById('progressFill');
+    if (bar) bar.style.width = percentage + '%';
+}
 
-            for (let i = 1; i <= quantQuestions; i++) {
-                const div = document.createElement('div');
-                div.className = 'question-number not-attempted';
-                div.textContent = i;
-                div.onclick = () => goToQuestion(i);
-                quantGrid.appendChild(div);
-            }
+/* ---------- Button Ripple / Visual Feedback ---------- */
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        btn.classList.add('clicked');
+        setTimeout(() => btn.classList.remove('clicked'), 150);
+    });
+});
 
-            for (let i = 1; i <= verbalQuestions; i++) {
-                const div = document.createElement('div');
-                div.className = 'question-number not-attempted';
-                div.textContent = i;
-                div.onclick = () => goToQuestion(i);
-                verbalGrid.appendChild(div);
-            }
+/* ---------- Page Load UI ---------- */
+window.addEventListener('load', () => {
+    renderStaticTimer();     // Default display
+    renderProgress(0);       // Default progress
+    setTimeout(openTimeLimitModal, 400); // Optional
+});
+</script>
 
-            updateGridDisplay();
-        }
-
-        // Update grid display
-        function updateGridDisplay() {
-            const allNumbers = document.querySelectorAll('.question-number');
-            allNumbers.forEach((el, index) => {
-                el.className = 'question-number ' + questionStatuses[index];
-                if (index + 1 === currentQuestion) {
-                    el.classList.add('current');
-                }
-            });
-        }
-
-        // Timer
-        function updateTimer() {
-            const hours = Math.floor(timeLeft / 3600);
-            const minutes = Math.floor((timeLeft % 3600) / 60);
-            const seconds = timeLeft % 60;
-            
-            let timeString = '';
-            if (hours > 0) {
-                timeString = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            } else {
-                timeString = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} Min`;
-            }
-            
-            document.getElementById('timer').textContent = timeString;
-            
-            const timerElement = document.querySelector('.timer');
-            timerElement.classList.remove('warning', 'danger');
-            
-            if (timeLeft <= 60) {
-                timerElement.classList.add('danger');
-            } else if (timeLeft <= 300) {
-                timerElement.classList.add('warning');
-            }
-            
-            if (timeLeft > 0) {
-                timeLeft--;
-            } else {
-                clearInterval(timerInterval);
-                alert('Time is up! Test will be submitted automatically.');
-                // Auto-submit logic here
-            }
-        }
-
-        function startTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-            }
-            timerInterval = setInterval(updateTimer, 1000);
-            updateTimer();
-        }
-
-        // Modal functions
-        function openTimeLimitModal() {
-            document.getElementById('timeLimitModal').classList.add('show');
-        }
-
-        function closeTimeLimitModal() {
-            document.getElementById('timeLimitModal').classList.remove('show');
-        }
-
-        function setQuickTime(hours, minutes, seconds) {
-            document.getElementById('hoursInput').value = hours;
-            document.getElementById('minutesInput').value = minutes;
-            document.getElementById('secondsInput').value = seconds;
-        }
-
-        function applyTimeLimit() {
-            const hours = parseInt(document.getElementById('hoursInput').value) || 0;
-            const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
-            const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
-            
-            timeLeft = (hours * 3600) + (minutes * 60) + seconds;
-            
-            if (timeLeft === 0) {
-                alert('Please set a valid time limit!');
-                return;
-            }
-            
-            closeTimeLimitModal();
-            startTimer();
-        }
-
-        // Progress bar
-        function updateProgress() {
-            const answered = questionStatuses.filter(s => s === 'answered').length;
-            const percentage = (answered / totalQuestions) * 100;
-            document.getElementById('progressFill').style.width = percentage + '%';
-        }
-
-        // Option selection
-        document.querySelectorAll('.option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                
-                const optionValue = this.dataset.option;
-                selectedAnswers[currentQuestion - 1] = optionValue;
-                questionStatuses[currentQuestion - 1] = 'answered';
-                
-                updateGridDisplay();
-                updateProgress();
-            });
-        });
-
-        // Navigation
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            if (currentQuestion > 1) {
-                goToQuestion(currentQuestion - 1);
-            }
-        });
-
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            if (currentQuestion < totalQuestions) {
-                goToQuestion(currentQuestion + 1);
-            }
-        });
-
-        document.getElementById('finishBtn').addEventListener('click', () => {
-            if (confirm('Are you sure you want to finish the test?')) {
-                alert('Test submitted!');
-            }
-        });
-
-        function goToQuestion(questionNum) {
-            currentQuestion = questionNum;
-            document.getElementById('currentQ').textContent = questionNum;
-            
-            // Clear selection
-            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-            
-            // Restore selection if exists
-            if (selectedAnswers[currentQuestion - 1]) {
-                const selected = document.querySelector(`[data-option="${selectedAnswers[currentQuestion - 1]}"]`);
-                if (selected) selected.classList.add('selected');
-            }
-            
-            updateGridDisplay();
-            
-            // Update button states
-            document.getElementById('prevBtn').disabled = currentQuestion === 1;
-            document.getElementById('nextBtn').disabled = currentQuestion === totalQuestions;
-        }
-
-        // Initialize
-        initializeGrids();
-        updateProgress();
-        goToQuestion(1);
-        
-        // Show time limit modal on page load
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                openTimeLimitModal();
-            }, 500);
-        });
-    </script>
 </body>
 </html>

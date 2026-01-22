@@ -1,7 +1,4 @@
 __pycache__/
-<<<<<<< HEAD
 *.pyc
 db.sqlite3
-=======
 *.pyc
->>>>>>> origin/rudraksh
