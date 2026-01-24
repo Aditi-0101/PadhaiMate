@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from .models import Question
-from .models import StudentProfile
+from .models import Question, StudentProfile, Topic, StudentWeakTopic, LearningContent
 from student.utils.level_helper import get_level_for_questions
+from django.db.models import Prefetch
 
 # Create your views here.
 
@@ -35,6 +35,16 @@ def dashboard(request):
         'science_level': science_level,
         'english_level': english_level,
     }
+
+    # Fetch Recommendations
+    weak_topics = StudentWeakTopic.objects.filter(
+        student=student_profile,
+        is_resolved=False
+    ).select_related('topic').prefetch_related(
+        Prefetch('topic__contents', queryset=LearningContent.objects.all())
+    )
+    
+    parameters['weak_topics'] = weak_topics
 
     return render(request, 'student/student-dashboard.html', parameters)
 
@@ -126,6 +136,31 @@ def quiz(request):
                 "score": int(score),
                 "total": int(len(all_questions)),
             }
+            
+            # ----------------- IDENTIFY WEAK TOPICS -----------------
+            incorrect_questions = []
+            for q in all_questions:
+                q_id = str(q.id)
+                if q_id in answers:
+                    if answers[q_id] != q.correct_option:
+                        incorrect_questions.append(q)
+                # Note: Unanswered questions could also be considered weak, 
+                # but let's stick to incorrect ones specifically for now or we can include unanswered too.
+                # Requirement says "Identify topics where the student answered incorrectly".
+            
+            weak_topics_set = set()
+            for q in incorrect_questions:
+                if q.topic:
+                    weak_topics_set.add(q.topic)
+            
+            for topic in weak_topics_set:
+                StudentWeakTopic.objects.get_or_create(
+                    student=student_profile,
+                    topic=topic,
+                    defaults={'is_resolved': False}
+                )
+            # --------------------------------------------------------
+
             request.session.modified = True
             request.session["clear_answers"] = True
             return redirect("student-dashboard")
@@ -157,3 +192,32 @@ def quiz(request):
     }
 
     return render(request, "student/quiz.html", context)
+
+@login_required
+def topic_quiz(request, topic_id):
+    student_profile = request.user.student_profile
+    topic = Topic.objects.get(id=topic_id)
+    
+    # Get questions for this topic
+    questions = list(Question.objects.filter(topic=topic))
+    
+    if not questions:
+        return redirect('student-dashboard')
+
+    if request.method == "POST":
+        # Simplified finish logic for topic quiz
+        score = 0
+        total = len(questions)
+        for q in questions:
+            selected = request.POST.get(f"q_{q.id}")
+            if selected == q.correct_option:
+                score += 1
+        
+        # Mastery threshold: e.g. 70% or something. Let's say if they get > 50% right.
+        if total > 0 and (score / total) >= 0.5:
+            # Mark as resolved
+            StudentWeakTopic.objects.filter(student=student_profile, topic=topic).update(is_resolved=True)
+        
+        return redirect('student-dashboard')
+
+    return render(request, "student/topic_quiz.html", {"topic": topic, "questions": questions})
