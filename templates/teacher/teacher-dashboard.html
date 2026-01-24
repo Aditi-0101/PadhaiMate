@@ -103,7 +103,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.75rem;
-            position: relative;
+            position: static;
             border: 1px solid rgba(99, 102, 241, 0.3);
             margin: 0 0.5rem 1rem 0.5rem;
             border-radius: 12px;
@@ -131,10 +131,10 @@
 
         /* Dropdown */
         .class-dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
+            position: fixed;
+            top: auto;
+            left: 0.5rem;
+            width: calc(250px - 1rem);
             background: #2d1b69;
             border-radius: 12px;
             margin-top: 0.5rem;
@@ -145,6 +145,8 @@
             z-index: 1000;
             overflow: hidden;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .class-dropdown.show {
@@ -857,10 +859,93 @@
             color: #9ca3af;
             font-size: 0.75rem;
         }
+        /* Upload Assignment */
+.upload-assignment-bar {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.upload-assignment-btn {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    padding: 0.65rem 1.2rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    transition: all 0.3s ease;
+}
+
+.upload-assignment-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(99, 102, 241, 0.45);
+}
+
+/* Upload Panel */
+.assignment-upload-panel {
+    display: none;
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    animation: scaleIn 0.3s ease;
+}
+
+.assignment-upload-panel h3 {
+    font-size: 1.1rem;
+    color: #1a1464;
+    margin-bottom: 1rem;
+}
+
+.assignment-upload-panel input,
+.assignment-upload-panel textarea {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    font-family: inherit;
+}
+
+.assignment-upload-panel textarea {
+    resize: none;
+    height: 80px;
+}
+
+.upload-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.cancel-btn {
+    background: #f3f4f6;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.submit-btn {
+    background: #1a1464;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
     </style>
 </head>
 <body>
-    <div id="dynamicContent"><!-- Sidebar -->
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
         <div class="choose-class-btn" id="chooseClassBtn">
             <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -871,16 +956,18 @@
                 <span>Choose Class</span>
             </div>
             <span class="arrow">▼</span>
-            <div class="class-dropdown" id="classDropdown">
-                <div  href="classlist.html" class="class-option" data-class="6">Class 6</div>
-                <div href="classlist.html" class="class-option selected" data-class="7">Class 7</div>
-                <div href="classlist.html" class="class-option" data-class="8">Class 8</div>
-                <div href="classlist.html" class="class-option" data-class="9">Class 9</div>
-                <div href="classlist.html" class="class-option" data-class="10">Class 10</div>
-                <div href="classlist.html" class="class-option" data-class="11">Class 11</div>
-                <div href="classlist.html" class="class-option" data-class="12">Class 12</div>
-            </div>
         </div>
+        
+        <div class="class-dropdown" id="classDropdown">
+            <div class="class-option" data-class="6">Class 6</div>
+            <div class="class-option selected" data-class="7">Class 7</div>
+            <div class="class-option" data-class="8">Class 8</div>
+            <div class="class-option" data-class="9">Class 9</div>
+            <div class="class-option" data-class="10">Class 10</div>
+            <div class="class-option" data-class="11">Class 11</div>
+            <div class="class-option" data-class="12">Class 12</div>
+        </div>
+        
         <div class="sidebar-item active">
             <svg class="sidebar-icon" viewBox="0 0 24 24">
                 <rect x="3" y="3" width="7" height="7" rx="1"/>
@@ -924,7 +1011,7 @@
             <span>Billing</span>
         </div>
     </div>
-</div>
+
     <!-- Main Content -->
     <div class="main-content">
         <!-- Header -->
@@ -1012,6 +1099,28 @@
 
                 <!-- Courses -->
                 <div class="courses-section">
+                    <!-- Upload Assignment Button -->
+<div class="upload-assignment-bar">
+    <button class="upload-assignment-btn" id="openAssignmentUpload">
+        ➕ Upload Assignment
+    </button>
+</div>
+
+<!-- Upload Assignment Panel -->
+<div class="assignment-upload-panel" id="assignmentUploadPanel">
+    <h3>Upload Assignment</h3>
+
+    <input type="text" placeholder="Assignment Title" />
+    <textarea placeholder="Assignment Description"></textarea>
+    <input type="file" />
+    <input type="date" />
+
+    <div class="upload-actions">
+        <button class="cancel-btn" id="closeAssignmentUpload">Cancel</button>
+        <button class="submit-btn">Upload</button>
+    </div>
+</div>
+
                     <div class="course-item">
                         <div class="course-icon orange">A1</div>
                         <div class="course-info">
@@ -1056,6 +1165,41 @@
                             <div class="course-members">68 members</div>
                             <div class="course-size">48 MB</div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Lessons -->
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="section-header">
+                        <h3 style="color: #1f2937; font-size: 1.1rem;">Lessons</h3>
+                    </div>
+                    <div class="lesson-item">
+                        <div class="lesson-info">
+                            <div class="lesson-icon blue">📘</div>
+                            <div class="lesson-details">
+                                <h4>Common English</h4>
+                                <div class="avatar-group">
+                                    <div class="avatar-small av1"></div>
+                                    <div class="avatar-small av2"></div>
+                                    <div class="avatar-small av3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lesson-arrow">→</div>
+                    </div>
+                    <div class="lesson-item">
+                        <div class="lesson-info">
+                            <div class="lesson-icon green">💬</div>
+                            <div class="lesson-details">
+                                <h4>Speaking club</h4>
+                                <div class="avatar-group">
+                                    <div class="avatar-small av2"></div>
+                                    <div class="avatar-small av3"></div>
+                                    <div class="avatar-small av1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lesson-arrow">→</div>
                     </div>
                 </div>
             </div>
@@ -1175,41 +1319,6 @@
                     </div>
                 </div>
 
-                <!-- Lessons -->
-                <div class="card">
-                    <div class="section-header">
-                        <h3 style="color: #1f2937; font-size: 1.1rem;">Lessons</h3>
-                    </div>
-                    <div class="lesson-item">
-                        <div class="lesson-info">
-                            <div class="lesson-icon blue">📘</div>
-                            <div class="lesson-details">
-                                <h4>Common English</h4>
-                                <div class="avatar-group">
-                                    <div class="avatar-small av1"></div>
-                                    <div class="avatar-small av2"></div>
-                                    <div class="avatar-small av3"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="lesson-arrow">→</div>
-                    </div>
-                    <div class="lesson-item">
-                        <div class="lesson-info">
-                            <div class="lesson-icon green">💬</div>
-                            <div class="lesson-details">
-                                <h4>Speaking club</h4>
-                                <div class="avatar-group">
-                                    <div class="avatar-small av2"></div>
-                                    <div class="avatar-small av3"></div>
-                                    <div class="avatar-small av1"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="lesson-arrow">→</div>
-                    </div>
-                </div>
-
                 <!-- Completed Tasks -->
                 <div class="card">
                     <div class="section-header">
@@ -1241,48 +1350,42 @@
             </div>
         </div>
     </div>
-<script>
+
+    <script>
         // Choose Class Dropdown
         const chooseClassBtn = document.getElementById('chooseClassBtn');
-const classDropdown = document.getElementById('classDropdown');
-const sidebar = document.getElementById('sidebar');
-const classOptions = document.querySelectorAll('.class-option');
+        const classDropdown = document.getElementById('classDropdown');
+        const sidebar = document.getElementById('sidebar');
+        const classOptions = document.querySelectorAll('.class-option');
 
-chooseClassBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    chooseClassBtn.classList.toggle('active');
-    classDropdown.classList.toggle('show');
-    sidebar.classList.add('expanded');
-});
+        chooseClassBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chooseClassBtn.classList.toggle('active');
+            classDropdown.classList.toggle('show');
+            sidebar.classList.add('expanded');
+            
+            // Position dropdown below button
+            const rect = chooseClassBtn.getBoundingClientRect();
+            classDropdown.style.top = (rect.bottom + 5) + 'px';
+        });
 
-classOptions.forEach(option => {
-    option.addEventListener('click', (e) => {
-        e.stopPropagation();
+        classOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                classOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
 
-        classOptions.forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-
-        const selectedClass = option.dataset.class;
-        loadClassList(selectedClass);
-
-        setTimeout(() => {
-            classDropdown.classList.remove('show');
-            chooseClassBtn.classList.remove('active');
-            sidebar.classList.remove('expanded');
-        }, 200);
-    });
-});
-
-document.addEventListener('click', () => {
-    classDropdown.classList.remove('show');
-    chooseClassBtn.classList.remove('active');
-    sidebar.classList.remove('expanded');
-});
-
+                setTimeout(() => {
+                    classDropdown.classList.remove('show');
+                    chooseClassBtn.classList.remove('active');
+                    sidebar.classList.remove('expanded');
+                }, 200);
+            });
+        });
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
-            if (!chooseClassBtn.contains(e.target)) {
+            if (!chooseClassBtn.contains(e.target) && !classDropdown.contains(e.target)) {
                 classDropdown.classList.remove('show');
                 chooseClassBtn.classList.remove('active');
                 sidebar.classList.remove('expanded');
@@ -1308,11 +1411,9 @@ document.addEventListener('click', () => {
         const calendarDays = document.querySelectorAll('.calendar-day:not(.other-month)');
         calendarDays.forEach(day => {
             day.addEventListener('click', function() {
-                // Remove pulse from current today
                 document.querySelectorAll('.calendar-day').forEach(d => {
                     d.classList.remove('today');
                 });
-                // Add to clicked day
                 this.classList.add('today');
             });
         });
@@ -1422,16 +1523,6 @@ document.addEventListener('click', () => {
             progressObserver.observe(bar);
         });
 
-        // Add hover sound effect (optional - comment out if not needed)
-        // const hoverSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYID2W77OWORw==');
-        
-        document.querySelectorAll('.sidebar-item, .time-slot, .class-option').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                // hoverSound.currentTime = 0;
-                // hoverSound.play().catch(() => {});
-            });
-        });
-
         // Welcome message typing effect
         const welcomeText = document.querySelector('.welcome-text h1');
         if (welcomeText) {
@@ -1462,17 +1553,5 @@ document.addEventListener('click', () => {
             illustration.style.transition = 'transform 1s ease-in-out';
         }
     </script>
-    <script>
-async function loadClassList(classNumber) {
-  const res = await fetch("classlist.html");
-  const html = await res.text();
-
-  const container = document.getElementById("dynamicContent");
-  container.innerHTML = html;
-
-  document.getElementById("classLabel").textContent = `Class ${classNumber}`;
-}
-</script>
-
 </body>
 </html>

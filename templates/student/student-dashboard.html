@@ -1240,6 +1240,104 @@
         .class-card:nth-child(1) { animation-delay: 0.1s; }
         .class-card:nth-child(2) { animation-delay: 0.2s; }
         .class-card:nth-child(3) { animation-delay: 0.3s; }
+        /* Learning Content Section */
+/* ================================
+   Learning Content – Dashboard Theme
+================================ */
+
+.learning-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+/* Card matches class-card / progress-card */
+.learning-card {
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.learning-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Section title style = dashboard titles */
+.learning-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Description text = dashboard secondary text */
+.learning-desc {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c7a89;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+/* Video container */
+.video-box {
+    border-radius: 14px;
+    overflow: hidden;
+    background: #F0F4FF;
+    box-shadow: inset 0 0 0 1px #E8F2FF;
+}
+
+/* Exercise list style */
+.exercise-list {
+    font-size: 14px;
+    color: #2c3e50;
+    padding-left: 18px;
+    margin-bottom: 25px;
+}
+
+.exercise-list li {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+/* Quiz */
+.quiz-question p {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 12px;
+}
+
+.quiz-question label {
+    font-size: 14px;
+    color: #6c7a89;
+    cursor: pointer;
+}
+
+/* Primary button = Learn More / Dashboard CTA */
+.learning-btn {
+    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s;
+}
+
+.learning-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+}
+
+
     </style>
 </head>
 <body>
@@ -1431,6 +1529,52 @@
                     </div>
                 </div>
             </div>
+            <!-- Learning Content Section -->
+<div class="section-header">
+    <h2 class="section-title">Learning Content</h2>
+</div>
+
+<div class="learning-section">
+
+    <!-- Video Content -->
+    <div class="learning-card">
+        <h3 class="learning-title">📺 Video Lesson</h3>
+        <div class="video-box">
+            <video width="100%" height="260" controls>
+                <source src="sample-video.mp4" type="video/mp4">
+                Your browser does not support video.
+            </video>
+        </div>
+        <p class="learning-desc">Watch the complete lesson carefully before attempting exercises.</p>
+    </div>
+
+    <!-- Exercise -->
+    <div class="learning-card">
+        <h3 class="learning-title">✍️ Exercise</h3>
+        <ul class="exercise-list">
+            <li>Define the main concept explained in the video.</li>
+            <li>Write two examples related to the topic.</li>
+            <li>Summarize the lesson in your own words.</li>
+        </ul>
+        <button class="learning-btn">Submit Exercise</button>
+    </div>
+
+    <!-- Quiz -->
+    <div class="learning-card">
+        <h3 class="learning-title">📝 Quiz</h3>
+
+        <div class="quiz-question">
+            <p><strong>Q1.</strong> What is the correct answer?</p>
+            <label><input type="radio" name="q1"> Option A</label><br>
+            <label><input type="radio" name="q1"> Option B</label><br>
+            <label><input type="radio" name="q1"> Option C</label>
+        </div>
+
+        <button class="learning-btn">Submit Quiz</button>
+    </div>
+
+</div>
+
 
             <!-- Progress & Analytics Section -->
             <div class="section-header">
@@ -1803,5 +1947,11 @@
             });
         });
     </script>
+    document.querySelectorAll('.learning-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        alert('Submitted successfully');
+    });
+});
+
 </body>
 </html>

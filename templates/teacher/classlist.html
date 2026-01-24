@@ -13,13 +13,179 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #d4c5f9 0%, #e8dff5 100%);
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
             min-height: 100vh;
-            padding: 2rem;
+            display: flex;
         }
 
+        /* ========== ADDED: SIDEBAR STYLES FROM DASHBOARD ========== */
+        .sidebar {
+            width: 90px;
+            background: linear-gradient(180deg, #1a1464 0%, #2d1b69 100%);
+            padding: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            transition: width 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .sidebar.expanded {
+            width: 250px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: #8b88b8;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar.expanded .sidebar-item {
+            flex-direction: row;
+            justify-content: flex-start;
+            padding-left: 2rem;
+        }
+
+        .sidebar.expanded .sidebar-item span {
+            font-size: 0.9rem;
+        }
+
+        .sidebar-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: #6366f1;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-item:hover::before,
+        .sidebar-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-icon {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            min-width: 24px;
+        }
+
+        .choose-class-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            color: white;
+            background: rgba(99, 102, 241, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            position: static;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            margin: 0 0.5rem 1rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .sidebar.expanded .choose-class-btn {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+        }
+
+        .choose-class-btn:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .choose-class-btn .arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .choose-class-btn.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        .class-dropdown {
+            position: fixed;
+            top: auto;
+            left: 0.5rem;
+            width: calc(250px - 1rem);
+            background: #2d1b69;
+            border-radius: 12px;
+            margin-top: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .class-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .class-option {
+            padding: 1rem 1.5rem;
+            color: #8b88b8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .class-option:hover {
+            background: rgba(99, 102, 241, 0.2);
+            color: white;
+            border-left-color: #6366f1;
+            padding-left: 2rem;
+        }
+
+        .class-option.selected {
+            background: rgba(99, 102, 241, 0.3);
+            color: white;
+            border-left-color: #6366f1;
+        }
+        /* ========== END SIDEBAR STYLES ========== */
+
+        /* ========== MODIFIED: MAIN WRAPPER TO ACCOMMODATE SIDEBAR ========== */
+        .main-wrapper {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        /* ========== END MAIN WRAPPER ========== */
+
         .page-title {
-            color: #6b46c1;
+            color: #1e40af;
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 2rem;
@@ -31,127 +197,11 @@
             margin: 0 auto;
             background: white;
             border-radius: 24px;
-            box-shadow: 0 10px 40px rgba(107, 70, 193, 0.15);
+            box-shadow: 0 10px 40px rgba(30, 64, 175, 0.15);
             overflow: hidden;
             display: flex;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 240px;
-            background: #fafafa;
-            padding: 1.5rem 0;
-            border-right: 1px solid #e5e7eb;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #6b46c1;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-        }
-
-        .logo-text {
-            font-weight: 700;
-            color: #1f2937;
-            font-size: 1.1rem;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .menu-item:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .menu-item.active {
-            background: linear-gradient(90deg, rgba(107, 70, 193, 0.1) 0%, transparent 100%);
-            color: #6b46c1;
-            font-weight: 600;
-        }
-
-        .menu-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: #6b46c1;
-        }
-
-        .menu-icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .menu-item.has-submenu::after {
-            content: '›';
-            margin-left: auto;
-            font-size: 1.2rem;
-            transition: transform 0.2s ease;
-        }
-
-        .menu-item.has-submenu.expanded::after {
-            transform: rotate(90deg);
-        }
-
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .submenu.show {
-            max-height: 500px;
-        }
-
-        .submenu-item {
-            padding: 0.6rem 1.5rem 0.6rem 3.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .submenu-item:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .submenu-item.active {
-            color: #6b46c1;
-            font-weight: 600;
-            background: rgba(107, 70, 193, 0.05);
-        }
-
-        /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
@@ -166,92 +216,6 @@
             align-items: center;
         }
 
-        .search-bar {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 0.65rem 1rem 0.65rem 2.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .search-bar input:focus {
-            border-color: #6b46c1;
-            box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            stroke: #9ca3af;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: #f9fafb;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .icon-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #1f2937;
-            font-size: 0.9rem;
-        }
-
-        .user-role {
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        /* Content Area */
         .content-area {
             padding: 2rem;
         }
@@ -270,7 +234,7 @@
         }
 
         .breadcrumb a:hover {
-            color: #6b46c1;
+            color: #1e40af;
         }
 
         .breadcrumb span {
@@ -292,7 +256,7 @@
         }
 
         .add-btn {
-            background: #6b46c1;
+            background: #1e40af;
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
@@ -306,12 +270,11 @@
         }
 
         .add-btn:hover {
-            background: #5a3ba8;
+            background: #1e3a8a;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
         }
 
-        /* Table Section */
         .table-header {
             display: flex;
             justify-content: space-between;
@@ -368,7 +331,6 @@
             font-size: 0.85rem;
         }
 
-        /* Table */
         .table-container {
             background: white;
             border-radius: 12px;
@@ -414,6 +376,12 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .student-cell:hover {
+            color: #1e40af;
         }
 
         .student-avatar {
@@ -423,73 +391,33 @@
             object-fit: cover;
         }
 
-        .badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: white;
+        .level-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
         }
 
-        .badge-purple { background: #8b5cf6; }
-        .badge-orange { background: #f59e0b; }
-        .badge-pink { background: #ec4899; }
-        .badge-cyan { background: #06b6d4; }
-        .badge-blue { background: #3b82f6; }
-
-        .checkbox {
-            width: 18px;
-            height: 18px;
-            border: 2px solid #d1d5db;
-            border-radius: 4px;
-            cursor: pointer;
-            appearance: none;
-            outline: none;
-            transition: all 0.2s ease;
+        .level-excellent {
+            background: #d1fae5;
+            color: #065f46;
         }
 
-        .checkbox:checked {
-            background: #6b46c1;
-            border-color: #6b46c1;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
-            background-size: 14px;
-            background-position: center;
-            background-repeat: no-repeat;
+        .level-good {
+            background: #dbeafe;
+            color: #1e40af;
         }
 
-        .action-btns {
-            display: flex;
-            gap: 0.5rem;
+        .level-average {
+            background: #fef3c7;
+            color: #92400e;
         }
 
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
+        .level-needs-improvement {
+            background: #fee2e2;
+            color: #991b1b;
         }
 
-        .action-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .action-btn svg {
-            width: 18px;
-            height: 18px;
-            stroke: #6b7280;
-        }
-
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: space-between;
@@ -519,14 +447,14 @@
         }
 
         .page-btn:hover {
-            border-color: #6b46c1;
-            color: #6b46c1;
+            border-color: #1e40af;
+            color: #1e40af;
         }
 
         .page-btn.active {
-            background: #6b46c1;
+            background: #1e40af;
             color: white;
-            border-color: #6b46c1;
+            border-color: #1e40af;
         }
 
         .page-btn.dots {
@@ -541,373 +469,752 @@
             font-size: 0.85rem;
             cursor: pointer;
         }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Student Detail Card */
+        .student-detail-card {
+            background: white;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            overflow: hidden;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            padding: 1.5rem;
+            color: white;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .card-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 3px solid white;
+            object-fit: cover;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-roll {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .performance-section {
+            background: #fafafa;
+            padding: 1.25rem;
+            border-radius: 16px;
+            margin-bottom: 1.25rem;
+        }
+
+        .performance-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .performance-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .performance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .performance-label {
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+
+        .performance-value {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 0.85rem;
+        }
+
+        .message-btn {
+            width: 100%;
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .message-btn:hover {
+            background: #1e3a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        /* Message Interface */
+        .message-interface {
+            display: none;
+            margin-top: 1.25rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .message-interface.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 0.75rem;
+            outline: none;
+        }
+
+        .message-input:focus {
+            border-color: #1e40af;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .send-btn {
+            flex: 1;
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.65rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #059669;
+        }
+
+        .cancel-btn {
+            flex: 1;
+            background: #f3f4f6;
+            color: #4b5563;
+            border: none;
+            padding: 0.65rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .success-message {
+            display: none;
+            background: #d1fae5;
+            color: #065f46;
+            padding: 0.875rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
     </style>
 </head>
 <body>
-    <h1 class="page-title">Student List - School Management</h1>
-    
-    <div class="container">
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Header -->
-            
-            <!-- Content Area -->
-            <div class="content-area">
-                <div class="breadcrumb">
-                    <a href="#">Home</a>
-                    <span>/</span>
-                    <span>Students</span>
-                </div>
+    <!-- ========== ADDED: SIDEBAR FROM DASHBOARD ========== -->
+    <div class="sidebar" id="sidebar">
+        <div class="choose-class-btn" id="chooseClassBtn">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <svg class="sidebar-icon" viewBox="0 0 24 24" style="stroke: white;">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                </svg>
+                <span>Choose Class</span>
+            </div>
+            <span class="arrow">▼</span>
+        </div>
+        
+        <div class="class-dropdown" id="classDropdown">
+            <div class="class-option" data-class="6">Class 6</div>
+            <div class="class-option selected" data-class="7">Class 7</div>
+            <div class="class-option" data-class="8">Class 8</div>
+            <div class="class-option" data-class="9">Class 9</div>
+            <div class="class-option" data-class="10">Class 10</div>
+            <div class="class-option" data-class="11">Class 11</div>
+            <div class="class-option" data-class="12">Class 12</div>
+        </div>
+        
+        <div class="sidebar-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span>Dashboard</span>
+        </div>
+        <div class="sidebar-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <path d="M3 12 L3 20 L9 20 L9 12 Z M10 4 L10 20 L14 20 L14 4 Z M15 8 L15 20 L21 20 L21 8 Z"/>
+            </svg>
+            <span>Analysis</span>
+        </div>
+        <div class="sidebar-item active">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <path d="M7 20 L7 24 M17 20 L17 24 M3 9 L21 9"/>
+            </svg>
+            <span>Inbox</span>
+        </div>
+        <div class="sidebar-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <path d="M9 12 L9 19 M3 7 L3 19 C3 20.1 3.9 21 5 21 L19 21 C20.1 21 21 20.1 21 19 L21 7 M3 7 L9 12 M21 7 L15 12 M9 12 L12 14.5 L15 12 M3 7 L12 3 L21 7"/>
+            </svg>
+            <span>Documents</span>
+        </div>
+        <div class="sidebar-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6 L12 12 L16 16"/>
+            </svg>
+            <span>History</span>
+        </div>
+        <div class="sidebar-item">
+            <svg class="sidebar-icon" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1 L12 3 M12 21 L12 23 M4.22 4.22 L5.64 5.64 M18.36 18.36 L19.78 19.78 M1 12 L3 12 M21 12 L23 12 M4.22 19.78 L5.64 18.36 M18.36 5.64 L19.78 4.22"/>
+            </svg>
+            <span>Billing</span>
+        </div>
+    </div>
+    <!-- ========== END SIDEBAR ========== -->
 
-                <div class="content-header">
-                    <h2 class="content-title">Students List</h2>
-                    <button class="add-btn">
-                        <span>+</span>
-                        <span>Add Students</span>
-                    </button>
-                </div>
+    <!-- ========== ADDED: MAIN WRAPPER TO CONTAIN EXISTING CONTENT ========== -->
+    <div class="main-wrapper">
+        <h1 class="page-title">Student List - School Management</h1>
+        
+        <div class="container">
+            <div class="main-content">
+                <div class="content-area">
+                    <div class="breadcrumb">
+                        <a href="#">Home</a>
+                        <span>/</span>
+                        <span>Students</span>
+                    </div>
 
-                <div class="table-header">
-                    <div class="table-title">Students Information</div>
-                    <div class="table-controls">
-                        <div class="search-input">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"/>
-                                <path d="M21 21l-4.35-4.35"/>
-                            </svg>
-                            <input type="text" placeholder="Search by name or roll">
+                    <div class="content-header">
+                        <h2 class="content-title">Students List</h2>
+                        <button class="add-btn">
+                            <span>+</span>
+                            <span>Add Students</span>
+                        </button>
+                    </div>
+
+                    <div class="table-header">
+                        <div class="table-title">Students Information</div>
+                        <div class="table-controls">
+                            <div class="search-input">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="M21 21l-4.35-4.35"/>
+                                </svg>
+                                <input type="text" placeholder="Search by name or roll">
+                            </div>
+                            <div class="filter-select">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                <span>Last 30 days</span>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="filter-select">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6"/>
-                                <line x1="8" y1="2" x2="8" y2="6"/>
-                                <line x1="3" y1="10" x2="21" y2="10"/>
-                            </svg>
-                            <span>Last 30 days</span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="6 9 12 15 18 9"/>
-                            </svg>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>STUDENT NAME</th>
+                                    <th>ROLL NUMBER</th>
+                                    <th>CLASS</th>
+                                    <th>LEVEL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTable">
+                                <!-- Students will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+
+                        <div class="pagination">
+                            <div class="pagination-left">
+                                <button class="page-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="15 18 9 12 15 6"/>
+                                    </svg>
+                                </button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn">2</button>
+                                <button class="page-btn">3</button>
+                                <button class="page-btn">4</button>
+                                <button class="page-btn">5</button>
+                                <button class="page-btn dots">...</button>
+                                <button class="page-btn">100</button>
+                                <button class="page-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="9 18 15 12 9 6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <select class="per-page-select">
+                                <option>10 / page</option>
+                                <option>25 / page</option>
+                                <option>50 / page</option>
+                                <option>100 / page</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ========== END MAIN WRAPPER ========== -->
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="student-detail-card">
+            <div class="card-header">
+                <button class="close-btn" onclick="closeModal()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+                <img id="modalAvatar" class="card-avatar" src="" alt="Student">
+                <div class="card-name" id="modalName"></div>
+                <div class="card-roll" id="modalRoll"></div>
+            </div>
+            <div class="card-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Class</div>
+                        <div class="info-value" id="modalClass"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Level</div>
+                        <div class="info-value" id="modalLevel"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Address</div>
+                        <div class="info-value" id="modalAddress"></div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Phone</div>
+                        <div class="info-value" id="modalPhone"></div>
+                    </div>
+                </div>
+
+                <div class="performance-section">
+                    <div class="performance-title">Academic Performance</div>
+                    <div class="performance-items">
+                        <div class="performance-item">
+                            <span class="performance-label">Attendance Rate</span>
+                            <span class="performance-value" id="modalAttendance"></span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="performance-label">Average Grade</span>
+                            <span class="performance-value" id="modalGrade"></span>
+                        </div>
+                        <div class="performance-item">
+                            <span class="performance-label">Assignment Completion</span>
+                            <span class="performance-value" id="modalAssignment"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th><input type="checkbox" class="checkbox"></th>
-                                <th>STUDENT'S NAME</th>
-                                <th>ROLL</th>
-                                <th>ADDRESS</th>
-                                <th>CLASS</th>
-                                <th>DATE OF BIRTH</th>
-                                <th>PHONE</th>
-                                <th>ACTION</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=1" alt="Eleanor Pena" class="student-avatar">
-                                        <span>Eleanor Pena</span>
-                                    </div>
-                                </td>
-                                <td>#01</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>02/05/2001</td>
-                                <td>+123 6988567</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=33" alt="Jenny Wilson" class="student-avatar">
-                                        <span>Jenny Wilson</span>
-                                    </div>
-                                </td>
-                                <td>#04</td>
-                                <td>Australia, Sydney</td>
-                                <td>01</td>
-                                <td>12/05/2001</td>
-                                <td>+123 7988656</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=8" alt="Guy Hawkins" class="student-avatar">
-                                        <span>Guy Hawkins</span>
-                                    </div>
-                                </td>
-                                <td>#03</td>
-                                <td>Australia, Sydney</td>
-                                <td>02</td>
-                                <td>03/05/2001</td>
-                                <td>+123 5988665</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=5" alt="Jacob Jones" class="student-avatar">
-                                        <span>Jacob Jones</span>
-                                    </div>
-                                </td>
-                                <td>#5</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/05/2001</td>
-                                <td>+123 9988558</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=12" alt="Jacob Jones" class="student-avatar">
-                                        <span>Jacob Jones</span>
-                                    </div>
-                                </td>
-                                <td>#15</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/05/2001</td>
-                                <td>+123 9988558</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=16" alt="Jane Cooper" class="student-avatar">
-                                        <span>Jane Cooper</span>
-                                    </div>
-                                </td>
-                                <td>#01</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/03/2001</td>
-                                <td>+123 6988566</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=20" alt="Floyd Miles" class="student-avatar">
-                                        <span>Floyd Miles</span>
-                                    </div>
-                                </td>
-                                <td>#11</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>03/05/2002</td>
-                                <td>+123 5988569</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=25" alt="Floyd Miles" class="student-avatar">
-                                        <span>Floyd Miles</span>
-                                    </div>
-                                </td>
-                                <td>#11</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>03/05/2002</td>
-                                <td>+123 5988569</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <button class="message-btn" onclick="toggleMessage()">Message Student</button>
 
-                    <!-- Pagination -->
-                    <div class="pagination">
-                        <div class="pagination-left">
-                            <button class="page-btn">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="15 18 9 12 15 6"/>
-                                </svg>
-                            </button>
-                            <button class="page-btn active">1</button>
-                            <button class="page-btn">2</button>
-                            <button class="page-btn">3</button>
-                            <button class="page-btn">4</button>
-                            <button class="page-btn">5</button>
-                            <button class="page-btn dots">...</button>
-                            <button class="page-btn">100</button>
-                            <button class="page-btn">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="9 18 15 12 9 6"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <select class="per-page-select">
-                            <option>10 / page</option>
-                            <option>25 / page</option>
-                            <option>50 / page</option>
-                            <option>100 / page</option>
-                        </select>
+                <div class="message-interface" id="messageInterface">
+                    <textarea class="message-input" id="messageInput" placeholder="Type your message here..."></textarea>
+                    <div class="message-actions">
+                        <button class="send-btn" onclick="sendMessage()">Send Message</button>
+                        <button class="cancel-btn" onclick="toggleMessage()">Cancel</button>
                     </div>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    ✓ Message sent successfully!
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function toggleSubmenu(element) {
-            const submenu = element.nextElementSibling;
-            if (submenu && submenu.classList.contains('submenu')) {
-                element.classList.toggle('expanded');
-                submenu.classList.toggle('show');
+        // ========== ADDED: SIDEBAR FUNCTIONALITY FROM DASHBOARD ==========
+        const chooseClassBtn = document.getElementById('chooseClassBtn');
+        const classDropdown = document.getElementById('classDropdown');
+        const sidebar = document.getElementById('sidebar');
+        const classOptions = document.querySelectorAll('.class-option');
+
+        chooseClassBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            chooseClassBtn.classList.toggle('active');
+            classDropdown.classList.toggle('show');
+            sidebar.classList.add('expanded');
+            
+            const rect = chooseClassBtn.getBoundingClientRect();
+            classDropdown.style.top = (rect.bottom + 5) + 'px';
+        });
+
+        classOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                classOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+
+                setTimeout(() => {
+                    classDropdown.classList.remove('show');
+                    chooseClassBtn.classList.remove('active');
+                    sidebar.classList.remove('expanded');
+                }, 200);
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!chooseClassBtn.contains(e.target) && !classDropdown.contains(e.target)) {
+                classDropdown.classList.remove('show');
+                chooseClassBtn.classList.remove('active');
+                sidebar.classList.remove('expanded');
+            }
+        });
+        // ========== END SIDEBAR FUNCTIONALITY ==========
+
+        // Student data
+        const students = [
+            {
+                name: "Eleanor Pena",
+                roll: "#01",
+                class: "01",
+                level: "Excellent",
+                avatar: "https://i.pravatar.cc/100?img=1",
+                address: "TA-107 Newyork",
+                phone: "+123 6988567",
+                attendance: "96%",
+                grade: "A+",
+                assignment: "98%"
+            },
+            {
+                name: "Jenny Wilson",
+                roll: "#04",
+                class: "01",
+                level: "Good",
+                avatar: "https://i.pravatar.cc/100?img=33",
+                address: "Australia, Sydney",
+                phone: "+123 7988656",
+                attendance: "92%",
+                grade: "A",
+                assignment: "94%"
+            },
+            {
+                name: "Guy Hawkins",
+                roll: "#03",
+                class: "02",
+                level: "Average",
+                avatar: "https://i.pravatar.cc/100?img=8",
+                address: "Australia, Sydney",
+                phone: "+123 5988665",
+                attendance: "88%",
+                grade: "B+",
+                assignment: "85%"
+            },
+            {
+                name: "Jacob Jones",
+                roll: "#05",
+                class: "04",
+                level: "Excellent",
+                avatar: "https://i.pravatar.cc/100?img=5",
+                address: "Australia, Sydney",
+                phone: "+123 9988558",
+                attendance: "95%",
+                grade: "A+",
+                assignment: "97%"
+            },
+            {
+                name: "Robert Fox",
+                roll: "#15",
+                class: "04",
+                level: "Good",
+                avatar: "https://i.pravatar.cc/100?img=12",
+                address: "Australia, Sydney",
+                phone: "+123 9988558",
+                attendance: "90%",
+                grade: "A-",
+                assignment: "91%"
+            },
+            {
+                name: "Jane Cooper",
+                roll: "#07",
+                class: "04",
+                level: "Excellent",
+                avatar: "https://i.pravatar.cc/100?img=16",
+                address: "Australia, Sydney",
+                phone: "+123 6988566",
+                attendance: "97%",
+                grade: "A+",
+                assignment: "99%"
+            },
+            {
+                name: "Floyd Miles",
+                roll: "#11",
+                class: "01",
+                level: "Average",
+                avatar: "https://i.pravatar.cc/100?img=20",
+                address: "TA-107 Newyork",
+                phone: "+123 5988569",
+                attendance: "87%",
+                grade: "B",
+                assignment: "83%"
+            },
+            {
+                name: "Kristin Watson",
+                roll: "#18",
+                class: "01",
+                level: "Good",
+                avatar: "https://i.pravatar.cc/100?img=25",
+                address: "TA-107 Newyork",
+                phone: "+123 5988569",
+                attendance: "93%",
+                grade: "A",
+                assignment: "92%"
+            }
+        ];
+
+        // Get level badge class
+        function getLevelClass(level) {
+            const levelMap = {
+                'Excellent': 'level-excellent',
+                'Good': 'level-good',
+                'Average': 'level-average',
+                'Needs Improvement': 'level-needs-improvement'
+            };
+            return levelMap[level] || 'level-average';
+        }
+
+        // Populate table
+        function populateTable() {
+            const tbody = document.getElementById('studentTable');
+            tbody.innerHTML = students.map((student, index) => `
+                <tr>
+                    <td>
+                        <div class="student-cell" onclick="openModal(${index})">
+                            <img src="${student.avatar}" alt="${student.name}" class="student-avatar">
+                            <span>${student.name}</span>
+                        </div>
+                    </td>
+                    <td>${student.roll}</td>
+                    <td>${student.class}</td>
+                    <td>
+                        <span class="level-badge ${getLevelClass(student.level)}">${student.level}</span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Open modal
+        function openModal(index) {
+            const student = students[index];
+            document.getElementById('modalAvatar').src = student.avatar;
+            document.getElementById('modalName').textContent = student.name;
+            document.getElementById('modalRoll').textContent = student.roll;
+            document.getElementById('modalClass').textContent = `Class ${student.class}`;
+            document.getElementById('modalLevel').textContent = student.level;
+            document.getElementById('modalAddress').textContent = student.address;
+            document.getElementById('modalPhone').textContent = student.phone;
+            document.getElementById('modalAttendance').textContent = student.attendance;
+            document.getElementById('modalGrade').textContent = student.grade;
+            document.getElementById('modalAssignment').textContent = student.assignment;
+            
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('messageInterface').classList.remove('active');
+            document.getElementById('messageInput').value = '';
+            document.getElementById('successMessage').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toggle message interface
+        function toggleMessage() {
+            const messageInterface = document.getElementById('messageInterface');
+            messageInterface.classList.toggle('active');
+            document.getElementById('successMessage').classList.remove('active');
+            if (messageInterface.classList.contains('active')) {
+                document.getElementById('messageInput').focus();
             }
         }
 
-        // Checkbox functionality
-        const selectAll = document.querySelector('thead .checkbox');
-        const rowCheckboxes = document.querySelectorAll('tbody .checkbox');
+        // Send message
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value.trim();
+            if (message) {
+                document.getElementById('messageInterface').classList.remove('active');
+                document.getElementById('successMessage').classList.add('active');
+                document.getElementById('messageInput').value = '';
+                
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.remove('active');
+                }, 3000);
+            }
+        }
 
-        selectAll.addEventListener('change', function() {
-            rowCheckboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
+        // Close modal when clicking outside
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
 
-        rowCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
-                selectAll.checked = allChecked;
-            });
-        });
+        // Initialize
+        populateTable();
 
         // Pagination
         const pageButtons = document.querySelectorAll('.page-btn:not(.dots)');
@@ -917,17 +1224,6 @@
                     pageButtons.forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                 }
-            });
-        });
-
-        // Add hover effects
-        const tableRows = document.querySelectorAll('tbody tr');
-        tableRows.forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.01)';
-            });
-            row.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
             });
         });
     </script>
