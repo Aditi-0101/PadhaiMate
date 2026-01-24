@@ -62,11 +62,44 @@ class StudentProfile(models.Model):
     def __str__(self):
         return f"{self.user.username} - Class {self.student_class}"
 
+class Topic(models.Model):
+    name = models.CharField(max_length=100)
+    subject = models.CharField(max_length=50)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.subject})"
+
+class LearningContent(models.Model):
+    CONTENT_TYPES = [
+        ('concept', 'Concept Explanation'),
+        ('visual', 'Visual Aid'),
+        ('real_life', 'Real-life Example'),
+    ]
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='contents')
+    title = models.CharField(max_length=200)
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPES)
+    text_content = models.TextField()
+    image_url = models.URLField(blank=True, null=True, help_text="URL for image/diagram")
+    video_url = models.URLField(blank=True, null=True, help_text="YouTube URL or similar")
+
+    def __str__(self):
+        return f"{self.title} ({self.topic.name})"
+
+class StudentWeakTopic(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    is_resolved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.student.user.username} - {self.topic.name}"
+
 class Question(models.Model):
     class_level = models.IntegerField(choices=CLASS_CHOICES)
     subject_name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
-    topic_name = models.CharField(max_length=100, null=True, blank=True)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, blank=True)
 
     question_text = models.TextField()
 
