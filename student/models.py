@@ -29,6 +29,35 @@ class StudentProfile(models.Model):
         related_name="student_profile"
     )
     student_class = models.IntegerField(choices=CLASS_CHOICES)
+    maths_level = models.CharField(
+        max_length=20,
+        choices=[
+            ("Beginner", "Beginner"),
+            ("Intermediate", "Intermediate"),
+            ("Advanced", "Advanced"),
+        ],
+        default="Beginner"
+    )
+
+    science_level = models.CharField(
+        max_length=20,
+        choices=[
+            ("Beginner", "Beginner"),
+            ("Intermediate", "Intermediate"),
+            ("Advanced", "Advanced"),
+        ],
+        default="Beginner"
+    )
+
+    english_level = models.CharField(
+        max_length=20,
+        choices=[
+            ("Beginner", "Beginner"),
+            ("Intermediate", "Intermediate"),
+            ("Advanced", "Advanced"),
+        ],
+        default="Beginner"
+    )
 
     def __str__(self):
         return f"{self.user.username} - Class {self.student_class}"

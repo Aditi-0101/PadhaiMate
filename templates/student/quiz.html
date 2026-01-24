@@ -1,609 +1,696 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MCT Mock Tests</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            height: 100vh;
-        }
-
-        .main-container {
-            display: flex;
-            width: 100%;
-        }
-
-        .left-section {
-            flex: 1;
-            padding: 24px;
-            background-color: white;
-            overflow-y: auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-
-        .test-info h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .test-info p {
-            font-size: 14px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .progress-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .progress-text {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .progress-bar {
-            width: 180px;
-            height: 8px;
-            background-color: #e5e7eb;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .btn:hover {
-            background-color: #f9f9f9;
-        }
-
-        .timer {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .question-container {
-            margin-bottom: 32px;
-        }
-
-        .question-header {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 16px;
-        }
-
-        .question-text {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: white;
-        }
-
-        .option:hover {
-            background-color: #f9fafb;
-            border-color: #c0c0c0;
-            transform: translateX(4px);
-        }
-
-        .option.selected {
-            background-color: #dcfce7;
-            border-color: #22c55e;
-            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
-        }
-
-        .option-indicator {
-            width: 4px;
-            height: 32px;
-            background-color: #22c55e;
-            margin-right: 16px;
-            border-radius: 2px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .option.selected .option-indicator {
-            opacity: 1;
-        }
-
-        .option-label {
-            font-size: 15px;
-            color: #374151;
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .option.selected .option-label {
-            color: #166534;
-        }
-
-        .option-radio {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #d1d5db;
-            border-radius: 50%;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .option.selected .option-radio {
-            border-color: #22c55e;
-            background-color: white;
-        }
-
-        .option.selected .option-radio::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .navigation {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-top: 48px;
-        }
-
-        .nav-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #666;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            background-color: #f9f9f9;
-            border-color: #999;
-        }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .nav-btn.finish {
-            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            color: white;
-            border: none;
-            padding: 12px 32px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-
-        .nav-btn.finish:hover {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .right-section {
-            width: 280px;
-            background: linear-gradient(180deg, #fafafa 0%, #f3f4f6 100%);
-            padding: 24px;
-            overflow-y: auto;
-            border-left: 1px solid #e5e7eb;
-        }
-
-        .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 16px;
-            padding: 8px 12px;
-            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
-            border-radius: 6px;
-            border-left: 4px solid #6366f1;
-        }
-
-        .question-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .question-number {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .question-number:hover {
-            transform: scale(1.05);
-        }
-
-        .question-number.answered {
-            background-color: #22c55e;
-            color: white;
-        }
-
-        .question-number.not-answered {
-            background-color: #ef4444;
-            color: white;
-        }
-
-        .question-number.not-attempted {
-            background-color: #d1d5db;
-            color: #666;
-        }
-
-        .question-number.current {
-            background-color: #3b82f6;
-            color: white;
-        }
-
-        svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-        }
-
-        .modal.show {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .modal-header svg {
-            width: 24px;
-            height: 24px;
-            color: #6366f1;
-        }
-
-        .time-input-group {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .input-field {
-            flex: 1;
-        }
-
-        .input-field label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: #6b7280;
-            margin-bottom: 8px;
-        }
-
-        .input-field input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .input-field input:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-        }
-
-        .quick-time-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-
-        .quick-time-btn {
-            padding: 10px;
-            border: 2px solid #e5e7eb;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            color: #6b7280;
-            transition: all 0.2s ease;
-        }
-
-        .quick-time-btn:hover {
-            border-color: #6366f1;
-            color: #6366f1;
-            background: #f5f3ff;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .modal-btn.cancel {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .modal-btn.cancel:hover {
-            background: #e5e7eb;
-        }
-
-        .modal-btn.confirm {
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            color: white;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        .modal-btn.confirm:hover {
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .timer.warning {
-            color: #f59e0b;
-            animation: pulse 1s infinite;
-        }
-
-        .timer.danger {
-            color: #ef4444;
-            animation: pulse 0.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.6;
-            }
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        height: 100vh;
+      }
+
+      .main-container {
+        display: flex;
+        width: 100%;
+      }
+
+      .left-section {
+        flex: 1;
+        padding: 24px;
+        background-color: white;
+        overflow-y: auto;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+      }
+
+      .test-info h2 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .test-info p {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      .progress-section {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .progress-text {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .progress-bar {
+        width: 180px;
+        height: 8px;
+        background-color: #e5e7eb;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+        border-radius: 4px;
+        transition: width 0.3s ease;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .btn:hover {
+        background-color: #f9f9f9;
+      }
+
+      .timer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #666;
+        font-size: 14px;
+      }
+
+      .question-container {
+        margin-bottom: 32px;
+      }
+
+      .question-header {
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 16px;
+      }
+
+      .question-text {
+        font-size: 16px;
+        color: #333;
+        line-height: 1.6;
+        margin-bottom: 32px;
+      }
+
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .option {
+        display: flex;
+        align-items: center;
+        padding: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background-color: white;
+      }
+
+      .option:hover {
+        background-color: #f9fafb;
+        border-color: #c0c0c0;
+        transform: translateX(4px);
+      }
+
+      .option.selected {
+        background-color: #dcfce7;
+        border-color: #22c55e;
+        box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+      }
+
+      .option-indicator {
+        width: 4px;
+        height: 32px;
+        background-color: #22c55e;
+        margin-right: 16px;
+        border-radius: 2px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .option.selected .option-indicator {
+        opacity: 1;
+      }
+
+      .option-label {
+        font-size: 15px;
+        color: #374151;
+        flex: 1;
+        font-weight: 500;
+      }
+
+      .option.selected .option-label {
+        color: #166534;
+      }
+
+      .option-radio {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #d1d5db;
+        border-radius: 50%;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+
+      .option.selected .option-radio {
+        border-color: #22c55e;
+        background-color: white;
+      }
+
+      .option.selected .option-radio::after {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #22c55e;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .navigation {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 48px;
+      }
+
+      .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #666;
+        transition: all 0.2s ease;
+      }
+
+      .nav-btn:hover:not(:disabled) {
+        background-color: #f9f9f9;
+        border-color: #999;
+      }
+
+      .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .nav-btn.finish {
+        background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      }
+
+      .nav-btn.finish:hover {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+        box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .right-section {
+        width: 280px;
+        background: linear-gradient(180deg, #fafafa 0%, #f3f4f6 100%);
+        padding: 24px;
+        overflow-y: auto;
+        border-left: 1px solid #e5e7eb;
+      }
+
+      .section-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 16px;
+        padding: 8px 12px;
+        background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+        border-radius: 6px;
+        border-left: 4px solid #6366f1;
+      }
+
+      .question-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .question-number {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .question-number:hover {
+        transform: scale(1.05);
+      }
+
+      .question-number.answered {
+        background-color: #22c55e;
+        color: white;
+      }
+
+      .question-number.not-answered {
+        background-color: #ef4444;
+        color: white;
+      }
+
+      .question-number.not-attempted {
+        background-color: #d1d5db;
+        color: #666;
+      }
+
+      .question-number.current {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+      }
+
+      .modal.show {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 16px;
+        padding: 32px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.3s ease;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1f2937;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .modal-header svg {
+        width: 24px;
+        height: 24px;
+        color: #6366f1;
+      }
+
+      .time-input-group {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .input-field {
+        flex: 1;
+      }
+
+      .input-field label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #6b7280;
+        margin-bottom: 8px;
+      }
+
+      .input-field input {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 16px;
+        text-align: center;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .input-field input:focus {
+        outline: none;
+        border-color: #6366f1;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      }
+
+      .quick-time-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .quick-time-btn {
+        padding: 10px;
+        border: 2px solid #e5e7eb;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        color: #6b7280;
+        transition: all 0.2s ease;
+      }
+
+      .quick-time-btn:hover {
+        border-color: #6366f1;
+        color: #6366f1;
+        background: #f5f3ff;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 12px;
+      }
+
+      .modal-btn {
+        flex: 1;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .modal-btn.cancel {
+        background: #f3f4f6;
+        color: #6b7280;
+      }
+
+      .modal-btn.cancel:hover {
+        background: #e5e7eb;
+      }
+
+      .modal-btn.confirm {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      }
+
+      .modal-btn.confirm:hover {
+        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .timer.warning {
+        color: #f59e0b;
+        animation: pulse 1s infinite;
+      }
+
+      .timer.danger {
+        color: #ef4444;
+        animation: pulse 0.5s infinite;
+      }
+      
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="main-container">
-        <!-- Time Limit Modal -->
-        
+      <!-- Time Limit Modal -->
 
-        <div class="left-section">
-            <div class="header">
-                <div class="test-info">
-                    <h2>MCT Mock Tests</h2>
-                    <p>Session 1</p>
-                </div>
-                <div class="progress-section">
-                    <span class="progress-text">20%</span>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                </div>
-                <div class="header-actions">
-                    <button class="btn">Refresh</button>
-                    <button class="btn">Mark for review</button>
-                    <div class="timer">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                        <span id="timer">00:00 Min</span>
-                    </div>
-                    <button class="btn" onclick="openTimeLimitModal()">Set Time</button>
-                </div>
+      <div class="left-section">
+        <form method="post">
+          {% csrf_token %}
+          <input type="hidden" name="current_index" value="{{ current_index }}">
+          <input type="hidden" name="question_id" value="{{ question.id }}">
+          <input type="hidden" name="subject_name" value="{{ subject_name }}" />
+          <div class="header">
+            <div class="test-info">
+              <h2>MCT Mock Tests</h2>
+              <p>Session 1</p>
+            </div>
+            <div class="progress-section">
+              <span class="progress-text">20%</span>
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+            <div class="header-actions">
+              <button type="button" class="btn">Refresh</button>
+              <button type="button" class="btn">Mark for review</button>
+              <div class="timer">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="timer">00:00 Min</span>
+              </div>
+              <button type="button" class="btn" onclick="openTimeLimitModal()">
+                Set Time
+              </button>
+            </div>
+          </div>
+
+          <div class="question-container">
+            <div class="question-header">
+              Question {{ current_index }} of {{ total_questions }}
             </div>
 
-            <div class="question-container">
-                <div class="question-header">Question <span id="currentQ">1</span></div>
-                <div class="question-text" id="questionText">
-                    {{ question_text }}
-                </div>
+            <div class="question-text">{{ question.question_text }}</div>
 
-                <div class="options" id="optionsContainer">
-                    <div class="option" data-option="A">
-                        <div class="option-indicator"></div>
-                        <span class="option-label">{{ option_a }}</span>
-                        <div class="option-radio"></div>
-                    </div>
-                    <div class="option" data-option="B">
-                        <div class="option-indicator"></div>
-                        <span class="option-label">{{ option_b }}</span>
-                        <div class="option-radio"></div>
-                    </div>
-                    <div class="option" data-option="C">
-                        <div class="option-indicator"></div>
-                        <span class="option-label">{{ option_c }}</span>
-                        <div class="option-radio"></div>
-                    </div>
-                    <div class="option" data-option="D">
-                        <div class="option-indicator"></div>
-                        <span class="option-label">{{ option_d }}</span>
-                        <div class="option-radio"></div>
-                    </div>
-                </div>
-            </div>
+            <div class="options">
+              <label class="option">
+                <input type="radio" name="answer" value="A"
+                {% if saved_answer == "A" %}checked{% endif %} />
+                <div class="option-indicator"></div>
+                <span class="option-label">{{ question.option_a }}</span>
+                <div class="option-radio"></div>
+              </label>
 
-            <div class="navigation">
-                <button class="nav-btn" id="prevBtn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                    Previous
-                </button>
-                <button class="nav-btn" id="nextBtn">
-                    Next
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-                <button class="nav-btn finish" id="finishBtn">Finish</button>
+              <label class="option">
+                <input type="radio" name="answer" value="B"
+                {% if saved_answer == "B" %}checked{% endif %} />
+                <div class="option-indicator"></div>
+                <span class="option-label">{{ question.option_b }}</span>
+                <div class="option-radio"></div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="answer" value="C"
+                {% if saved_answer == "C" %}checked{% endif %} />
+                <div class="option-indicator"></div>
+                <span class="option-label">{{ question.option_c }}</span>
+                <div class="option-radio"></div>
+              </label>
+
+              <label class="option">
+                <input type="radio" name="answer" value="D"
+                {% if saved_answer == "D" %}checked{% endif %} />
+                <div class="option-indicator"></div>
+                <span class="option-label">{{ question.option_d }}</span>
+                <div class="option-radio"></div>
+              </label>
             </div>
+          </div>
+
+          <div class="navigation">
+            <button type="submit" name="action" value="prev" class="nav-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                Previous
+            </button>
+
+            <button type="submit" name="action" value="next" class="nav-btn">
+                 Next
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                     <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+
+            <button type="submit" name="action" value="finish" class="nav-btn finish">
+            Finish Test
+            </button>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="right-section">
+        <div class="section-title">Maths (7)</div>
+        <div class="question-grid">
+            {% for i in maths_range %}
+            {% with q=all_questions|slice:i|last %}
+            <div class="question-number
+            {% if current_subject == 'Maths' and current_index == i %}
+            current
+            {% elif q.id|stringformat:'s' in answers %}
+            answered
+            {% else %}
+            not-attempted
+            {% endif %}
+            ">
+            {{ i }}
+            </div>
+            {% endwith %}
+            {% endfor %}
         </div>
 
-        <div class="right-section">
-            <div class="section-title">Maths</div>
-            <div class="question-grid" id="quantGrid"></div>
 
-            <div class="section-title">Verbal</div>
-            <div class="question-grid" id="verbalGrid"></div>
 
-            <div class="section-title">Verbal</div>
-            <div class="question-grid" id="verbalGrid"></div>
+        <div class="section-title">Science (7)</div>
+        <div class="question-grid">
+            {% for i in science_range %}
+            {% with idx=7|add:i %}
+            {% with q=all_questions|slice:idx|last %}
+            <div class="question-number
+            {% if current_subject == 'Science' and current_index == idx %}
+            current
+            {% elif q.id|stringformat:'s' in answers %}
+            answered
+            {% else %}
+            not-attempted
+            {% endif %}
+            ">
+            {{ i }}
+            </div>
+            {% endwith %}
+            {% endwith %}
+            {% endfor %}
         </div>
+
+
+        <div class="section-title">English (6)</div>
+        <div class="question-grid">
+            {% for i in english_range %}
+            {% with idx=14|add:i %}
+            {% with q=all_questions|slice:idx|last %}
+            <div class="question-number
+            {% if current_subject == 'English' and current_index == idx %}
+            current
+            {% elif q.id|stringformat:'s' in answers %}
+            answered
+            {% else %}
+            not-attempted
+            {% endif %}
+            ">
+            {{ i }}
+            </div>
+            {% endwith %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+
+    </div>
     </div>
 
     <script>
-/* ===============================
+      /* ===============================
    UI / DECORATION ONLY SCRIPT
    NO EXAM LOGIC – DJANGO WILL HANDLE
 ================================ */
 
-/* ---------- Decorative Progress Bar ---------- */
-/* Backend will inject real percentage */
-function renderProgress(percentage = 0) {
-    const bar = document.getElementById('progressFill');
-    if (bar) bar.style.width = percentage + '%';
-}
+      /* ---------- Decorative Progress Bar ---------- */
+      /* Backend will inject real percentage */
+      function renderProgress(percentage = 0) {
+        const bar = document.getElementById("progressFill");
+        if (bar) bar.style.width = percentage + "%";
+      }
 
-/* ---------- Button Ripple / Visual Feedback ---------- */
-document.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-        btn.classList.add('clicked');
-        setTimeout(() => btn.classList.remove('clicked'), 150);
-    });
-});
+      /* ---------- Button Ripple / Visual Feedback ---------- */
+      document.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          btn.classList.add("clicked");
+          setTimeout(() => btn.classList.remove("clicked"), 150);
+        });
+      });
 
-/* ---------- Page Load UI ---------- */
-window.addEventListener('load', () => {
-    renderStaticTimer();     // Default display
-    renderProgress(0);       // Default progress
-    setTimeout(openTimeLimitModal, 400); // Optional
-});
-</script>
-
-</body>
+      /* ---------- Page Load UI ---------- */
+      window.addEventListener("load", () => {
+        renderStaticTimer(); // Default display
+        renderProgress(0); // Default progress
+        setTimeout(openTimeLimitModal, 400); // Optional
+      });
+    </script>
+  </body>
 </html>
