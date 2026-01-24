@@ -1,0 +1,61 @@
+question_id,class,subject_name,difficulty,question_text,option_a,option_b,option_c,option_d,correct_option
+1,6,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B
+2,6,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C
+3,6,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B
+4,6,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B
+5,6,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A
+6,6,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,None,A
+7,6,Maths,easy,What is 15 + 5?,10,15,20,25,C
+8,6,Maths,easy,What is 9 x 3?,18,21,27,36,C
+9,6,Maths,easy,What is half of 20?,5,10,15,20,B
+10,6,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C
+11,6,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C
+12,6,Maths,hard,Solve: 3x = 18,4,5,6,7,C
+13,6,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C
+14,6,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C
+15,6,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B
+16,6,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C
+17,6,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C
+18,6,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B
+19,6,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D
+20,6,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B
+21,7,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B
+22,7,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C
+23,7,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B
+24,7,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B
+25,7,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A
+26,7,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,None,A
+27,7,Maths,easy,What is 15 + 5?,10,15,20,25,C
+28,7,Maths,easy,What is 9 x 3?,18,21,27,36,C
+29,7,Maths,easy,What is half of 20?,5,10,15,20,B
+30,7,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C
+31,7,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C
+32,7,Maths,hard,Solve: 3x = 18,4,5,6,7,C
+33,7,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C
+34,7,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C
+35,7,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B
+36,7,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C
+37,7,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C
+38,7,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B
+39,7,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D
+40,7,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B
+41,8,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B
+42,8,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C
+43,8,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B
+44,8,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B
+45,8,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A
+46,8,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,None,A
+47,8,Maths,easy,What is 15 + 5?,10,15,20,25,C
+48,8,Maths,easy,What is 9 x 3?,18,21,27,36,C
+49,8,Maths,easy,What is half of 20?,5,10,15,20,B
+50,8,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C
+51,8,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C
+52,8,Maths,hard,Solve: 3x = 18,4,5,6,7,C
+53,8,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C
+54,8,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C
+55,8,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B
+56,8,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C
+57,8,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C
+58,8,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B
+59,8,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D
+60,8,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B
