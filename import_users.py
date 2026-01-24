@@ -17,7 +17,10 @@ with open('students.csv', newline='') as file:
     for row in reader:
         user, created = User.objects.get_or_create(
             username=row['username'],
-            defaults={'password': row['password']}
+            defaults={'password': row['password'],
+                      'first_name': row['first_name'],
+                        'last_name': row['last_name'],
+                    }
         )
 
         if created:
@@ -26,6 +29,9 @@ with open('students.csv', newline='') as file:
             user.save()
             print(f"Student user created: {row['username']}")
         else:
+            user.first_name = row['first_name']
+            user.last_name = row['last_name']
+            user.save()
             print(f"Student user already exists: {row['username']}")
 
         # 🔴 IMPORTANT: profile check
@@ -43,7 +49,10 @@ with open('teachers.csv', newline='') as file:
     for row in reader:
         user, created = User.objects.get_or_create(
             username=row['username'],
-            defaults={'password': row['password']}
+            defaults={'password': row['password'],
+                      'first_name': row['first_name'],
+                      'last_name': row['last_name']
+                    }
         )
 
         if created:
@@ -52,6 +61,9 @@ with open('teachers.csv', newline='') as file:
             user.save()
             print(f"Teacher user created: {row['username']}")
         else:
+            user.first_name = row['first_name']
+            user.last_name = row['last_name']
+            user.save()
             print(f"Teacher user already exists: {row['username']}")
 
         # 🔴 IMPORTANT: profile check

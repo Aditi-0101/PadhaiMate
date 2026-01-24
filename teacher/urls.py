@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     path('teacher-dashboard', views.dashboard, name='teacher-dashboard'),
     path('class-analytics', views.analytics, name='class-analytics'),
+    path('notifications', include('notifications.urls')),
 ]
