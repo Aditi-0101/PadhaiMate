@@ -1,0 +1,61 @@
+question_id,class,subject_name,difficulty,question_text,option_a,option_b,option_c,option_d,correct_option,topic_name
+1,6,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B,Articles
+2,6,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C,Nouns
+3,6,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B,Vocabulary
+4,6,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B,Verbs
+5,6,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A,Tenses
+6,6,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,,A,General English
+7,6,Maths,easy,What is 15 + 5?,10,15,20,25,C,General Maths
+8,6,Maths,easy,What is 9 x 3?,18,21,27,36,C,General Maths
+9,6,Maths,easy,What is half of 20?,5,10,15,20,B,General Maths
+10,6,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C,General Maths
+11,6,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C,General Maths
+12,6,Maths,hard,Solve: 3x = 18,4,5,6,7,C,General Maths
+13,6,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C,General Maths
+14,6,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C,Plants
+15,6,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B,General Science
+16,6,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C,General Science
+17,6,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C,General Science
+18,6,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B,Water & Its Forms
+19,6,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D,General Science
+20,6,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B,General Science
+21,7,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B,Articles
+22,7,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C,Nouns
+23,7,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B,Vocabulary
+24,7,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B,Verbs
+25,7,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A,Tenses
+26,7,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,,A,General English
+27,7,Maths,easy,What is 15 + 5?,10,15,20,25,C,General Maths
+28,7,Maths,easy,What is 9 x 3?,18,21,27,36,C,General Maths
+29,7,Maths,easy,What is half of 20?,5,10,15,20,B,General Maths
+30,7,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C,General Maths
+31,7,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C,General Maths
+32,7,Maths,hard,Solve: 3x = 18,4,5,6,7,C,General Maths
+33,7,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C,General Maths
+34,7,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C,Plants
+35,7,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B,General Science
+36,7,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C,General Science
+37,7,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C,General Science
+38,7,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B,Water & Its Forms
+39,7,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D,General Science
+40,7,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B,General Science
+41,8,English,easy,Choose the correct article: ___ honest man,A,An,The,No article,B,Articles
+42,8,English,easy,Which is a noun?,Run,Blue,Teacher,Quickly,C,Nouns
+43,8,English,easy,Opposite of 'Hot' is?,Warm,Cold,Cool,Heat,B,Vocabulary
+44,8,English,medium,Identify the verb: She writes a letter,She,Writes,Letter,A,B,Verbs
+45,8,English,medium,Choose correct tense: He ___ playing,Is,Was,Were,Be,A,Tenses
+46,8,English,hard,Change to passive: She eats an apple,Apple is eaten by her,Apple eaten her,She eaten apple,,A,General English
+47,8,Maths,easy,What is 15 + 5?,10,15,20,25,C,General Maths
+48,8,Maths,easy,What is 9 x 3?,18,21,27,36,C,General Maths
+49,8,Maths,easy,What is half of 20?,5,10,15,20,B,General Maths
+50,8,Maths,medium,Solve: x + 7 = 12,3,4,5,6,C,General Maths
+51,8,Maths,medium,Find perimeter of square with side 4 cm,8,12,16,20,C,General Maths
+52,8,Maths,hard,Solve: 3x = 18,4,5,6,7,C,General Maths
+53,8,Maths,hard,"Area of rectangle (l=5,b=4)",9,15,20,25,C,General Maths
+54,8,Science,easy,Which gas do plants use?,Oxygen,Nitrogen,Carbon Dioxide,Hydrogen,C,Plants
+55,8,Science,easy,Which organ helps us breathe?,Heart,Lungs,Brain,Kidney,B,General Science
+56,8,Science,easy,Source of energy for Earth?,Moon,Stars,Sun,Wind,C,General Science
+57,8,Science,medium,Which part pumps blood?,Brain,Lungs,Heart,Liver,C,General Science
+58,8,Science,medium,Change of water to vapour is called?,Condensation,Evaporation,Freezing,Melting,B,Water & Its Forms
+59,8,Science,hard,Which vitamin comes from sunlight?,A,B,C,D,D,General Science
+60,8,Science,hard,Smallest unit of life?,Atom,Cell,Tissue,Organ,B,General Science

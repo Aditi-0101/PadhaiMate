@@ -4,6 +4,7 @@ from datetime import datetime
 from .models import Question
 from .models import StudentProfile
 from student.utils.level_helper import get_level_for_questions
+from student.services.gemini_service import generate_explanation
 
 # Create your views here.
 
@@ -157,3 +158,18 @@ def quiz(request):
     }
 
     return render(request, "student/quiz.html", context)
+
+@login_required
+def recommendation(request):
+    student = request.user.student_profile
+
+    explanation = generate_explanation(
+        class_level=student.student_class,
+        subject="Maths",
+        level=student.maths_level,
+        weak_topics=["Fractions", "Decimals"]
+    )
+
+    return render(request, "student/recommendation.html", {
+        "explanation": explanation
+    })

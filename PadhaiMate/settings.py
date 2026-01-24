@@ -75,6 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'PadhaiMate.wsgi.application'
 
+GEMINI_API_KEY = "AIzaSyBfUdbaStxNfNmRgC7sMSdXYnpXypDNPQY"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases

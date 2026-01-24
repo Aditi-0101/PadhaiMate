@@ -66,6 +66,7 @@ class Question(models.Model):
     class_level = models.IntegerField(choices=CLASS_CHOICES)
     subject_name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
+    topic_name = models.CharField(max_length=100, null=True, blank=True)
 
     question_text = models.TextField()
 
