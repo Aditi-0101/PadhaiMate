@@ -619,8 +619,26 @@
               <p style="color: var(--text-sub); line-height: 1.6; font-size: 0.95rem;">{{ content.text_content }}</p>
 
               {% if content.image_url %}
-              <img src="{{ content.image_url }}" alt="{{ content.title }}"
-                style="width: 100%; max-height: 300px; object-fit: contain; margin-top: 1rem; border-radius: 0.5rem;">
+              <img src="{{ content.image_url }}"
+              alt="{{ content.title }}"
+              class="content-image"
+              onerror="this.src='{% static 'images/concept.svg' %}'"
+              {% else %}
+              {% if content.content_type == "concept" %}
+              <img src="{% static 'images/concept.svg' %}" class="content-image" alt="Concept">
+              {% elif content.content_type == "visual" %}
+              <img src="{% static 'images/visual.svg' %}" class="content-image" alt="Visual">
+              {% else %}
+              <img src="{% static 'images/real_life.svg' %}" class="content-image" alt="Example">
+              {% endif %}
+              {% endif %}
+
+
+              {% if content.video_url %}
+              <a href="{{ content.video_url }}" target="_blank"
+                style="display:block; margin-top:8px; font-size:13px; color: #3498db; font-weight: 600;">
+                ▶ Watch Video Explanation
+              </a>
               {% endif %}
             </div>
             {% empty %}
