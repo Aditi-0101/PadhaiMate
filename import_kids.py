@@ -2,52 +2,51 @@ import csv
 import os
 import django
 
-# Django setup
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PadhaiMate.settings")
 django.setup()
 
-from kid.models import Kid   # ✅ kid app
+from django.contrib.auth.models import User
+from kid.models import Kid
 
-FILE_PATH = "kids.csv"
+with open("kids.csv", encoding="utf-8-sig") as file:
+    reader = csv.DictReader(file)
 
-def run():
-    print("📥 Importing kids data...")
+    print("CSV HEADERS 👉", reader.fieldnames)
 
-    with open(FILE_PATH, newline='', encoding='utf-8-sig') as file:
-        reader = csv.DictReader(file)
+    for row in reader:
+        username = row["username"].strip()
+        password = row["password"].strip()
+        first_name = row["first_name"].strip()
+        last_name = row["last_name"].strip()
+        class_level = row["class"].strip()
 
-        print("📌 CSV Headers detected:", reader.fieldnames)
-
-        for row in reader:
-            kid_id = row["username"].strip()          # LKG001
-            name = f"{row['first_name']} {row['last_name']}".strip()
-            class_raw = row["class"].strip()          # LKG
-
-            # 🔹 Convert class like LKG → numeric
-            CLASS_MAP = {
-                "LKG": 0,
-                "UKG": 1,
-                "1": 1,
-                "2": 2,
-                "3": 3,
+        # ---- USER ----
+        user, created = User.objects.get_or_create(
+            username=username,
+            defaults={
+                "first_name": first_name,
+                "last_name": last_name,
             }
+        )
 
-            class_level = CLASS_MAP.get(class_raw, 0)
+        # password hamesha set karo (safe)
+        user.set_password(password)
+        user.is_staff = False
+        user.save()
 
-            kid, created = Kid.objects.get_or_create(
-                kid_id=kid_id,
-                defaults={
-                    "name": name,
-                    "class_level": class_level,
-                }
-            )
+        if created:
+            print(f"✅ Kid user created: {username}")
+        else:
+            print(f"⚠️ Kid user already exists: {username}")
 
-            if created:
-                print(f"✅ Kid added: {kid_id}")
-            else:
-                print(f"⚠️ Kid already exists: {kid_id}")
+        # ---- KID PROFILE ----
+        Kid.objects.get_or_create(
+            user=user,
+            kid_id=username,
+            defaults={
+                "name": f"{first_name} {last_name}",
+                "class_level": class_level
+            }
+        )
 
-    print("🎉 Kids import completed!")
-
-if __name__ == "__main__":
-    run()
+print("🎉 Kids import completed successfully")

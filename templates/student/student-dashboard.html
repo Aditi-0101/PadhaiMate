@@ -140,9 +140,10 @@
     }
 
     .nav-link.active {
-      background: #e0e7ff;
-      color: var(--primary);
-    }
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+      }
 
     .nav-icon {
       font-size: 1.2rem;
@@ -533,7 +534,7 @@
       <ul class="nav-menu">
         <li class="nav-item">
           <a href="{% url 'student-dashboard' %}"
-            class="nav-link {% if request.resolver_match.url_name == 'student-dashboard' %}active{% endif %}">
+            class="nav-link active">
             <span class="nav-icon">📊</span>
             <span class="nav-text">Dashboard</span>
           </a>
@@ -693,7 +694,7 @@
       {% endif %}
 
       <!-- Stats Grid -->
-      <h2 class="section-title" id="progress" >Your Progress 📈</h2>
+      <h2 class="section-title" id="progress">Your Progress 📈</h2>
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-header">

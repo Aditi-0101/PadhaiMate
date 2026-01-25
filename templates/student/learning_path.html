@@ -139,10 +139,11 @@
         }
 
         .nav-link.active {
-            background: #e0e7ff;
-            color: var(--primary);
-        }
-
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+      }
+      
         .nav-icon {
             font-size: 1.2rem;
             width: 1.5rem;
@@ -393,6 +394,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{% url 'recommendations' %}"
+                        class="nav-link" >
+                        <span class="nav-icon">✨</span>
+                        <span class="nav-text">Recommendations</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{% url 'learning-path' %}"
                         class="nav-link {% if request.resolver_match.url_name == 'learning-path' %}active{% endif %}">
                         <span class="nav-icon">🚀</span>
@@ -400,13 +409,6 @@
                     </a>
                 </li>
             </ul>
-
-            <div class="help-card">
-                <div class="help-illustration">📚</div>
-                <h3>Need help?</h3>
-                <p>Check our docs or contact us</p>
-                <button class="help-btn">Get Started</button>
-            </div>
         </aside>
 
         <!-- Main Content -->
