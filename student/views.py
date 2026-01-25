@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
 from .models import Question, StudentProfile, Topic, StudentWeakTopic, LearningContent
-from student.services import RecommendationService
+
 from student.utils.level_helper import get_level_for_questions
 from student.services.gemini_service import generate_explanation
 from django.db.models import Prefetch
