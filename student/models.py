@@ -99,7 +99,13 @@ class Question(models.Model):
     class_level = models.IntegerField(choices=CLASS_CHOICES)
     subject_name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
-    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, blank=True)
+    topic = models.ForeignKey(
+        Topic,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="questions"
+    )
 
     question_text = models.TextField()
 
@@ -129,3 +135,10 @@ class AssessmentResult(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+class LearningActivity(models.Model):
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True)
+    quizzes_attempted = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.student.user.username} - {self.date}"

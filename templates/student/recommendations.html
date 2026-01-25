@@ -803,33 +803,15 @@
       <aside class="sidebar">
         <ul class="nav-menu">
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{% url 'student-dashboard' %}" class="nav-link">
               <span class="nav-icon">📊</span>
               <span class="nav-text">Dashboard</span>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <span class="nav-icon">🎓</span>
-              <span class="nav-text">Classroom</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <span class="nav-icon">📚</span>
-              <span class="nav-text">Live Lessons</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="{% url 'recommendations' %}" class="nav-link active">
               <span class="nav-icon">✨</span>
               <span class="nav-text">Recommendations</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <span class="nav-icon">📹</span>
-              <span class="nav-text">Video Library</span>
             </a>
           </li>
         </ul>
@@ -845,8 +827,43 @@
       <!-- Main Content -->
       <main class="main-content">
         <div class="content-box">
-            <!-- Enter you content here -->
-        </div>
+  <div class="page-header">
+    <h1 class="page-title">Recommended Topic</h1>
+    <p class="page-subtitle">
+      Focus on this topic to improve your understanding
+    </p>
+  </div>
+
+  <h2 style="margin-bottom: 15px;">{{ topic.name }}</h2>
+
+  <div
+    style="
+      margin-top: 20px;
+      white-space: pre-wrap;
+      line-height: 1.7;
+      font-size: 15px;
+      color: #2c3e50;
+    "
+  >
+    {{ explanation }}
+  </div>
+
+  <div style="margin-top: 35px; display: flex; gap: 15px;">
+    <a href="{% url 'topic-quiz' topic.id %}">
+      <button class="featured-btn">
+        Take Quiz
+      </button>
+    </a>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="card-action-btn">
+        Explain Again (Simpler)
+      </button>
+    </form>
+  </div>
+</div>
+
       </main>
     </div>
 

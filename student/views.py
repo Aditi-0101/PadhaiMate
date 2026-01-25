@@ -5,6 +5,8 @@ from .models import Question, StudentProfile, Topic, StudentWeakTopic, LearningC
 from student.utils.level_helper import get_level_for_questions
 from student.services.gemini_service import generate_explanation
 from django.db.models import Prefetch
+from .models import LearningActivity
+from django.utils.timezone import now, timedelta
 
 # Create your views here.
 
@@ -46,6 +48,19 @@ def dashboard(request):
     )
     
     parameters['weak_topics'] = weak_topics
+
+    today = now().date()
+    last_7_days = [today - timedelta(days=i) for i in range(6, -1, -1)]
+    activity_map = {
+        a.date: a.quizzes_attempted
+        for a in LearningActivity.objects.filter(
+            student=student_profile,
+            date__in=last_7_days
+        )
+    }
+    daily_progress = [activity_map.get(d, 0) for d in last_7_days]
+    parameters["daily_progress"] = daily_progress
+
 
     return render(request, 'student/student-dashboard.html', parameters)
 
@@ -164,6 +179,17 @@ def quiz(request):
 
             request.session.modified = True
             request.session["clear_answers"] = True
+            # ----------------- DAILY LEARNING ACTIVITY -----------------
+            today = now().date()
+            activity, created = LearningActivity.objects.get_or_create(
+                student=student_profile,
+                date=today
+            )
+            activity.quizzes_attempted += 1
+            activity.save()
+# ----------------------------------------------------------
+
+            
             return redirect("student-dashboard")
     else:
         current_index = 1            
@@ -194,20 +220,6 @@ def quiz(request):
 
     return render(request, "student/quiz.html", context)
 
-@login_required
-def recommendation(request):
-    student = request.user.student_profile
-
-    explanation = generate_explanation(
-        class_level=student.student_class,
-        subject="Maths",
-        level=student.maths_level,
-        weak_topics=["Fractions", "Decimals"]
-    )
-
-    return render(request, "student/recommendation.html", {
-        "explanation": explanation
-    })
 def topic_quiz(request, topic_id):
     student_profile = request.user.student_profile
     topic = Topic.objects.get(id=topic_id)
@@ -235,3 +247,46 @@ def topic_quiz(request, topic_id):
         return redirect('student-dashboard')
 
     return render(request, "student/topic_quiz.html", {"topic": topic, "questions": questions})
+
+@login_required
+def recommendations(request):
+    student_profile = request.user.student_profile
+
+    # 1️⃣ Get unresolved weak topics
+    weak_topics_qs = StudentWeakTopic.objects.filter(
+        student=student_profile,
+        is_resolved=False
+    ).select_related("topic")
+
+    if not weak_topics_qs.exists():
+        # No weak topics → back to dashboard
+        return redirect("student-dashboard")
+
+    # 2️⃣ Pick ONE topic at a time (simpler flow)
+    current_weak_topic = weak_topics_qs.first().topic
+
+    subject = current_weak_topic.subject
+    class_level = student_profile.student_class
+
+    # 3️⃣ Get level dynamically based on subject
+    level_map = {
+        "Maths": student_profile.maths_level,
+        "Science": student_profile.science_level,
+        "English": student_profile.english_level,
+    }
+    level = level_map.get(subject, "Beginner")
+
+    # 4️⃣ Gemini explanation
+    explanation = generate_explanation(
+        class_level=class_level,
+        subject=subject,
+        level=level,
+        weak_topics=[current_weak_topic.name]
+    )
+
+    context = {
+        "topic": current_weak_topic,
+        "explanation": explanation,
+    }
+
+    return render(request, "student/recommendations.html", context)

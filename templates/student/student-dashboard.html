@@ -6,6 +6,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EduLearn - Student Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     * {
       margin: 0;
@@ -1500,9 +1501,7 @@
         <span class="navbar-logo-text">PadhaiMate</span>
       </div>
       <div class="navbar-menu" id="navbarMenu">
-        <a href="#" class="active">Dashboard</a>
-        <a href="#">Courses</a>
-        <a href="#">Assignments</a>
+        <a href="{% url 'student-dashboard' %}" class="active">Dashboard</a>
         <a href="#">Progress</a>
       </div>
     </div>
@@ -1537,43 +1536,20 @@
     <aside class="sidebar">
       <ul class="nav-menu">
         <li class="nav-item">
-          <a href="#" class="nav-link active">
+          <a href="{% url 'student-dashboard' %}" class="nav-link active">
             <span class="nav-icon">📊</span>
             <span class="nav-text">Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span class="nav-icon">🎓</span>
-            <span class="nav-text">Classroom</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span class="nav-icon">📚</span>
-            <span class="nav-text">Live Lessons</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span class="nav-icon">🎥</span>
-            <span class="nav-text">Recorded Lessons</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <span class="nav-icon">📹</span>
-            <span class="nav-text">Video library</span>
+          <a href="{% url 'recommendations' %}" class="nav-link">
+            <span class="nav-icon">✨</span>
+            <span class="nav-text">Recommendations</span>
           </a>
         </li>
       </ul>
 
-      <div class="help-card">
-        <div class="help-illustration">📚</div>
-        <h3>Need help?</h3>
-        <p>Please check our docs or contact us via chat</p>
-        <button class="help-btn">Get Started</button>
-      </div>
+      
     </aside>
 
     <!-- Main Content -->
@@ -1591,13 +1567,8 @@
       <div class="welcome-section">
         <div class="welcome-text">
           <h1>
-            Welcome back, {% if user.first_name %} {{ user.first_name }} {{user.last_name }} {% else %} {{ user.username
-            }} {% endif %} !
+            Welcome back, {% if user.first_name %} {{ user.first_name }} {{user.last_name }} {% else %} {{ user.username}} {% endif %} !
           </h1>
-          <p>
-            You have 8 new courses since last login. Three of your students
-          </p>
-          <p>scored over 80 on all the forms. <a href="#">Learn more</a></p>
           <a href="{% url 'quiz' %}" class="level-test-btn">LEVEL ASSESSMENT TEST</a>
 
           {% if test_result %}
@@ -1686,89 +1657,7 @@
       </div>
       {% endif %}
 
-      <!-- Classes Section -->
-      <div class="section-header">
-        <h2 class="section-title">Classes</h2>
-        <a href="#" class="view-all">View All →</a>
-      </div>
-
-      <div class="classes-grid">
-        <div class="class-card blue">
-          <div class="class-header">
-            <div>
-              <div class="class-title">English - UNIT III</div>
-              <div class="class-subtitle"></div>
-            </div>
-            <div class="class-members">
-              <div class="avatar-group">
-                <div class="avatar">👤</div>
-                <div class="avatar">👤</div>
-              </div>
-            </div>
-          </div>
-          <div class="class-info">
-            <div class="info-item">
-              <span>📄</span>
-              <span>23 Files</span>
-            </div>
-            <div class="info-item">
-              <span>👥</span>
-              <span>{{ english_level }} Core Grammar</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="class-card purple">
-          <div class="class-header">
-            <div>
-              <div class="class-title">Maths - UNIT II</div>
-              <div class="class-subtitle"></div>
-            </div>
-            <div class="class-members">
-              <div class="avatar-group">
-                <div class="avatar">👤</div>
-                <div class="avatar">👤</div>
-                <div class="avatar">👤</div>
-              </div>
-            </div>
-          </div>
-          <div class="class-info">
-            <div class="info-item">
-              <span>📄</span>
-              <span>12 Files</span>
-            </div>
-            <div class="info-item">
-              <span>👥</span>
-              <span>{{ maths_level }} Core Chapters</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="class-card pink">
-          <div class="class-header">
-            <div>
-              <div class="class-title">Science-UNIT I</div>
-              <div class="class-subtitle"></div>
-            </div>
-            <div class="class-members">
-              <div class="avatar-group">
-                <div class="avatar">👤</div>
-                <div class="avatar">👤</div>
-              </div>
-            </div>
-          </div>
-          <div class="class-info">
-            <div class="info-item">
-              <span>📄</span>
-              <span>34 Files</span>
-            </div>
-            <div class="info-item">
-              <span>👥</span>
-              <span>{{ science_level }} Core Chapters</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       <!-- Progress & Analytics Section -->
       <div class="section-header">
@@ -1786,262 +1675,11 @@
             </div>
           </div>
           <div class="progress-chart">
-            <div class="chart-bars">
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 60%">
-                  <span class="bar-value">12h</span>
-                </div>
-                <span class="bar-label">Mon</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 85%">
-                  <span class="bar-value">17h</span>
-                </div>
-                <span class="bar-label">Tue</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 45%">
-                  <span class="bar-value">9h</span>
-                </div>
-                <span class="bar-label">Wed</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 95%">
-                  <span class="bar-value">19h</span>
-                </div>
-                <span class="bar-label">Thu</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 70%">
-                  <span class="bar-value">14h</span>
-                </div>
-                <span class="bar-label">Fri</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 40%">
-                  <span class="bar-value">8h</span>
-                </div>
-                <span class="bar-label">Sat</span>
-              </div>
-              <div class="bar-wrapper">
-                <div class="bar" style="height: 55%">
-                  <span class="bar-value">11h</span>
-                </div>
-                <span class="bar-label">Sun</span>
-              </div>
-            </div>
+            <canvas id="dailyProgressChart"></canvas>
           </div>
         </div>
 
-        <div class="stats-cards">
-          <div class="stat-card-small">
-            <div class="stat-card-header">
-              <div class="stat-icon-small">📊</div>
-              <span class="stat-trend">↑ 12%</span>
-            </div>
-            <div class="stat-value-large">85%</div>
-            <div class="stat-label-small">Average Score</div>
-            <div class="progress-ring">
-              <div class="ring-bg">
-                <div class="ring-fill" style="width: 85%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stat-card-small">
-            <div class="stat-card-header">
-              <div class="stat-icon-small">🎯</div>
-              <span class="stat-trend">↑ 8%</span>
-            </div>
-            <div class="stat-value-large">24</div>
-            <div class="stat-label-small">Tasks Completed</div>
-            <div class="progress-ring">
-              <div class="ring-bg">
-                <div class="ring-fill" style="width: 70%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="stat-card-small">
-            <div class="stat-card-header">
-              <div class="stat-icon-small">⏱️</div>
-              <span class="stat-trend down">↓ 3%</span>
-            </div>
-            <div class="stat-value-large">42h</div>
-            <div class="stat-label-small">Study Time</div>
-            <div class="progress-ring">
-              <div class="ring-bg">
-                <div class="ring-fill" style="width: 92%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Actions -->
-      <div class="section-header">
-        <h2 class="section-title">Quick Actions</h2>
-      </div>
-
-      <div class="quick-actions">
-        <div class="actions-grid">
-          <div class="action-btn">
-            <div class="action-icon">📝</div>
-            <div class="action-label">Take Quiz</div>
-          </div>
-          <div class="action-btn">
-            <div class="action-icon">📚</div>
-            <div class="action-label">Study Materials</div>
-          </div>
-          <div class="action-btn">
-            <div class="action-icon">💬</div>
-            <div class="action-label">Ask Teacher</div>
-          </div>
-          <div class="action-btn">
-            <div class="action-icon">📊</div>
-            <div class="action-label">View Reports</div>
-          </div>
-          <div class="action-btn">
-            <div class="action-icon">🎥</div>
-            <div class="action-label">Watch Videos</div>
-          </div>
-          <div class="action-btn">
-            <div class="action-icon">⚙️</div>
-            <div class="action-label">Settings</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Upcoming Classes -->
-      <div class="section-header">
-        <h2 class="section-title">Upcoming Classes</h2>
-        <a href="#" class="view-all">View All →</a>
-      </div>
-
-      <div class="upcoming-section">
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-time">09:00 AM</div>
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-title">Mathematics - Algebra</div>
-              <div class="timeline-meta">
-                <span>👨‍🏫 Prof. Johnson</span>
-                <span>⏱️ 45 mins</span>
-                <span>📍 Room 101</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-time">11:00 AM</div>
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-title">Science - Physics</div>
-              <div class="timeline-meta">
-                <span>👨‍🏫 Dr. Smith</span>
-                <span>⏱️ 60 mins</span>
-                <span>📍 Lab 2</span>
-              </div>
-            </div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-time">02:00 PM</div>
-            <div class="timeline-dot"></div>
-            <div class="timeline-content">
-              <div class="timeline-title">English Literature</div>
-              <div class="timeline-meta">
-                <span>👩‍🏫 Ms. Brown</span>
-                <span>⏱️ 45 mins</span>
-                <span>📍 Room 205</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Lessons Section -->
-      <div class="section-header">
-        <h2 class="section-title">Lessons</h2>
-        <a href="#" class="view-all">View All →</a>
-      </div>
-
-      <div class="lessons-section">
-        <table class="lessons-table">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Teacher Name</th>
-              <th>Members</th>
-              <th>Starting</th>
-              <th>Material</th>
-              <th>Payment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="class-badge">A1</span></td>
-              <td>
-                <div class="teacher-cell">
-                  <div class="avatar">👤</div>
-                  <span class="teacher-name">Bernard Carr</span>
-                </div>
-              </td>
-              <td class="members-cell">
-                <div class="avatar-group">
-                  <div class="avatar">👤</div>
-                  <div class="avatar">👤</div>
-                  <div class="avatar">👤</div>
-                </div>
-              </td>
-              <td>12.07.2023</td>
-              <td><button class="download-btn">Download</button></td>
-              <td>
-                <span class="status-badge done"><span class="status-dot"></span>Done</span>
-              </td>
-            </tr>
-            <tr>
-              <td><span class="class-badge">A1</span></td>
-              <td>
-                <div class="teacher-cell">
-                  <div class="avatar">👤</div>
-                  <span class="teacher-name">Henry Poole</span>
-                </div>
-              </td>
-              <td class="members-cell">
-                <div class="avatar-group">
-                  <div class="avatar">👤</div>
-                  <div class="avatar">👤</div>
-                  <div class="avatar">👤</div>
-                </div>
-              </td>
-              <td>17.07.2023</td>
-              <td><button class="download-btn">Download</button></td>
-              <td>
-                <span class="status-badge pending"><span class="status-dot"></span>Pending</span>
-              </td>
-            </tr>
-            <tr>
-              <td><span class="class-badge">A1</span></td>
-              <td>
-                <div class="teacher-cell">
-                  <div class="avatar">👤</div>
-                  <span class="teacher-name">Helena Love</span>
-                </div>
-              </td>
-              <td class="members-cell">
-                <div class="avatar-group">
-                  <div class="avatar">👤</div>
-                  <div class="avatar">👤</div>
-                </div>
-              </td>
-              <td>22.07.2023</td>
-              <td><button class="download-btn">Download</button></td>
-              <td>
-                <span class="status-badge done"><span class="status-dot"></span>Done</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        
       </div>
     </main>
   </div>
@@ -2161,6 +1799,30 @@
         timelineObserver.observe(item);
       });
     });
+  const ctx = document.getElementById('dailyProgressChart');
+
+  const dailyData = {{ daily_progress|safe }};
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      datasets: [{
+        label: 'Quizzes Attempted',
+        data: dailyData,
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: { stepSize: 1 }
+        }
+      }
+    }
+  });
   </script>
 </body>
 
