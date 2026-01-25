@@ -1,0 +1,11 @@
+Django>=4.2,<5.0
+
+# Environment variables
+python-dotenv>=1.0.0
+
+# Google Gemini API (new SDK)
+google-genai>=0.3.0
+
+# Google core dependencies (auto-installed but kept explicit for safety)
+google-api-core>=2.26.0
+google-auth>=2.41.0
