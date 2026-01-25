@@ -36,222 +36,12 @@
             display: flex;
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 240px;
-            background: #fafafa;
-            padding: 1.5rem 0;
-            border-right: 1px solid #e5e7eb;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: #6b46c1;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 700;
-        }
-
-        .logo-text {
-            font-weight: 700;
-            color: #1f2937;
-            font-size: 1.1rem;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            font-size: 0.95rem;
-        }
-
-        .menu-item:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .menu-item.active {
-            background: linear-gradient(90deg, rgba(107, 70, 193, 0.1) 0%, transparent 100%);
-            color: #6b46c1;
-            font-weight: 600;
-        }
-
-        .menu-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 3px;
-            background: #6b46c1;
-        }
-
-        .menu-icon {
-            width: 20px;
-            height: 20px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .menu-item.has-submenu::after {
-            content: '›';
-            margin-left: auto;
-            font-size: 1.2rem;
-            transition: transform 0.2s ease;
-        }
-
-        .menu-item.has-submenu.expanded::after {
-            transform: rotate(90deg);
-        }
-
-        .submenu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-
-        .submenu.show {
-            max-height: 500px;
-        }
-
-        .submenu-item {
-            padding: 0.6rem 1.5rem 0.6rem 3.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-
-        .submenu-item:hover {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .submenu-item.active {
-            color: #6b46c1;
-            font-weight: 600;
-            background: rgba(107, 70, 193, 0.05);
-        }
-
-        /* Main Content */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
         }
 
-        .header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .search-bar {
-            position: relative;
-            width: 300px;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 0.65rem 1rem 0.65rem 2.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .search-bar input:focus {
-            border-color: #6b46c1;
-            box-shadow: 0 0 0 3px rgba(107, 70, 193, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 18px;
-            height: 18px;
-            stroke: #9ca3af;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: #f9fafb;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .icon-btn:hover {
-            background: #f3f4f6;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .user-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .user-name {
-            font-weight: 600;
-            color: #1f2937;
-            font-size: 0.9rem;
-        }
-
-        .user-role {
-            font-size: 0.8rem;
-            color: #9ca3af;
-        }
-
-        /* Content Area */
         .content-area {
             padding: 2rem;
         }
@@ -311,7 +101,6 @@
             box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
         }
 
-        /* Table Section */
         .table-header {
             display: flex;
             justify-content: space-between;
@@ -368,7 +157,6 @@
             font-size: 0.85rem;
         }
 
-        /* Table */
         .table-container {
             background: white;
             border-radius: 12px;
@@ -414,6 +202,12 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .student-cell:hover span {
+            color: #6b46c1;
+            text-decoration: underline;
         }
 
         .student-avatar {
@@ -422,24 +216,6 @@
             border-radius: 50%;
             object-fit: cover;
         }
-
-        .badge {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: white;
-        }
-
-        .badge-purple { background: #8b5cf6; }
-        .badge-orange { background: #f59e0b; }
-        .badge-pink { background: #ec4899; }
-        .badge-cyan { background: #06b6d4; }
-        .badge-blue { background: #3b82f6; }
 
         .checkbox {
             width: 18px;
@@ -489,7 +265,6 @@
             stroke: #6b7280;
         }
 
-        /* Pagination */
         .pagination {
             display: flex;
             justify-content: space-between;
@@ -541,17 +316,220 @@
             font-size: 0.85rem;
             cursor: pointer;
         }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .student-modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .close-modal svg {
+            width: 20px;
+            height: 20px;
+            stroke: white;
+            stroke-width: 2;
+        }
+
+        .modal-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin: 0 auto;
+            object-fit: cover;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-name {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 0.75rem;
+        }
+
+        .modal-roll {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-top: 0.2rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #6b46c1;
+            stroke-width: 2;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .subject-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .subject-tag {
+            padding: 0.4rem 0.9rem;
+            background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 1.25rem 2rem;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .message-btn {
+            background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+        }
+
+        .message-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 70, 193, 0.4);
+        }
+
+        .message-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            stroke-width: 2;
+        }
     </style>
 </head>
 <body>
     <h1 class="page-title">Student List - School Management</h1>
     
     <div class="container">
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
-            
-            <!-- Content Area -->
             <div class="content-area">
                 <div class="breadcrumb">
                     <a href="#">Home</a>
@@ -606,251 +584,10 @@
                                 <th>ACTION</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=1" alt="Eleanor Pena" class="student-avatar">
-                                        <span>Eleanor Pena</span>
-                                    </div>
-                                </td>
-                                <td>#01</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>02/05/2001</td>
-                                <td>+123 6988567</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=33" alt="Jenny Wilson" class="student-avatar">
-                                        <span>Jenny Wilson</span>
-                                    </div>
-                                </td>
-                                <td>#04</td>
-                                <td>Australia, Sydney</td>
-                                <td>01</td>
-                                <td>12/05/2001</td>
-                                <td>+123 7988656</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=8" alt="Guy Hawkins" class="student-avatar">
-                                        <span>Guy Hawkins</span>
-                                    </div>
-                                </td>
-                                <td>#03</td>
-                                <td>Australia, Sydney</td>
-                                <td>02</td>
-                                <td>03/05/2001</td>
-                                <td>+123 5988665</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=5" alt="Jacob Jones" class="student-avatar">
-                                        <span>Jacob Jones</span>
-                                    </div>
-                                </td>
-                                <td>#5</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/05/2001</td>
-                                <td>+123 9988558</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=12" alt="Jacob Jones" class="student-avatar">
-                                        <span>Jacob Jones</span>
-                                    </div>
-                                </td>
-                                <td>#15</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/05/2001</td>
-                                <td>+123 9988558</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=16" alt="Jane Cooper" class="student-avatar">
-                                        <span>Jane Cooper</span>
-                                    </div>
-                                </td>
-                                <td>#01</td>
-                                <td>Australia, Sydney</td>
-                                <td>04</td>
-                                <td>12/03/2001</td>
-                                <td>+123 6988566</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=20" alt="Floyd Miles" class="student-avatar">
-                                        <span>Floyd Miles</span>
-                                    </div>
-                                </td>
-                                <td>#11</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>03/05/2002</td>
-                                <td>+123 5988569</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="checkbox"></td>
-                                <td>
-                                    <div class="student-cell">
-                                        <img src="https://i.pravatar.cc/100?img=25" alt="Floyd Miles" class="student-avatar">
-                                        <span>Floyd Miles</span>
-                                    </div>
-                                </td>
-                                <td>#11</td>
-                                <td>TA-107 Newyork</td>
-                                <td>01</td>
-                                <td>03/05/2002</td>
-                                <td>+123 5988569</td>
-                                <td>
-                                    <div class="action-btns">
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <polyline points="3 6 5 6 21 6"/>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="studentTableBody">
                         </tbody>
                     </table>
 
-                    <!-- Pagination -->
                     <div class="pagination">
                         <div class="pagination-left">
                             <button class="page-btn">
@@ -864,7 +601,7 @@
                             <button class="page-btn">4</button>
                             <button class="page-btn">5</button>
                             <button class="page-btn dots">...</button>
-                            <button class="page-btn">100</button>
+                            <button class="page-btn">20</button>
                             <button class="page-btn">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polyline points="9 18 15 12 9 6"/>
@@ -883,31 +620,397 @@
         </div>
     </div>
 
+    <!-- Student Details Modal -->
+    <div class="modal-overlay" id="studentModal">
+        <div class="student-modal">
+            <div class="modal-header">
+                <button class="close-modal" onclick="closeModal()">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor"/>
+                    </svg>
+                </button>
+                <img id="modalAvatar" src="" alt="" class="modal-avatar">
+                <h2 class="modal-name" id="modalName"></h2>
+                <p class="modal-roll" id="modalRoll"></p>
+            </div>
+            <div class="modal-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <polyline points="9 22 9 12 15 12 15 22"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Address</div>
+                            <div class="info-value" id="modalAddress"></div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Date of Birth</div>
+                            <div class="info-value" id="modalDOB"></div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Phone Number</div>
+                            <div class="info-value" id="modalPhone"></div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Class</div>
+                            <div class="info-value" id="modalClass"></div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="info-content">
+                            <div class="info-label">Subjects</div>
+                            <div class="subject-tags" id="modalSubjects"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="message-btn" onclick="sendMessage()">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                    Send Message
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function toggleSubmenu(element) {
-            const submenu = element.nextElementSibling;
-            if (submenu && submenu.classList.contains('submenu')) {
-                element.classList.toggle('expanded');
-                submenu.classList.toggle('show');
+        const students = [
+            {
+                name: "Aarav Sharma",
+                roll: "#001",
+                address: "Sector 62, Noida, UP",
+                class: "10th",
+                dob: "15/03/2009",
+                phone: "+91 98765 43210",
+                avatar: "https://i.pravatar.cc/100?img=1",
+                subjects: ["Mathematics", "Physics", "Chemistry"]
+            },
+            {
+                name: "Diya Patel",
+                roll: "#002",
+                address: "Andheri West, Mumbai, MH",
+                class: "10th",
+                dob: "22/07/2009",
+                phone: "+91 98123 45678",
+                avatar: "https://i.pravatar.cc/100?img=33",
+                subjects: ["Biology", "English", "Hindi"]
+            },
+            {
+                name: "Arjun Singh",
+                roll: "#003",
+                address: "Koramangala, Bangalore, KA",
+                class: "9th",
+                dob: "10/11/2010",
+                phone: "+91 97654 32109",
+                avatar: "https://i.pravatar.cc/100?img=8",
+                subjects: ["Computer Science", "Mathematics", "English"]
+            },
+            {
+                name: "Ananya Reddy",
+                roll: "#004",
+                address: "Jubilee Hills, Hyderabad, TG",
+                class: "11th",
+                dob: "05/01/2008",
+                phone: "+91 99887 76655",
+                avatar: "https://i.pravatar.cc/100?img=5",
+                subjects: ["Commerce", "Accountancy", "Economics"]
+            },
+            {
+                name: "Rohan Gupta",
+                roll: "#005",
+                address: "Connaught Place, New Delhi",
+                class: "12th",
+                dob: "18/09/2007",
+                phone: "+91 98111 22333",
+                avatar: "https://i.pravatar.cc/100?img=12",
+                subjects: ["Physics", "Chemistry", "Mathematics"]
+            },
+            {
+                name: "Ishita Verma",
+                roll: "#006",
+                address: "Salt Lake, Kolkata, WB",
+                class: "9th",
+                dob: "28/04/2010",
+                phone: "+91 97000 11222",
+                avatar: "https://i.pravatar.cc/100?img=16",
+                subjects: ["History", "Geography", "Civics"]
+            },
+            {
+                name: "Vivaan Kumar",
+                roll: "#007",
+                address: "Banjara Hills, Hyderabad, TG",
+                class: "10th",
+                dob: "12/06/2009",
+                phone: "+91 96543 21098",
+                avatar: "https://i.pravatar.cc/100?img=20",
+                subjects: ["Science", "Mathematics", "Social Studies"]
+            },
+            {
+                name: "Saanvi Joshi",
+                roll: "#008",
+                address: "Viman Nagar, Pune, MH",
+                class: "11th",
+                dob: "30/12/2008",
+                phone: "+91 95432 10987",
+                avatar: "https://i.pravatar.cc/100?img=25",
+                subjects: ["Biology", "Chemistry", "English"]
+            },
+            {
+                name: "Kabir Mehta",
+                roll: "#009",
+                address: "Vastrapur, Ahmedabad, GJ",
+                class: "10th",
+                dob: "08/05/2009",
+                phone: "+91 94281 65432",
+                avatar: "https://i.pravatar.cc/100?img=13",
+                subjects: ["Physics", "Chemistry", "Biology"]
+            },
+            {
+                name: "Myra Kapoor",
+                roll: "#010",
+                address: "Gomti Nagar, Lucknow, UP",
+                class: "9th",
+                dob: "25/08/2010",
+                phone: "+91 93567 89012",
+                avatar: "https://i.pravatar.cc/100?img=28",
+                subjects: ["English", "Hindi", "Sanskrit"]
+            },
+            {
+                name: "Aditya Nair",
+                roll: "#011",
+                address: "Marine Drive, Kochi, KL",
+                class: "12th",
+                dob: "14/02/2007",
+                phone: "+91 98450 12345",
+                avatar: "https://i.pravatar.cc/100?img=15",
+                subjects: ["Physics", "Mathematics", "Computer Science"]
+            },
+            {
+                name: "Prisha Desai",
+                roll: "#012",
+                address: "Satellite, Ahmedabad, GJ",
+                class: "11th",
+                dob: "19/10/2008",
+                phone: "+91 97234 56789",
+                avatar: "https://i.pravatar.cc/100?img=31",
+                subjects: ["Economics", "Business Studies", "Accountancy"]
+            },
+            {
+                name: "Vihaan Rao",
+                roll: "#013",
+                address: "Indiranagar, Bangalore, KA",
+                class: "10th",
+                dob: "03/12/2009",
+                phone: "+91 96345 67890",
+                avatar: "https://i.pravatar.cc/100?img=18",
+                subjects: ["Mathematics", "Science", "English"]
+            },
+            {
+                name: "Kiara Chatterjee",
+                roll: "#014",
+                address: "Park Street, Kolkata, WB",
+                class: "9th",
+                dob: "21/06/2010",
+                phone: "+91 95678 90123",
+                avatar: "https://i.pravatar.cc/100?img=35",
+                subjects: ["Bengali", "English", "History"]
+            },
+            {
+                name: "Reyansh Malhotra",
+                roll: "#015",
+                address: "Greater Kailash, New Delhi",
+                class: "12th",
+                dob: "07/04/2007",
+                phone: "+91 99123 45678",
+                avatar: "https://i.pravatar.cc/100?img=22",
+                subjects: ["Physics", "Chemistry", "Mathematics"]
+            },
+            {
+                name: "Aadhya Iyer",
+                roll: "#016",
+                address: "Anna Nagar, Chennai, TN",
+                class: "11th",
+                dob: "16/09/2008",
+                phone: "+91 98765 01234",
+                avatar: "https://i.pravatar.cc/100?img=38",
+                subjects: ["Tamil", "English", "Computer Science"]
+            },
+            {
+                name: "Ayaan Khan",
+                roll: "#017",
+                address: "Bandra East, Mumbai, MH",
+                class: "10th",
+                dob: "29/01/2009",
+                phone: "+91 97890 12345",
+                avatar: "https://i.pravatar.cc/100?img=26",
+                subjects: ["Mathematics", "Physics", "Chemistry"]
+            },
+            {
+                name: "Navya Pillai",
+                roll: "#018",
+                address: "Thiruvananthapuram, KL",
+                class: "9th",
+                dob: "11/11/2010",
+                phone: "+91 94567 23456",
+                avatar: "https://i.pravatar.cc/100?img=40",
+                subjects: ["Malayalam", "English", "Social Science"]
+            },
+            {
+                name: "Dhruv Agarwal",
+                roll: "#019",
+                address: "Civil Lines, Jaipur, RJ",
+                class: "12th",
+                dob: "24/03/2007",
+                phone: "+91 96234 34567",
+                avatar: "https://i.pravatar.cc/100?img=30",
+                subjects: ["Physics", "Chemistry", "Biology"]
+            },
+            {
+                name: "Shanaya Bansal",
+                roll: "#020",
+                address: "Model Town, Chandigarh",
+                class: "11th",
+                dob: "13/07/2008",
+                phone: "+91 98901 45678",
+                avatar: "https://i.pravatar.cc/100?img=42",
+                subjects: ["English", "Economics", "Political Science"]
             }
+        ];
+
+        function renderStudents() {
+            const tbody = document.getElementById('studentTableBody');
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td><input type="checkbox" class="checkbox"></td>
+                    <td>
+                        <div class="student-cell" onclick='openModal(${JSON.stringify(student).replace(/'/g, "&apos;")})'>
+                            <img src="${student.avatar}" alt="${student.name}" class="student-avatar">
+                            <span>${student.name}</span>
+                        </div>
+                    </td>
+                    <td>${student.roll}</td>
+                    <td>${student.address}</td>
+                    <td>${student.class}</td>
+                    <td>${student.dob}</td>
+                    <td>${student.phone}</td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="action-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"/>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                </svg>
+                            </button>
+                            <button class="action-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
+
+        function openModal(student) {
+            document.getElementById('modalAvatar').src = student.avatar;
+            document.getElementById('modalName').textContent = student.name;
+            document.getElementById('modalRoll').textContent = `Roll No: ${student.roll}`;
+            document.getElementById('modalAddress').textContent = student.address;
+            document.getElementById('modalDOB').textContent = student.dob;
+            document.getElementById('modalPhone').textContent = student.phone;
+            document.getElementById('modalClass').textContent = student.class;
+            
+            const subjectsContainer = document.getElementById('modalSubjects');
+            subjectsContainer.innerHTML = student.subjects.map(subject => 
+                `<span class="subject-tag">${subject}</span>`
+            ).join('');
+            
+            document.getElementById('studentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('studentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function sendMessage() {
+            const studentName = document.getElementById('modalName').textContent;
+            alert(`Sending message to ${studentName}...`);
+            closeModal();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('studentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
 
         // Checkbox functionality
         const selectAll = document.querySelector('thead .checkbox');
-        const rowCheckboxes = document.querySelectorAll('tbody .checkbox');
+        
+        function updateCheckboxes() {
+            const rowCheckboxes = document.querySelectorAll('tbody .checkbox');
+            
+            selectAll.addEventListener('change', function() {
+                rowCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
 
-        selectAll.addEventListener('change', function() {
             rowCheckboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
+                checkbox.addEventListener('change', function() {
+                    const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
+                    selectAll.checked = allChecked;
+                });
             });
-        });
-
-        rowCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const allChecked = Array.from(rowCheckboxes).every(cb => cb.checked);
-                selectAll.checked = allChecked;
-            });
-        });
+        }
 
         // Pagination
         const pageButtons = document.querySelectorAll('.page-btn:not(.dots)');
@@ -920,15 +1023,10 @@
             });
         });
 
-        // Add hover effects
-        const tableRows = document.querySelectorAll('tbody tr');
-        tableRows.forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.01)';
-            });
-            row.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderStudents();
+            updateCheckboxes();
         });
     </script>
 </body>

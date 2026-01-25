@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidora - Space Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #2a1f4a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            transition: background 0.5s ease;
+        }
+
+        body.has-background::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 14, 39, 0.7);
+            z-index: 0;
+        }
+
+        /* Theme Classes */
+        body.space-theme {
+            background-image: url(/static/home/image.png);
+            background-size: cover;
+        }
+
+        body.jungle-theme {
+            background-image: url(/static/home/jungle.avif);
+            background-size: cover;
+        }
+
+        body.shinchan-theme {
+            background-image: url(/static/home/shin.jpg);
+            background-size: cover;
+        }
+
+        body.doraemon-theme {
+            background-image: url(/static/home/Doraemon2014tvseries.png);
+            background-size: cover;
+        }
+
+        body.pokemon-theme {
+            background-image: url(/static/home/featuredImage.jpg);
+            background-size: cover;
+        }
+
+        /* Decorative background elements */
+        .bg-decoration {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.2;
+            pointer-events: none;
+            transition: background 0.5s ease;
+        }
+
+        .bg-circle-1 {
+            width: 400px;
+            height: 400px;
+            background: #1a1f3a;
+            top: -200px;
+            left: -200px;
+        }
+
+        .bg-circle-2 {
+            width: 500px;
+            height: 500px;
+            background: #2a1f4a;
+            bottom: -250px;
+            right: -250px;
+        }
+
+        /* Theme-specific decorations */
+        body.jungle-theme .bg-circle-1 {
+            background: #1b5e20;
+        }
+
+        body.jungle-theme .bg-circle-2 {
+            background: #f57f17;
+        }
+
+        body.shinchan-theme .bg-circle-1 {
+            background: #FFE4B5;
+        }
+
+        body.shinchan-theme .bg-circle-2 {
+            background: #FFA07A;
+        }
+
+        body.doraemon-theme .bg-circle-1 {
+            background: #1E90FF;
+        }
+
+        body.doraemon-theme .bg-circle-2 {
+            background: #FFD700;
+        }
+
+        body.pokemon-theme .bg-circle-1 {
+            background: #FFD93D;
+        }
+
+        body.pokemon-theme .bg-circle-2 {
+            background: #6BCB77;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: rgba(46, 125, 50, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            overflow-y: auto;
+            transition: background 0.5s ease;
+        }
+
+        body.space-theme .sidebar {
+            background: rgba(26, 31, 58, 0.5);
+        }
+
+        body.shinchan-theme .sidebar {
+            background: rgba(255, 160, 122, 0.4);
+        }
+
+        body.doraemon-theme .sidebar {
+            background: rgba(30, 144, 255, 0.4);
+        }
+
+        body.pokemon-theme .sidebar {
+            background: rgba(255, 107, 107, 0.4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .section-title {
+            color: #ffd54f;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.5s ease;
+        }
+
+        body.space-theme .section-title {
+            color: #9fa8da;
+        }
+
+        body.shinchan-theme .section-title {
+            color: #ff6347;
+        }
+
+        body.doraemon-theme .section-title {
+            color: #ffd700;
+        }
+
+        body.pokemon-theme .section-title {
+            color: #ffd93d;
+        }
+
+        .nav-button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(46, 125, 50, 0.6);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.space-theme .nav-button {
+            background: rgba(63, 81, 181, 0.6);
+        }
+
+        body.shinchan-theme .nav-button {
+            background: rgba(255, 160, 122, 0.6);
+        }
+
+        body.doraemon-theme .nav-button {
+            background: rgba(30, 144, 255, 0.6);
+        }
+
+        body.pokemon-theme .nav-button {
+            background: rgba(255, 107, 107, 0.6);
+        }
+
+        .nav-button:hover {
+            background: rgba(46, 125, 50, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        body.space-theme .nav-button:hover {
+            background: rgba(63, 81, 181, 0.9);
+        }
+
+        body.shinchan-theme .nav-button:hover {
+            background: rgba(255, 160, 122, 0.9);
+        }
+
+        body.doraemon-theme .nav-button:hover {
+            background: rgba(30, 144, 255, 0.9);
+        }
+
+        body.pokemon-theme .nav-button:hover {
+            background: rgba(255, 107, 107, 0.9);
+        }
+
+        .nav-button.active {
+            background: #43a047;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        body.space-theme .nav-button.active {
+            background: #5c6bc0;
+        }
+
+        body.shinchan-theme .nav-button.active {
+            background: #ff7f50;
+        }
+
+        body.doraemon-theme .nav-button.active {
+            background: #1e90ff;
+        }
+
+        body.pokemon-theme .nav-button.active {
+            background: #ff6b6b;
+        }
+
+        .section-divider {
+            margin: 24px 0;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .header-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2d7a3e;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        body.space-theme .header-button {
+            color: #3f51b5;
+        }
+
+        body.shinchan-theme .header-button {
+            color: #ff6347;
+        }
+
+        body.doraemon-theme .header-button {
+            color: #1e90ff;
+        }
+
+        body.pokemon-theme .header-button {
+            color: #ff6b6b;
+        }
+
+        .header-button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Theme Dropdown */
+        .theme-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
+            background: white;
+            min-width: 200px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-content.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #2d7a3e;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: #f5f5f5;
+            padding-left: 24px;
+        }
+
+        .dropdown-item.active {
+            background: #e8f5e9;
+        }
+
+        /* Ask Your Buddy Card */
+        .buddy-card {
+            background: linear-gradient(135deg, rgba(129, 199, 132, 0.9) 0%, rgba(102, 187, 106, 0.9) 100%);
+            border-radius: 24px;
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        body.space-theme .buddy-card {
+            background: linear-gradient(135deg, rgba(92, 107, 192, 0.9) 0%, rgba(63, 81, 181, 0.9) 100%);
+        }
+
+        body.shinchan-theme .buddy-card {
+            background: linear-gradient(135deg, rgba(255, 183, 77, 0.9) 0%, rgba(255, 160, 122, 0.9) 100%);
+        }
+
+        body.doraemon-theme .buddy-card {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.9) 0%, rgba(135, 206, 235, 0.9) 100%);
+        }
+
+        body.pokemon-theme .buddy-card {
+            background: linear-gradient(135deg, rgba(255, 217, 61, 0.9) 0%, rgba(255, 107, 107, 0.9) 100%);
+        }
+
+        .buddy-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .buddy-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        body.space-theme .buddy-icon {
+            background: linear-gradient(135deg, #9fa8da 0%, #7986cb 100%);
+        }
+
+        body.shinchan-theme .buddy-icon {
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+        }
+
+        body.doraemon-theme .buddy-icon {
+            background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+        }
+
+        body.pokemon-theme .buddy-icon {
+            background: linear-gradient(135deg, #ffd93d 0%, #ffb700 100%);
+        }
+
+        .buddy-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .buddy-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .input-container {
+            margin-bottom: 24px;
+        }
+        .logo img {
+    width: 48px; /* REDUCE from 58px */
+    height: 48px; /* REDUCE from 58px */
+    filter: none; /* REMOVE drop-shadow */
+    margin-left: 0vw;
+}
+
+        .buddy-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px 24px;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .buddy-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .ask-button {
+            padding: 18px 48px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            color: #2d7a3e;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(255, 193, 7, 0.4);
+        }
+
+        body.space-theme .ask-button {
+            background: linear-gradient(135deg, #9fa8da 0%, #7986cb 100%);
+            color: #1a237e;
+        }
+
+        body.shinchan-theme .ask-button {
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+            color: #f57c00;
+        }
+
+        body.doraemon-theme .ask-button {
+            background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+            color: #0d47a1;
+        }
+
+        body.pokemon-theme .ask-button {
+            background: linear-gradient(135deg, #6bcb77 0%, #4caf50 100%);
+            color: #1b5e20;
+        }
+
+        .ask-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6);
+        }
+
+        /* Bottom Cards */
+        .bottom-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .info-card {
+            background: rgba(102, 187, 106, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.space-theme .info-card {
+            background: rgba(92, 107, 192, 0.8);
+        }
+
+        body.shinchan-theme .info-card {
+            background: rgba(255, 183, 77, 0.8);
+        }
+
+        body.doraemon-theme .info-card {
+            background: rgba(30, 144, 255, 0.8);
+        }
+
+        body.pokemon-theme .info-card {
+            background: rgba(255, 217, 61, 0.8);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.5s ease;
+        }
+
+        body.space-theme .card-icon {
+            background: linear-gradient(135deg, #9fa8da 0%, #7986cb 100%);
+        }
+
+        body.shinchan-theme .card-icon {
+            background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+        }
+
+        body.doraemon-theme .card-icon {
+            background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+        }
+
+        body.pokemon-theme .card-icon {
+            background: linear-gradient(135deg, #6bcb77 0%, #4caf50 100%);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .card-content {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Quiz Modal */
+        .quiz-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-modal.show {
+            display: flex;
+        }
+
+        .quiz-container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-title {
+            font-size: 32px;
+            color: #3f51b5;
+            margin-bottom: 10px;
+        }
+
+        .quiz-progress {
+            font-size: 16px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8eaf6 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 22px;
+            color: #2d3436;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .answer-option-wrapper {
+            cursor: pointer;
+        }
+
+        .option-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .answer-option {
+            background: white;
+            border: 3px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: #2d3436;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .answer-option:hover {
+            border-color: #3f51b5;
+            background: #f5f7fa;
+            transform: scale(1.03);
+        }
+
+        .answer-option.selected {
+            border-color: #3f51b5;
+            background: #e8eaf6;
+            box-shadow: 0 4px 16px rgba(63, 81, 181, 0.3);
+        }
+
+        .answer-option.correct {
+            border-color: #4caf50;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .answer-option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .option-label {
+            font-weight: 600;
+            color: #666;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .quiz-btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-btn-primary {
+            background: linear-gradient(135deg, #3f51b5 0%, #5c6bc0 100%);
+            color: white;
+        }
+
+        .quiz-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 81, 181, 0.4);
+        }
+
+        .quiz-btn-secondary {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .quiz-btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .result-title {
+            font-size: 36px;
+            color: #3f51b5;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .result-score {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .result-message {
+            font-size: 18px;
+            color: #888;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .buddy-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body class="space-theme">
+    <div class="bg-decoration bg-circle-1"></div>
+    <div class="bg-decoration bg-circle-2"></div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div><img src="/static/home/logo.png" alt=""></div>
+                <div class="logo-text">PadhaiMate</div>
+            </div>
+
+            <div class="section-title">🏠 MY JUNGLE 🌺</div>
+            <button class="nav-button active">✨ Explore Today! ✨</button>
+            <button class="nav-button">🌺 Task Treehouse 🪵</button>
+
+            <div class="section-divider"></div>
+
+            <div class="section-title">📚 LEARNING ZONE 🦜</div>
+            <button class="nav-button">📖 Story Caves 📚</button>
+            <button class="nav-button">🎵 Rhymes World 🎭</button>
+            <button class="nav-button">🍃 Topic Forest 🌿</button>
+
+            <div class="section-divider"></div>
+
+            <div class="section-title">🎯 QUIZ CHALLENGE 🏆</div>
+            <button class="nav-button" onclick="showQuiz()">🔥 Strengthen Learning 🧠</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <input 
+                    type="file" 
+                    id="bgImageInput" 
+                    accept="image/*" 
+                    style="display: none;"
+                    onchange="changeBackground()"
+                >
+                <button class="header-button" onclick="document.getElementById('bgImageInput').click()">
+                    🖼️ Background
+                </button>
+                <button class="header-button" onclick="removeBackground()">
+                    🗑️ Remove BG
+                </button>
+                <button class="header-button">👋 Hi, Arpita 🌸</button>
+                
+                <!-- Theme Dropdown -->
+                <div class="theme-dropdown">
+                    <button class="header-button" onclick="toggleThemeDropdown()">
+                        🎨 Theme 🌈
+                    </button>
+                    <div class="dropdown-content" id="themeDropdown">
+                        <div class="dropdown-item active" onclick="changeTheme('space')">
+                            🌌 Space Adventure
+                        </div>
+                        <div class="dropdown-item" onclick="changeTheme('jungle')">
+                            🌿 Jungle Safari
+                        </div>
+                        <div class="dropdown-item" onclick="changeTheme('shinchan')">
+                            😄 Shinchan Fun
+                        </div>
+                        <div class="dropdown-item" onclick="changeTheme('doraemon')">
+                            🔵 Doraemon World
+                        </div>
+                        <div class="dropdown-item" onclick="changeTheme('pokemon')">
+                            ⚡ Pokemon Quest
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ask Your Buddy Card -->
+            <div class="buddy-card">
+                <div class="buddy-header">
+                    <div class="buddy-icon">🦜</div>
+                    <h1 class="buddy-title">Ask Your Buddy 💬</h1>
+                </div>
+                <p class="buddy-subtitle">Your friendly jungle companion is here to help! 🌿 ✨</p>
+                
+                <div class="input-container">
+                    <input 
+                        type="text" 
+                        class="buddy-input" 
+                        placeholder="What's on your jungle mind? 🌿 💭"
+                        id="questionInput"
+                    >
+                </div>
+                
+                <button class="ask-button" onclick="askQuestion()">ASK NOW! 💫</button>
+            </div>
+
+            <!-- Bottom Info Cards -->
+            <div class="bottom-cards">
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">🎮</div>
+                        <button class="nav-button" onclick="showQuiz()">🔥Jungle Quest🧠</button>
+                    </div>
+                    <div class="card-content">
+                        A new quest will begin in 2 days.<br>
+                        Stay tuned!
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">💡</div>
+                        <h3 class="card-title">Adventure Progress ⭐</h3>
+                    </div>
+                    <div class="card-content">
+                        Keep exploring and learning new things every day!
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">❓</div>
+                        <h3 class="card-title">FAQs 🤔</h3>
+                    </div>
+                    <div class="card-content">
+                        Frequently Asked Questions
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div class="quiz-modal" id="quizModal">
+        <div class="quiz-container" id="quizContainer">
+            <!-- Quiz content will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Theme management
+        let currentTheme = 'space';
+
+        // Quiz data - Add your image URLs for each option
+        const quizQuestions = [
+            {
+                question: "What is the largest planet in our solar system?",
+                options: [
+                    { text: "Earth", image: "/static/home/e.webp" },  // Add image URL like: "/static/quiz/earth.jpg"
+                    { text: "Jupiter", image: "/static/home/Jupiter.png" },
+                    { text: "Saturn", image: "/static/home/Saturn.jpg" },
+                    { text: "Mars", image: "/static/home/Mars.webp" }
+                ],
+                correct: 1
+            },
+            {
+                question: "Which fruit is known as the 'King of the fruits' ",
+                options: [
+                    { text: "Mango", image: "/static/home/mango.png" },
+                    { text: "Guava", image: "/static/home/guava.webp" },
+                    { text: "Litchi", image: "/static/home/litchi.jpg" },
+                    { text: "Papaya", image: "/static/home/papaya.jpg" }
+                ],
+                correct: 2
+            },
+            {
+                question: "Which animal is known as the 'King of the Jungle'?",
+                options: [
+                    { text: "Tiger", image: "/static/home/tiger.jpg" },
+                    { text: "Lion", image: "/static/home/lion.jpg" },
+                    { text: "Elephant", image: "/static/home/elephant.jpg" },
+                    { text: "Bear", image: "/static/home/bear.jpg" }
+                ],
+                correct: 1
+            },
+            {
+                question: "Which color is green?",
+                options: [
+                    { text: "", image: "/static/home/black.webp" },
+                    { text: "", image: "/static/home/yellow.png" },
+                    { text: "", image: "/static/home/green.avif" },
+                    { text: "", image: "/static/home/red.jpg" }
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function showQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            selectedAnswer = null;
+            document.getElementById('quizModal').classList.add('show');
+            displayQuestion();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quizModal').classList.remove('show');
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('quizContainer');
+            const q = quizQuestions[currentQuestion];
+            
+            let html = `
+                <div class="quiz-header">
+                    <h2 class="quiz-title">🧠 Quiz Challenge 🏆</h2>
+                    <p class="quiz-progress">Question ${currentQuestion + 1} of ${quizQuestions.length}</p>
+                </div>
+                <div class="question-card">
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-grid">
+                        ${q.options.map((option, index) => `
+                            <div class="answer-option-wrapper" onclick="selectAnswer(${index})">
+                                <div class="answer-option" data-index="${index}">
+                                    ${option.image ? `<img src="${option.image}" alt="${option.text}" class="option-image">` : ''}
+                                    <span class="option-label">${String.fromCharCode(65 + index)}. ${option.text}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="quiz-buttons">
+                    <button class="quiz-btn quiz-btn-secondary" onclick="closeQuiz()">
+                        ❌ Close
+                    </button>
+                    <button class="quiz-btn quiz-btn-primary" onclick="submitAnswer()">
+                        ✅ Submit Answer
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        function selectAnswer(index) {
+            // Remove previous selection
+            document.querySelectorAll('.answer-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            document.querySelector(`.answer-option[data-index="${index}"]`).classList.add('selected');
+            selectedAnswer = index;
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null) {
+                alert('🌺 Please select an answer first! 💭');
+                return;
+            }
+
+            const q = quizQuestions[currentQuestion];
+            const options = document.querySelectorAll('.answer-option');
+            
+            // Show correct/incorrect
+            options[q.correct].classList.add('correct');
+            if (selectedAnswer !== q.correct) {
+                options[selectedAnswer].classList.add('incorrect');
+            } else {
+                score++;
+            }
+
+            // Disable further selection
+            document.querySelectorAll('.answer-option-wrapper').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            // Change button to Next/Finish
+            setTimeout(() => {
+                if (currentQuestion < quizQuestions.length - 1) {
+                    currentQuestion++;
+                    selectedAnswer = null;
+                    displayQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        function showResults() {
+            const container = document.getElementById('quizContainer');
+            const percentage = (score / quizQuestions.length) * 100;
+            let message = '';
+            let icon = '';
+
+            if (percentage >= 80) {
+                message = 'Amazing! You\'re a superstar! 🌟';
+                icon = '🏆';
+            } else if (percentage >= 60) {
+                message = 'Great job! Keep learning! 📚';
+                icon = '⭐';
+            } else {
+                message = 'Good try! Practice makes perfect! 💪';
+                icon = '🎯';
+            }
+
+            const html = `
+                <div class="quiz-result">
+                    <div class="result-icon">${icon}</div>
+                    <h2 class="result-title">${message}</h2>
+                    <p class="result-score">Your Score: ${score} out of ${quizQuestions.length}</p>
+                    <p class="result-message">You got ${percentage.toFixed(0)}% correct!</p>
+                    <div class="quiz-buttons">
+                        <button class="quiz-btn quiz-btn-secondary" onclick="closeQuiz()">
+                            ❌ Close
+                        </button>
+                        <button class="quiz-btn quiz-btn-primary" onclick="showQuiz()">
+                            🔄 Try Again
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('quizModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQuiz();
+            }
+        });
+
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function changeTheme(theme) {
+            // Remove all theme classes
+            document.body.classList.remove('space-theme', 'jungle-theme', 'shinchan-theme', 'doraemon-theme', 'pokemon-theme');
+            
+            // Add new theme class
+            document.body.classList.add(theme + '-theme');
+            currentTheme = theme;
+            
+            // Update dropdown active state
+            const items = document.querySelectorAll('.dropdown-item');
+            items.forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Close dropdown
+            document.getElementById('themeDropdown').classList.remove('show');
+            
+            // Save theme preference
+            try {
+                localStorage.setItem('kidoraCurrentTheme', theme);
+            } catch (e) {
+                console.log('Theme changed to:', theme);
+            }
+        }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            if (!e.target.matches('.header-button')) {
+                const dropdown = document.getElementById('themeDropdown');
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        });
+
+        function askQuestion() {
+            const input = document.getElementById('questionInput');
+            const question = input.value.trim();
+            
+            if (question) {
+                alert('🦜 Your jungle buddy is thinking about: "' + question + '"\n\n✨ Great question! Let\'s explore this together! 🌿');
+                input.value = '';
+            } else {
+                alert('🌺 Please type your question first! 💭');
+            }
+        }
+
+        // Background image functions
+        function changeBackground() {
+            const input = document.getElementById('bgImageInput');
+            const file = input.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.body.style.backgroundImage = `url('${e.target.result}')`;
+                    document.body.classList.add('has-background');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeBackground() {
+            document.body.style.backgroundImage = '';
+            document.body.classList.remove('has-background');
+        }
+
+        // Load saved theme on page load
+        window.addEventListener('load', function() {
+            try {
+                const savedTheme = localStorage.getItem('kidoraCurrentTheme');
+                
+                if (savedTheme) {
+                    document.body.classList.remove('space-theme');
+                    document.body.classList.add(savedTheme + '-theme');
+                    currentTheme = savedTheme;
+                    
+                    // Update dropdown active state
+                    const items = document.querySelectorAll('.dropdown-item');
+                    items.forEach(item => {
+                        if (item.getAttribute('onclick').includes(savedTheme)) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                }
+            } catch (e) {
+                console.log('Using default theme');
+            }
+        });
+
+        // Add enter key support
+        document.getElementById('questionInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                askQuestion();
+            }
+        });
+
+        // Add subtle animations to cards
+        const cards = document.querySelectorAll('.info-card');
+        cards.forEach((card, index) => {
+            card.style.animation = `fadeInUp 0.6s ease ${index * 0.1}s both`;
+        });
+
+        // Add CSS animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

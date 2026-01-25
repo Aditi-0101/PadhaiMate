@@ -1,0 +1,475 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Learning Path - PadhaiMate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --sidebar-width: 260px;
+            --navbar-height: 70px;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--navbar-height);
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+            z-index: 1000;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .back-btn {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Layout Container */
+        .app-container {
+            display: flex;
+            padding-top: var(--navbar-height);
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            position: fixed;
+            top: var(--navbar-height);
+            bottom: 0;
+            overflow-y: auto;
+            z-index: 900;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            /* Matches sidebar width */
+            padding: 2rem;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        /* Common Sidebar Styles */
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-sub);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 1.5rem;
+            text-align: center;
+        }
+
+        .help-card {
+            margin-top: 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, #818cf8 100%);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            color: white;
+            text-align: center;
+        }
+
+        .help-illustration {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .help-card h3 {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .help-card p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .help-btn {
+            background: white;
+            color: var(--primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        .help-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Learning Path Specific Styles */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        /* Learning Topic Card */
+        .topic-section {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2.5rem;
+            border-left: 5px solid #ef4444;
+            /* Weak topic color */
+            border: 1px solid #f1f5f9;
+            border-left-width: 5px;
+        }
+
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .topic-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .quiz-btn {
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .quiz-btn:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Types */
+        .content-type {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            align-self: flex-start;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .type-concept {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+
+        .type-visual {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .type-real_life {
+            background: #ffedd5;
+            color: #c2410c;
+        }
+
+        .content-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        .content-text {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .content-image-container {
+            width: 100%;
+            height: 180px;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .content-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-sub);
+            background: white;
+            border-radius: 1rem;
+            border: 1px dashed #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navbar -->
+    <nav class="top-navbar">
+        <div class="navbar-left">
+            <a href="{% url 'student-dashboard' %}" class="navbar-logo">
+                🎓 PadhaiMate
+            </a>
+        </div>
+        <div class="navbar-right">
+            <div class="user-profile" style="display: flex; align-items: center; gap: 1rem;">
+                <div style="text-align: right;">
+                    <div style="font-weight: 600; color: var(--text-main);">{{ user.first_name }} {{ user.last_name }}
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-sub);">{% if user.is_staff %}Teacher{% else
+                        %}Student{% endif %}</div>
+                </div>
+                <div
+                    style="width: 40px; height: 40px; background: #e0e7ff; color: #4338ca; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600;">
+                    {{ user.first_name|first|upper }}
+                </div>
+                <a href="{% url 'logout' %}"
+                    style="color: var(--danger); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'student-dashboard' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'student-dashboard' %}active{% endif %}">
+                        <span class="nav-icon">📊</span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'learning-path' %}"
+                        class="nav-link {% if request.resolver_match.url_name == 'learning-path' %}active{% endif %}">
+                        <span class="nav-icon">🚀</span>
+                        <span class="nav-text">My Learning Path</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="help-card">
+                <div class="help-illustration">📚</div>
+                <h3>Need help?</h3>
+                <p>Check our docs or contact us</p>
+                <button class="help-btn">Get Started</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">My Learning Path</h1>
+                <p class="page-subtitle">Personalized lessons based on your quiz performance. Master these concepts to
+                    level up!</p>
+            </div>
+
+            {% if weak_topics %}
+            {% for wt in weak_topics %}
+            <div class="topic-section">
+                <div class="topic-header">
+                    <div>
+                        <div class="topic-title">{{ wt.topic.name }}</div>
+                        <div style="font-size: 0.9rem; color: var(--text-sub); margin-top: 0.25rem;">
+                            Focus Areas:
+                            {% if wt.weak_concepts %}
+                            <span style="color: #ef4444; font-weight: 600;">{{ wt.weak_concepts }}</span>
+                            {% else %}
+                            <span style="color: #ef4444;">General Topic Review</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Redirects back to learning path anyway, but good for UX if wired -->
+                    <a href="{% url 'topic-quiz' wt.topic.id %}" class="quiz-btn">Take Topic Quiz</a>
+                </div>
+
+                <div class="content-grid">
+                    {% for content in wt.filtered_contents %}
+                    <div class="content-card">
+                        {% if content.image_url %}
+                        <div class="content-image-container">
+                            <img src="{{ content.image_url }}" alt="{{ content.title }}" class="content-image"
+                                onerror="this.style.display='none'">
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <span class="content-type type-{{ content.content_type }}">
+                                {% if content.content_type == 'concept' %}Concept
+                                {% elif content.content_type == 'visual' %}Visual Aid
+                                {% elif content.content_type == 'real_life' %}Real World
+                                {% else %}{{ content.get_content_type_display }}{% endif %}
+                            </span>
+                            <h3 class="content-title">{{ content.title }}</h3>
+                            <p class="content-text">{{ content.text_content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="empty-state">
+                <p style="font-size: 1.2rem; margin-bottom: 1rem;">🎉 You're all caught up!</p>
+                <p>Great job! You don't have any weak topics to review right now.</p>
+                <br>
+                <a href="{% url 'quiz' %}" class="quiz-btn" style="background: var(--primary);">Take a Mock Test</a>
+            </div>
+            {% endif %}
+        </main>
+    </div>
+</body>
+
+</html>

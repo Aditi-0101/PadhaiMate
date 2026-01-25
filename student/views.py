@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from datetime import datetime
 from .models import Question, StudentProfile, Topic, StudentWeakTopic, LearningContent
+from student.services import RecommendationService
 from student.utils.level_helper import get_level_for_questions
 from student.services.gemini_service import generate_explanation
 from django.db.models import Prefetch
@@ -39,7 +41,13 @@ def dashboard(request):
         'english_level': english_level,
     }
 
-    # Fetch Recommendations
+    return render(request, 'student/student-dashboard.html', parameters)
+
+@login_required
+def learning_path(request):
+    student_profile = request.user.student_profile
+    
+    # Fetch Weak Topics
     weak_topics = StudentWeakTopic.objects.filter(
         student=student_profile,
         is_resolved=False
@@ -47,7 +55,26 @@ def dashboard(request):
         Prefetch('topic__contents', queryset=LearningContent.objects.all())
     )
     
-    parameters['weak_topics'] = weak_topics
+    # Attach Content based on Concepts
+    valid_topics = []
+    for wt in weak_topics:
+        # Filter Learning Content STRICTLY by concept_tag
+        all_contents = wt.topic.contents.all()
+        wt.filtered_contents = []
+        
+        if wt.weak_concepts:
+            concept_tags = [tag.strip() for tag in wt.weak_concepts.split(',') if tag.strip()]
+            if concept_tags:
+                wt.filtered_contents = all_contents.filter(concept_tag__in=concept_tags)
+        else:
+            # Fallback for topics with no specific concept tags recorded (General Review)
+            wt.filtered_contents = all_contents
+        
+        # Only show topic if there is content to learn
+        if wt.filtered_contents:
+            valid_topics.append(wt)
+            
+    return render(request, 'student/learning_path.html', {'weak_topics': valid_topics})
 
     today = now().date()
     last_7_days = [today - timedelta(days=i) for i in range(6, -1, -1)]
@@ -63,6 +90,64 @@ def dashboard(request):
 
 
     return render(request, 'student/student-dashboard.html', parameters)
+@login_required
+def submit_topic_practice(request):
+    if request.method == "POST":
+        topic_id = request.POST.get('topic_id')
+        if not topic_id:
+            return redirect('learning-path')
+        
+        student_profile = request.user.student_profile
+        topic = Topic.objects.get(id=topic_id)
+        
+        # Calculate score
+        score = 0
+        total_attempted = 0
+        
+        # Get all keys from POST that start with 'q_'
+        for key in request.POST:
+            if key.startswith('q_'):
+                q_id = key.split('_')[1]
+                selected_option = request.POST[key]
+                try:
+                    question = Question.objects.get(id=q_id)
+                    total_attempted += 1
+                    if question.correct_option == selected_option:
+                        score += 1
+                except Question.DoesNotExist:
+                    pass
+        
+        # Mastery Check: Need at least 3 out of 5 (60%) correct to resolve
+        # Adjust threshold as needed
+        if total_attempted > 0 and (score / total_attempted) >= 0.6:
+            # Mark as resolved
+            StudentWeakTopic.objects.filter(student=student_profile, topic=topic).update(is_resolved=True)
+            messages.success(request, f"🎉 Great job! You scored {score}/{total_attempted}. Topic '{topic.name}' is now mastered!")
+            return redirect('learning-path') # Return to learning path on success
+        else:
+             # Logic to update weak concepts for persistent failures
+             incorrect_concepts = set()
+             for key in request.POST:
+                 if key.startswith('q_'):
+                     q_id = key.split('_')[1]
+                     selected = request.POST[key]
+                     try:
+                         q = Question.objects.get(id=q_id)
+                         if selected != q.correct_option and q.concept_tag:
+                             incorrect_concepts.add(q.concept_tag)
+                     except Question.DoesNotExist:
+                         pass
+             
+             if incorrect_concepts:
+                 wt, _ = StudentWeakTopic.objects.get_or_create(student=student_profile, topic=topic)
+                 current = set(wt.weak_concepts.split(',')) if wt.weak_concepts else set()
+                 updated = current.union(incorrect_concepts)
+                 wt.weak_concepts = ",".join({c for c in updated if c})
+                 wt.save()
+
+             messages.warning(request, f"Keep practicing! You scored {score}/{total_attempted}. Try to get at least 60%.")
+             
+    return redirect('learning-path')
 
 @login_required
 def quiz(request):
@@ -154,28 +239,13 @@ def quiz(request):
             }
             
             # ----------------- IDENTIFY WEAK TOPICS -----------------
-            incorrect_questions = []
-            for q in all_questions:
-                q_id = str(q.id)
-                if q_id in answers:
-                    if answers[q_id] != q.correct_option:
-                        incorrect_questions.append(q)
-                # Note: Unanswered questions could also be considered weak, 
-                # but let's stick to incorrect ones specifically for now or we can include unanswered too.
-                # Requirement says "Identify topics where the student answered incorrectly".
+
+            # ----------------- IDENTIFY & STORE WEAK TOPICS -----------------
+            # Use Service Layer
+            weak_areas = RecommendationService.calculate_weak_areas(all_questions, answers)
+            RecommendationService.store_weak_areas(student_profile, weak_areas)
             
-            weak_topics_set = set()
-            for q in incorrect_questions:
-                if q.topic:
-                    weak_topics_set.add(q.topic)
-            
-            for topic in weak_topics_set:
-                StudentWeakTopic.objects.get_or_create(
-                    student=student_profile,
-                    topic=topic,
-                    defaults={'is_resolved': False}
-                )
-            # --------------------------------------------------------
+            # ----------------------------------------------------------------
 
             request.session.modified = True
             request.session["clear_answers"] = True
@@ -220,15 +290,37 @@ def quiz(request):
 
     return render(request, "student/quiz.html", context)
 
+
+@login_required
 def topic_quiz(request, topic_id):
     student_profile = request.user.student_profile
     topic = Topic.objects.get(id=topic_id)
     
-    # Get questions for this topic
-    questions = list(Question.objects.filter(topic=topic))
+    # Check for weak topic to filter questions by concept
+    try:
+        wt = StudentWeakTopic.objects.get(student=student_profile, topic=topic)
+        weak_concepts = [t.strip() for t in wt.weak_concepts.split(',') if t.strip()]
+    except StudentWeakTopic.DoesNotExist:
+        weak_concepts = []
+        
+    if weak_concepts:
+        # STRICT Filtering: Show only questions matching the weak concepts
+        questions = list(Question.objects.filter(topic=topic, concept_tag__in=weak_concepts))
+        
+        # Fallback (optional): If no questions found for strict tags, maybe show all? 
+        # Requirement says "Quiz questions MUST be filtered by the SAME concept_tag".
+        # So if empty, let's keep it empty or show a message.
+        if not questions:
+            # Dangerous if no questions exist for tag. Let's fallback to topic questions if strictly 0 found, 
+            # to avoid broken UI, OR better, tell user "No practice questions for this specific concept yet".
+            # For hackathon safety: Fallback to all topic questions if specific filter yields 0.
+            questions = list(Question.objects.filter(topic=topic))
+    else:
+        questions = list(Question.objects.filter(topic=topic))
     
     if not questions:
-        return redirect('student-dashboard')
+        messages.info(request, "No questions available for this topic yet.")
+        return redirect('learning-path')
 
     if request.method == "POST":
         # Simplified finish logic for topic quiz
@@ -239,13 +331,16 @@ def topic_quiz(request, topic_id):
             if selected == q.correct_option:
                 score += 1
         
-        # Mastery threshold: e.g. 70% or something. Let's say if they get > 50% right.
-        if total > 0 and (score / total) >= 0.5:
+        # Mastery threshold: 80%
+        if total > 0 and (score / total) >= 0.8:
             # Mark as resolved
             StudentWeakTopic.objects.filter(student=student_profile, topic=topic).update(is_resolved=True)
+            messages.success(request, "Topic Mastered! You scored over 80%.")
+            return redirect('learning-path')
+        else:
+             messages.warning(request, f"Score: {score}/{total}. You need 80% to master this topic. Try again!")
+             return redirect('learning-path')
         
-        return redirect('student-dashboard')
-
     return render(request, "student/topic_quiz.html", {"topic": topic, "questions": questions})
 
 @login_required

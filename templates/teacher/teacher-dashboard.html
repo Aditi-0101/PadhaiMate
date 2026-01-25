@@ -26,8 +26,16 @@
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            position: relative;
+            /* position: relative; */
             transition: width 0.3s ease;
+        
+           
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
         }
 
         .sidebar.expanded {
@@ -107,6 +115,7 @@
             border: 1px solid rgba(99, 102, 241, 0.3);
             margin: 0 0.5rem 1rem 0.5rem;
             border-radius: 12px;
+            z-index: 100; /* ADD THIS */
         }
 
         .sidebar.expanded .choose-class-btn {
@@ -176,9 +185,12 @@
 
         /* Main Content */
         .main-content {
-            flex: 1;
-            padding: 2rem 3rem;
-            overflow-y: auto;
+            
+
+            margin-left: 90px; /* Match sidebar width */
+    flex: 1;
+    padding: 2rem 3rem;
+    overflow-y: auto;
         }
 
         /* Header */
@@ -857,6 +869,473 @@
             color: #9ca3af;
             font-size: 0.75rem;
         }
+        .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb a {
+    color: #6b7280;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.breadcrumb a:hover {
+    color: #6b46c1;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.content-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.add-btn {
+    background: #6b46c1;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+    background: #5a3ba8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: #fafafa;
+    border-radius: 12px;
+}
+
+.table-title {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.table-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search-input input {
+    padding: 0.5rem 1rem 0.5rem 2.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    width: 200px;
+    outline: none;
+}
+
+.search-input svg {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    stroke: #9ca3af;
+}
+
+.filter-select {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #fafafa;
+}
+
+th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+    transition: all 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #fafafa;
+}
+
+td {
+    padding: 1rem;
+    color: #1f2937;
+    font-size: 0.9rem;
+}
+
+.student-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.student-cell:hover span {
+    color: #6b46c1;
+    text-decoration: underline;
+}
+
+.student-avatar-table {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #d1d5db;
+    border-radius: 4px;
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.checkbox:checked {
+    background: #6b46c1;
+    border-color: #6b46c1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+    background-size: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #f3f4f6;
+}
+
+.action-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: #6b7280;
+}
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.pagination-left {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.page-btn:hover {
+    border-color: #6b46c1;
+    color: #6b46c1;
+}
+
+.page-btn.active {
+    background: #6b46c1;
+    color: white;
+    border-color: #6b46c1;
+}
+
+.page-btn.dots {
+    border: none;
+    cursor: default;
+}
+
+.per-page-select {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+/* Modal Styles */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.student-modal {
+    background: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.close-modal svg {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    stroke-width: 2;
+}
+
+.modal-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid white;
+    margin: 0 auto;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-name {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 0.75rem;
+}
+
+.modal-roll {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+}
+
+.modal-body {
+    padding: 1.5rem 2rem;
+}
+
+.info-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.info-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.info-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: #6b46c1;
+    stroke-width: 2;
+}
+
+.info-content {
+    flex: 1;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #1f2937;
+    font-weight: 500;
+}
+
+.subject-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.subject-tag {
+    padding: 0.4rem 0.9rem;
+    background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.modal-footer {
+    padding: 1.25rem 2rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-btn {
+    background: linear-gradient(135deg, #6b46c1 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.75rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+}
+
+.message-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(107, 70, 193, 0.4);
+}
+
+.message-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: white;
+    stroke-width: 2;
+}
     </style>
 </head>
 <body>
@@ -872,13 +1351,13 @@
             </div>
             <span class="arrow">▼</span>
             <div class="class-dropdown" id="classDropdown">
-                <div  href="classlist.html" class="class-option" data-class="6">Class 6</div>
-                <div href="classlist.html" class="class-option selected" data-class="7">Class 7</div>
-                <div href="classlist.html" class="class-option" data-class="8">Class 8</div>
-                <div href="classlist.html" class="class-option" data-class="9">Class 9</div>
-                <div href="classlist.html" class="class-option" data-class="10">Class 10</div>
-                <div href="classlist.html" class="class-option" data-class="11">Class 11</div>
-                <div href="classlist.html" class="class-option" data-class="12">Class 12</div>
+                <div   class="class-option" data-class="6">Class 6</div>
+                <div  class="class-option selected" data-class="7">Class 7</div>
+                <div  class="class-option" data-class="8">Class 8</div>
+                <div  class="class-option" data-class="9">Class 9</div>
+                <div  class="class-option" data-class="10">Class 10</div>
+                <div  class="class-option" data-class="11">Class 11</div>
+                <div  class="class-option" data-class="12">Class 12</div>
             </div>
         </div>
         <div class="sidebar-item active">
@@ -944,14 +1423,14 @@
                     <div class="notification-dot"></div>
                 </div>
                 <div class="user-avatar">TJ</div>
-                <span style="font-weight: 600; color: #1f2937;">Tiana Jiménez</span>
+                <span style="font-weight: 600; color: #1f2937;">Ramesh Sharma</span>
             </div>
         </div>
 
         <!-- Welcome Section -->
         <div class="welcome-section">
             <div class="welcome-text">
-                <h1>Welcome Back, <span>Tiana!</span></h1>
+                <h1>Welcome Back, <span>Suraj</span></h1>
                 <p>Your Students completed <span>80%</span> of the tasks.</p>
                 <p class="progress-text">Progress is very good!</p>
             </div>
@@ -971,7 +1450,7 @@
                     <div class="student-item">
                         <div class="student-avatar" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);"></div>
                         <div class="student-info">
-                            <div class="student-name">Amelia collier</div>
+                            <div class="student-name">Ishita Goyal</div>
                             <div class="progress-bar">
                                 <div class="progress-fill progress-blue" style="width: 95%;"></div>
                             </div>
@@ -981,7 +1460,7 @@
                     <div class="student-item">
                         <div class="student-avatar" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
                         <div class="student-info">
-                            <div class="student-name">Estelle Baldwin</div>
+                            <div class="student-name">Aditi Singh</div>
                             <div class="progress-bar">
                                 <div class="progress-fill progress-yellow" style="width: 75%;"></div>
                             </div>
@@ -991,7 +1470,7 @@
                     <div class="student-item">
                         <div class="student-avatar" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);"></div>
                         <div class="student-info">
-                            <div class="student-name">Amanda Wood</div>
+                            <div class="student-name">Anushka Kashyap</div>
                             <div class="progress-bar">
                                 <div class="progress-fill progress-red" style="width: 60%;"></div>
                             </div>
@@ -1001,7 +1480,7 @@
                     <div class="student-item">
                         <div class="student-avatar" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);"></div>
                         <div class="student-info">
-                            <div class="student-name">Lilly Tano</div>
+                            <div class="student-name">Ananya Pandey</div>
                             <div class="progress-bar">
                                 <div class="progress-fill progress-cyan" style="width: 85%;"></div>
                             </div>
@@ -1016,7 +1495,7 @@
                         <div class="course-icon orange">A1</div>
                         <div class="course-info">
                             <div class="course-title">Common English</div>
-                            <div class="course-file">Cambridge advanced.pdf</div>
+                            <div class="course-file">English Grammar.pdf</div>
                         </div>
                         <div class="course-meta">
                             <div class="course-status status-available">
@@ -1063,7 +1542,7 @@
             <!-- Right Column -->
             <div class="right-sidebar">
                 <!-- Calendar -->
-                <div class="card">
+                <!-- <div class="card">
                     <div class="calendar-header">
                         <div class="calendar-month">January 2025</div>
                         <div>⋮</div>
@@ -1119,7 +1598,7 @@
                         <div class="time-slot">4</div>
                         <div class="time-slot">5</div>
                     </div>
-                </div>
+                </div> -->
 
                 <!-- Working Hours -->
                 <div class="card">
@@ -1241,6 +1720,94 @@
             </div>
         </div>
     </div>
+    <!-- Student Details Modal -->
+<div class="modal-overlay" id="studentModal">
+    <div class="student-modal">
+        <div class="modal-header">
+            <button class="close-modal" onclick="closeModal()">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor"/>
+                </svg>
+            </button>
+            <img id="modalAvatar" src="" alt="" class="modal-avatar">
+            <h2 class="modal-name" id="modalName"></h2>
+            <p class="modal-roll" id="modalRoll"></p>
+        </div>
+        <div class="modal-body">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Address</div>
+                        <div class="info-value" id="modalAddress"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Date of Birth</div>
+                        <div class="info-value" id="modalDOB"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Phone Number</div>
+                        <div class="info-value" id="modalPhone"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Class</div>
+                        <div class="info-value" id="modalClass"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <div class="info-content">
+                        <div class="info-label">Subjects</div>
+                        <div class="subject-tags" id="modalSubjects"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="message-btn" onclick="sendMessage()">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                </svg>
+                Send Message
+            </button>
+        </div>
+    </div>
+</div>
 <script>
         // Choose Class Dropdown
         const chooseClassBtn = document.getElementById('chooseClassBtn');
@@ -1463,15 +2030,228 @@ document.addEventListener('click', () => {
         }
     </script>
     <script>
-async function loadClassList(classNumber) {
-  const res = await fetch("classlist.html");
-  const html = await res.text();
+const students = [
+    {
+        name: "Aarav Sharma",
+        roll: "#001",
+        address: "Sector 62, Noida, UP",
+        class: "10th",
+        dob: "15/03/2009",
+        phone: "+91 98765 43210",
+        avatar: "https://i.pravatar.cc/100?img=1",
+        subjects: ["Mathematics", "Physics", "Chemistry"]
+    },
+    {
+        name: "Diya Patel",
+        roll: "#002",
+        address: "Andheri West, Mumbai, MH",
+        class: "10th",
+        dob: "22/07/2009",
+        phone: "+91 98123 45678",
+        avatar: "https://i.pravatar.cc/100?img=33",
+        subjects: ["Biology", "English", "Hindi"]
+    },
+    {
+        name: "Arjun Singh",
+        roll: "#003",
+        address: "Koramangala, Bangalore, KA",
+        class: "9th",
+        dob: "10/11/2010",
+        phone: "+91 97654 32109",
+        avatar: "https://i.pravatar.cc/100?img=8",
+        subjects: ["Computer Science", "Mathematics", "English"]
+    },
+    {
+        name: "Ananya Reddy",
+        roll: "#004",
+        address: "Jubilee Hills, Hyderabad, TG",
+        class: "11th",
+        dob: "05/01/2008",
+        phone: "+91 99887 76655",
+        avatar: "https://i.pravatar.cc/100?img=5",
+        subjects: ["Commerce", "Accountancy", "Economics"]
+    },
+    {
+        name: "Rohan Gupta",
+        roll: "#005",
+        address: "Connaught Place, New Delhi",
+        class: "12th",
+        dob: "18/09/2007",
+        phone: "+91 98111 22333",
+        avatar: "https://i.pravatar.cc/100?img=12",
+        subjects: ["Physics", "Chemistry", "Mathematics"]
+    }
+];
 
-  const container = document.getElementById("dynamicContent");
-  container.innerHTML = html;
+function loadClassList(classNumber) {
+    const mainContent = document.querySelector('.main-content');
+    
+    mainContent.innerHTML = `
+        <div class="breadcrumb">
+            <a onclick="loadDashboard()">Home</a>
+            <span>/</span>
+            <span>Class ${classNumber} Students</span>
+        </div>
 
-  document.getElementById("classLabel").textContent = `Class ${classNumber}`;
+        <div class="content-header">
+            <h2 class="content-title">Students List - Class ${classNumber}</h2>
+            <button class="add-btn">
+                <span>+</span>
+                <span>Add Students</span>
+            </button>
+        </div>
+
+        <div class="table-header">
+            <div class="table-title">Students Information</div>
+            <div class="table-controls">
+                <div class="search-input">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                    <input type="text" placeholder="Search by name or roll">
+                </div>
+                <div class="filter-select">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    <span>Last 30 days</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkbox"></th>
+                        <th>STUDENT'S NAME</th>
+                        <th>ROLL</th>
+                        <th>ADDRESS</th>
+                        <th>CLASS</th>
+                        <th>DATE OF BIRTH</th>
+                        <th>PHONE</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTableBody">
+                    ${students.map(student => `
+                        <tr>
+                            <td><input type="checkbox" class="checkbox"></td>
+                            <td>
+                                <div class="student-cell" onclick='openModal(${JSON.stringify(student).replace(/'/g, "&apos;")})'>
+                                    <img src="${student.avatar}" alt="${student.name}" class="student-avatar-table">
+                                    <span>${student.name}</span>
+                                </div>
+                            </td>
+                            <td>${student.roll}</td>
+                            <td>${student.address}</td>
+                            <td>${student.class}</td>
+                            <td>${student.dob}</td>
+                            <td>${student.phone}</td>
+                            <td>
+                                <div class="action-btns">
+                                    <button class="action-btn">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="3 6 5 6 21 6"/>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                                        </svg>
+                                    </button>
+                                    <button class="action-btn">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <div class="pagination-left">
+                    <button class="page-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"/>
+                        </svg>
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn">4</button>
+                    <button class="page-btn">5</button>
+                    <button class="page-btn dots">...</button>
+                    <button class="page-btn">20</button>
+                    <button class="page-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
+                    </button>
+                </div>
+                <select class="per-page-select">
+                    <option>10 / page</option>
+                    <option>25 / page</option>
+                    <option>50 / page</option>
+                    <option>100 / page</option>
+                </select>
+            </div>
+        </div>
+    `;
 }
+
+function loadDashboard() {
+    location.reload();
+}
+function openModal(student) {
+    document.getElementById('modalAvatar').src = student.avatar;
+    document.getElementById('modalName').textContent = student.name;
+    document.getElementById('modalRoll').textContent = `Roll No: ${student.roll}`;
+    document.getElementById('modalAddress').textContent = student.address;
+    document.getElementById('modalDOB').textContent = student.dob;
+    document.getElementById('modalPhone').textContent = student.phone;
+    document.getElementById('modalClass').textContent = student.class;
+    
+    const subjectsContainer = document.getElementById('modalSubjects');
+    subjectsContainer.innerHTML = student.subjects.map(subject => 
+        `<span class="subject-tag">${subject}</span>`
+    ).join('');
+    
+    document.getElementById('studentModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('studentModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+function sendMessage() {
+    const studentName = document.getElementById('modalName').textContent;
+    alert(`Sending message to ${studentName}...`);
+    closeModal();
+}
+
+// Close modal when clicking outside
+document.getElementById('studentModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
 </script>
 
 </body>
