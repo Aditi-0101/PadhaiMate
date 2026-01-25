@@ -1655,18 +1655,20 @@
               <p class="content-text">{{ content.text_content }}</p>
 
               {% if content.image_url %}
-              <img src="{{ content.image_url }}" alt="{{ content.title }}" class="content-image"
-                onerror="this.src='{% static 'images/concept.svg' %}'">
+              <img src="{{ content.image_url }}"
+              alt="{{ content.title }}"
+              class="content-image"
+              onerror="this.src='{% static 'images/concept.svg' %}'"
               {% else %}
-              <!-- Static Placeholder based on type -->
-              {% if content.content_type == 'concept' %}
+              {% if content.content_type == "concept" %}
               <img src="{% static 'images/concept.svg' %}" class="content-image" alt="Concept">
-              {% elif content.content_type == 'visual' %}
+              {% elif content.content_type == "visual" %}
               <img src="{% static 'images/visual.svg' %}" class="content-image" alt="Visual">
               {% else %}
               <img src="{% static 'images/real_life.svg' %}" class="content-image" alt="Example">
               {% endif %}
               {% endif %}
+
 
               {% if content.video_url %}
               <a href="{{ content.video_url }}" target="_blank"
