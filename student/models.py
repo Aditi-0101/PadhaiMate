@@ -82,6 +82,7 @@ class LearningContent(models.Model):
     text_content = models.TextField()
     image_url = models.URLField(blank=True, null=True, help_text="URL for image/diagram")
     video_url = models.URLField(blank=True, null=True, help_text="YouTube URL or similar")
+    concept_tag = models.CharField(max_length=50, blank=True, help_text="Tag for specific concept matching (e.g. 'friction')")
 
     def __str__(self):
         return f"{self.title} ({self.topic.name})"
@@ -90,6 +91,8 @@ class StudentWeakTopic(models.Model):
     student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     is_resolved = models.BooleanField(default=False)
+    weak_concepts = models.TextField(blank=True, help_text="Comma-separated list of weak concept tags")
+    study_plan = models.JSONField(blank=True, null=True, help_text="AI-generated 3-day study plan")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -100,6 +103,7 @@ class Question(models.Model):
     subject_name = models.CharField(max_length=50)
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
     topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True, blank=True)
+    concept_tag = models.CharField(max_length=50, blank=True, help_text="Tag for specific concept (e.g. 'friction')")
 
     question_text = models.TextField()
 
