@@ -20,12 +20,12 @@ def login(request):
 
             if user.is_staff:
                 return redirect("teacher-dashboard")
+            
+            elif Kid.objects.filter(user=user).exists():
+                return redirect("kid")
 
             elif hasattr(user, "student_profile"):
                 return redirect("student-dashboard")
-
-            elif hasattr(user, "kid"):
-                return redirect("kid")
 
             else:
                 messages.error(request, "No role assigned to this user")

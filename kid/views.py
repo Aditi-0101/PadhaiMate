@@ -7,4 +7,5 @@ from kid.models import Kid
 
 @login_required
 def kid(request):
-    return render(request, "kid/kid.html")
+    return render(request, "kid/kids.html")
+

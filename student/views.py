@@ -9,6 +9,7 @@ from student.services.gemini_service import generate_explanation
 from django.db.models import Prefetch
 from .models import LearningActivity
 from django.utils.timezone import now, timedelta
+from student import service
 
 # Create your views here.
 
@@ -242,8 +243,9 @@ def quiz(request):
 
             # ----------------- IDENTIFY & STORE WEAK TOPICS -----------------
             # Use Service Layer
-            weak_areas = RecommendationService.calculate_weak_areas(all_questions, answers)
-            RecommendationService.store_weak_areas(student_profile, weak_areas)
+            weak_areas = service.RecommendationService.calculate_weak_areas(all_questions, answers)
+            service.RecommendationService.store_weak_areas(student_profile, weak_areas)
+
             
             # ----------------------------------------------------------------
 
